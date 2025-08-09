@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:uni_online_shop/views/shared/product_card.dart';
+import 'package:uni_online_shop/views/ui/product_by_category.dart';
 import '../../models/sneakers_model.dart';
 import 'appstyle.dart';
 import 'new_shoes.dart';
 
 class HomeWidget extends StatelessWidget {
-  const HomeWidget({super.key, required Future<List<Sneakers>> persona})
-    : _male = persona;
+  const HomeWidget({
+    super.key,
+    required Future<List<Sneakers>> persona,
+    required this.tabIndex,
+  }) : _male = persona;
 
   final Future<List<Sneakers>> _male;
+  final int tabIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +60,27 @@ class HomeWidget extends StatelessWidget {
                     "Latest Shoes",
                     style: appstyle(24, Colors.black, FontWeight.bold),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        "Show All",
-                        style: appstyle(22, Colors.black, FontWeight.w500),
-                      ),
-                      Icon(AntDesign.caretright, size: 20),
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) =>
+                                  ProductByCategory(tabIndex: tabIndex),
+                        ),
+                      );
+                      print("***********************$tabIndex");
+                    },
+                    child: Row(
+                      children: [
+                        Text(
+                          "Show All",
+                          style: appstyle(22, Colors.black, FontWeight.w500),
+                        ),
+                        Icon(AntDesign.caretright, size: 20),
+                      ],
+                    ),
                   ),
                 ],
               ),

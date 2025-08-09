@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/conrollers/main_page_provider.dart';
 import 'package:uni_online_shop/views/ui/card_page.dart';
+import 'package:uni_online_shop/views/ui/home_page.dart';
 import 'package:uni_online_shop/views/ui/product_by_category.dart';
 import 'package:uni_online_shop/views/ui/profile_page.dart';
 import 'package:uni_online_shop/views/ui/search_page.dart';
@@ -50,8 +51,10 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     pageList = const [
-      ProductByCategory(),
+      HomePage(),
       SearchPage(),
+      HomePage(),
+      // ProductByCategory(tabIndex: tabIndex),
       AddPage(),
       CardPage(),
       ProfilePage(),

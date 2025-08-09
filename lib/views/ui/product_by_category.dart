@@ -8,7 +8,9 @@ import '../shared/custom_spacer.dart';
 import '../shared/latest_shoes.dart';
 
 class ProductByCategory extends StatefulWidget {
-  const ProductByCategory({super.key});
+  const ProductByCategory({super.key, required this.tabIndex});
+
+  final int tabIndex;
 
   @override
   State<ProductByCategory> createState() => _ProductByCategoryState();
@@ -19,6 +21,8 @@ class _ProductByCategoryState extends State<ProductByCategory>
   late final TabController _tabController = TabController(
     length: 3,
     vsync: this,
+    initialIndex: widget.tabIndex,
+
   );
 
   late Future<List<Sneakers>> _male;
@@ -47,11 +51,11 @@ class _ProductByCategoryState extends State<ProductByCategory>
 
   List<String> brand =[
     "assets/logo/adidas.png",
-    "assets/logo/gucci.png",
+    "assets/logo/nike.png",
     "assets/logo/jordan.png",
+    "assets/logo/gucci.png",
     "assets/logo/nike.png",
-    "assets/logo/nike.png",
-    "assets/logo/nike.png",
+    "assets/logo/adidas.png",
   ];
 
   @override
@@ -80,12 +84,15 @@ class _ProductByCategoryState extends State<ProductByCategory>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
                           child: Icon(AntDesign.close, color: Colors.white),
                         ),
                         GestureDetector(
                           onTap: () {
                             filter();
+                            print('*********************pageindex in producr page is ${widget.tabIndex}');
                           },
                           child: Icon(FontAwesome.sliders, color: Colors.white),
                         ),
