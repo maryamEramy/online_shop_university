@@ -1,0 +1,93 @@
+[
+  {
+    "id": "1",
+    "name": "Nike Air Max",
+    "category": "kid's Running",
+    "title": "Stylish Running Shoes",
+    "description": "Lightweight and comfortable sneakers for everyday use.",
+    "imageUrl": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/e4f67288-80e9-4b0b-af35-7c6f12917e51/NIKE+DUNK+LOW+BG.png",
+    "oldPrice": "180.0",
+    "price": "139.99",
+    "sizes": [
+      { "size": "40", "isSelected": false },
+      { "size": "41", "isSelected": true },
+      { "size": "42", "isSelected": false }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Adidas Ultraboost",
+    "category": "kid's Running",
+    "title": "High-Performance Sports Shoes",
+    "description": "Designed for ultimate energy return and advanced cushioning.",
+    "imageUrl": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/97c6408e-eedc-4c68-9b5a-590b4d10e2e0/VOMERO+5+%28TD%29.png",
+    "oldPrice": "220.0",
+    "price": "159.99",
+    "sizes": [
+      { "size": "39", "isSelected": false },
+      { "size": "40", "isSelected": true },
+      { "size": "41", "isSelected": false }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Puma RS-X",
+    "category": "kid's Running",
+    "title": "Retro-Future Vibe",
+    "description": "Modern sneakers with a chunky design and soft cushioning.",
+    "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/6a1833c7-3b1d-4862-aaea-93a6b3e12389/NIKE+DUNK+LOW+%28PSE%29.png",
+    "oldPrice": "160.0",
+    "price": "119.99",
+    "sizes": [
+      { "size": "38", "isSelected": false },
+      { "size": "39", "isSelected": false },
+      { "size": "40", "isSelected": true }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "Reebok Nano X1",
+    "category": "kid's Running",
+    "title": "Training Shoes for Athletes",
+    "description": "Built for speed and performance with breathable material.",
+    "imageUrl": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/c1d23818-f4f4-4efb-a31b-226fb58316b5/JA+2+KOOLAID+%28PS%29.png",
+    "oldPrice": "190.0",
+    "price": "149.99",
+    "sizes": [
+      { "size": "41", "isSelected": true },
+      { "size": "42", "isSelected": false },
+      { "size": "43", "isSelected": false }
+    ]
+  },
+  {
+    "id": "5",
+    "name": "Puma RS-X",
+    "category": "kid's Running",
+    "title": "Retro-Future Vibe",
+    "description": "Modern sneakers with a chunky design and soft cushioning.",
+    "imageUrl": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/6a1833c7-3b1d-4862-aaea-93a6b3e12389/NIKE+DUNK+LOW+%28PSE%29.png",
+    "oldPrice": "160.0",
+    "price": "119.99",
+    "sizes": [
+      { "size": "38", "isSelected": false },
+      { "size": "39", "isSelected": false },
+      { "size": "40", "isSelected": true }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Adidas Ultraboost",
+    "category": "kid's Running",
+    "title": "High-Performance Sports Shoes",
+    "description": "Designed for ultimate energy return and advanced cushioning.",
+    "imageUrl": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/97c6408e-eedc-4c68-9b5a-590b4d10e2e0/VOMERO+5+%28TD%29.png",
+    "oldPrice": "220.0",
+    "price": "159.99",
+    "sizes": [
+      { "size": "39", "isSelected": false },
+      { "size": "40", "isSelected": true },
+      { "size": "41", "isSelected": false }
+    ]
+  }
+]
+

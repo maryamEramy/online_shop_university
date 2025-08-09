@@ -1,0 +1,93 @@
+[
+  {
+    "id": "1",
+    "name": "Nike Air Max",
+    "category": "female's Running",
+    "title": "Stylish Running Shoes",
+    "description": "Lightweight and comfortable sneakers for everyday use.",
+    "imageUrl": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/ac11229e-b11c-45b1-8178-cee52316af4f/W+NIKE+VOMERO+18.png",
+    "oldPrice": "180.0",
+    "price": "139.99",
+    "sizes": [
+      { "size": "40", "isSelected": false },
+      { "size": "41", "isSelected": true },
+      { "size": "42", "isSelected": false }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Adidas Ultraboost",
+    "category": "female's Running",
+    "title": "High-Performance Sports Shoes",
+    "description": "Designed for ultimate energy return and advanced cushioning.",
+    "imageUrl": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/f9dfd232-316b-46ba-9f46-b95f27e4230c/W+LD-1000+SE.png",
+    "oldPrice": "220.0",
+    "price": "159.99",
+    "sizes": [
+      { "size": "39", "isSelected": false },
+      { "size": "40", "isSelected": true },
+      { "size": "41", "isSelected": false }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Puma RS-X",
+    "category": "female's Running",
+    "title": "Retro-Future Vibe",
+    "description": "Modern sneakers with a chunky design and soft cushioning.",
+    "imageUrl": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/daee5c9d-35c0-40f5-a733-65f416039cc0/W+NIKE+V5+RNR.png",
+    "oldPrice": "160.0",
+    "price": "119.99",
+    "sizes": [
+      { "size": "38", "isSelected": false },
+      { "size": "39", "isSelected": false },
+      { "size": "40", "isSelected": true }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "Reebok Nano X1",
+    "category": "female's Running",
+    "title": "Training Shoes for Athletes",
+    "description": "Built for speed and performance with breathable material.",
+    "imageUrl": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/379c21df-a812-4cfb-be68-86e56a3edc8c/W+NIKE+AIR+MAX+270.png",
+    "oldPrice": "190.0",
+    "price": "149.99",
+    "sizes": [
+      { "size": "41", "isSelected": true },
+      { "size": "42", "isSelected": false },
+      { "size": "43", "isSelected": false }
+    ]
+  },
+  {
+    "id": "5",
+    "name": "Nike Air",
+    "category": "female's Running",
+    "title": "Stylish Running Shoes",
+    "description": "Lightweight and comfortable sneakers for everyday use.",
+    "imageUrl": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/ac11229e-b11c-45b1-8178-cee52316af4f/W+NIKE+VOMERO+18.png",
+    "oldPrice": "180.0",
+    "price": "139.99",
+    "sizes": [
+      { "size": "40", "isSelected": false },
+      { "size": "41", "isSelected": true },
+      { "size": "42", "isSelected": false }
+    ]
+  },
+  {
+    "id": "6",
+    "name": "Puma RS-X",
+    "category": "female's Running",
+    "title": "Retro-Future Vibe",
+    "description": "Modern sneakers with a chunky design and soft cushioning.",
+    "imageUrl": "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/daee5c9d-35c0-40f5-a733-65f416039cc0/W+NIKE+V5+RNR.png",
+    "oldPrice": "160.0",
+    "price": "119.99",
+    "sizes": [
+      { "size": "38", "isSelected": false },
+      { "size": "39", "isSelected": false },
+      { "size": "40", "isSelected": true }
+    ]
+  }
+]
+

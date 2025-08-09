@@ -1,0 +1,62 @@
+# Flutter/Dart/Pub related
+.dart_tool/
+.packages
+pubspec.lock
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Build outputs
+build/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+android/app/debug
+android/app/profile
+android/app/release
+
+# Android specific
+.gradle/
+**/gradle-wrapper.jar
+/captures/
+*.apk
+*.aar
+*.ap_
+
+# iOS/macOS specific
+Pods/
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+xcuserdata/
+DerivedData/
+*.xcuserstate
+ios/Flutter/App.framework
+ios/Flutter/engine/
+
+# VS Code
+.vscode/
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Web
+web/.dart_tool/
+
+# Linux
+linux/.dart_tool/
+
+# Other platform-specific
+windows/.dart_tool/
+
+# Generated files
+*.log
+*.tmp
+*.swp
