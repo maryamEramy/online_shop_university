@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/conrollers/main_page_provider.dart';
+import 'package:uni_online_shop/conrollers/product_provider.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
-import 'package:uni_online_shop/views/ui/splash_screen.dart';
 
 
 void main() async {
@@ -11,6 +11,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => MainPageNotifier()),
+        ChangeNotifierProvider(create: (context) => ProductNotifier()),
       ],
       child: const MyApp(),
     ),
