@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/conrollers/product_provider.dart';
 import 'package:uni_online_shop/services/helper.dart';
+import 'package:uni_online_shop/views/shared/appstyle.dart';
 
 import '../../models/sneakers_model.dart';
 
@@ -69,7 +71,9 @@ class _ProductPageState extends State<ProductPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             GestureDetector(
-                              onTap: null,
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
                               child: Icon(AntDesign.close),
                             ),
                             GestureDetector(
@@ -109,7 +113,9 @@ class _ProductPageState extends State<ProductPage> {
                                         ),
                                       ),
                                       Positioned(
-                                        top: MediaQuery.of(context).size.height * 0.09,
+                                        top:
+                                            MediaQuery.of(context).size.height *
+                                            0.1,
                                         right: 20,
                                         child: Icon(
                                           MaterialCommunityIcons.heart_outline,
@@ -120,20 +126,31 @@ class _ProductPageState extends State<ProductPage> {
                                         bottom: 0,
                                         right: 0,
                                         left: 0,
-                                        height: MediaQuery.of(context).size.height * 0.3,
-                                        child: SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: List<Widget>.generate(
-                                              sneaker.imageUrl.length,
-                                                  (index) => Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: 4),
-                                                child: CircleAvatar(
-                                                  radius: 5,
-                                                  backgroundColor: productNotifier.activepage != index
-                                                      ? Colors.grey
-                                                      : Colors.black,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                            0.3,
+                                        child: Center(
+                                          child: SingleChildScrollView(
+                                            scrollDirection: Axis.horizontal,
+                                            child: Row(
+                                              // mainAxisAlignment:
+                                              //     MainAxisAlignment.center,
+                                              children: List<Widget>.generate(
+                                                /*sneaker.imageUrl.length,*/
+                                                6,
+                                                (index) => Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 4,
+                                                  ),
+                                                  child: CircleAvatar(
+                                                    radius: 5,
+                                                    backgroundColor:
+                                                        productNotifier
+                                                                    .activepage !=
+                                                                index
+                                                            ? Colors.grey
+                                                            : Colors.black,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -143,6 +160,145 @@ class _ProductPageState extends State<ProductPage> {
                                     ],
                                   );
                                 },
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 20,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
+                                ),
+                                child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height *
+                                      0.645,
+                                  width: MediaQuery.of(context).size.width,
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: EdgeInsets.all(12),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          sneaker.name,
+                                          style: appstyle(
+                                            40,
+                                            Colors.black,
+                                            FontWeight.w500,
+                                          ),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              sneaker.category,
+                                              style: appstyle(
+                                                20,
+                                                Colors.grey,
+                                                FontWeight.w500,
+                                              ),
+                                            ),
+                                            SizedBox(width: 20),
+                                            RatingBar.builder(
+                                              initialRating: 4,
+                                              minRating: 1,
+                                              direction: Axis.horizontal,
+                                              allowHalfRating: true,
+                                              itemCount: 5,
+                                              itemSize: 22,
+                                              itemPadding: EdgeInsets.symmetric(
+                                                horizontal: 1,
+                                              ),
+                                              itemBuilder:
+                                                  (context, _) => Icon(
+                                                    Icons.star,
+                                                    size: 18,
+                                                    color: Colors.black,
+                                                  ),
+                                              onRatingUpdate: (rating) {},
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(height: 20),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "\$${sneaker.price}",
+                                              style: appstyle(
+                                                26,
+                                                Colors.black,
+                                                FontWeight.w600,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  "Colors",
+                                                  style: appstyle(
+                                                    18,
+                                                    Colors.black,
+                                                    FontWeight.w500,
+                                                  ),
+                                                ),
+                                                SizedBox(width: 5),
+                                                CircleAvatar(
+                                                  radius: 7,
+                                                  backgroundColor: Colors.black,
+                                                ),
+                                                SizedBox(width: 2),
+                                                CircleAvatar(
+                                                  radius: 7,
+                                                  backgroundColor: Colors.red,
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(height: 20),
+                                            Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      "Select size",
+                                                      style: appstyle(
+                                                        20,
+                                                        Colors.black,
+                                                        FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: 20),
+                                                    Text(
+                                                      "View size guide",
+                                                      style: appstyle(
+                                                        20,
+                                                        Colors.black,
+                                                        FontWeight.w600,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 10,),
+                                                SizedBox(
+                                                  height: 40,
+                                                  child: ListView.builder(
+                                                      itemCount: 3,
+                                                      scrollDirection: Axis.horizontal,
+                                                      padding: EdgeInsets.zero,
+                                                      itemBuilder: (context , index){
+                                                        return ChoiceChip(label: label, selected: selected)
+                                                  }),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        // ...
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
