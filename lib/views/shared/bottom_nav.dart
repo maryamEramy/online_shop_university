@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uni_online_shop/conrollers/main_page_provider.dart';
+import 'package:uni_online_shop/controllers/main_page_provider.dart';
 
 import 'bottom_nav_widget.dart';
 

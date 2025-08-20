@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:uni_online_shop/conrollers/product_provider.dart';
+import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/services/helper.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 
@@ -357,7 +356,9 @@ class _ProductPageState extends State<ProductPage> {
                                         Align(
                                           alignment: Alignment.bottomCenter,
                                           child: Padding(padding: EdgeInsets.only(top: 12),
-                                          child: CheckoutButton(label: '',),
+                                          child: CheckoutButton(
+                                            onTap: (){},
+                                            label: 'Add to Cart',),
                                           ),
                                         )
                                         // ...
