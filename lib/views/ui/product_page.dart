@@ -73,6 +73,7 @@ class _ProductPageState extends State<ProductPage> {
                             GestureDetector(
                               onTap: () {
                                 Navigator.pop(context);
+                                productNotifier.shoeSizes.clear();
                               },
                               child: Icon(AntDesign.close),
                             ),
@@ -255,42 +256,74 @@ class _ProductPageState extends State<ProductPage> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(height: 20),
-                                            Column(
+                                          ],
+                                        ),
+                                        SizedBox(height: 20),
+                                        Column(
+                                          children: [
+                                            Row(
                                               children: [
-                                                Row(
-                                                  children: [
-                                                    Text(
-                                                      "Select size",
-                                                      style: appstyle(
-                                                        20,
-                                                        Colors.black,
-                                                        FontWeight.w600,
-                                                      ),
-                                                    ),
-                                                    SizedBox(width: 20),
-                                                    Text(
-                                                      "View size guide",
-                                                      style: appstyle(
-                                                        20,
-                                                        Colors.black,
-                                                        FontWeight.w600,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                Text(
+                                                  "Select size",
+                                                  style: appstyle(
+                                                    20,
+                                                    Colors.black,
+                                                    FontWeight.w600,
+                                                  ),
                                                 ),
-                                                SizedBox(height: 10,),
-                                                SizedBox(
-                                                  height: 40,
-                                                  child: ListView.builder(
-                                                      itemCount: 3,
-                                                      scrollDirection: Axis.horizontal,
-                                                      padding: EdgeInsets.zero,
-                                                      itemBuilder: (context , index){
-                                                        return ChoiceChip(label: label, selected: selected)
-                                                  }),
-                                                )
+                                                SizedBox(width: 20),
+                                                Text(
+                                                  "View size guide",
+                                                  style: appstyle(
+                                                    20,
+                                                    Colors.grey,
+                                                    FontWeight.w500,
+                                                  ),
+                                                ),
                                               ],
+                                            ),
+                                            SizedBox(height: 10),
+                                            SizedBox(
+                                              height: 40,
+                                              child: ListView.builder(
+                                                itemCount:
+                                                    productNotifier
+                                                        .shoeSizes
+                                                        .length,
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                padding: EdgeInsets.zero,
+                                                itemBuilder: (context, index) {
+
+                                                  final sizes = productNotifier.shoeSizes[index];
+
+                                                  return Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                                    child: ChoiceChip(
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(60),
+                                                        side: BorderSide(
+                                                          color: Colors.black,
+                                                          width: 1,
+                                                          style:
+                                                              BorderStyle.solid,
+                                                        ),
+                                                      ),
+                                                      disabledColor: Colors.white,
+                                                      label: Text(
+                                                        sizes['size'],
+                                                        style: appstyle(18, sizes['isSelected']? Colors.white : Colors.black, FontWeight.w500),
+                                                      ),
+                                                      selectedColor: Colors.black,
+                                                      padding: EdgeInsets.symmetric(vertical: 8),
+                                                      selected: sizes['isSelected'],
+                                                      onSelected: (newState){
+                                                        productNotifier.toggleCheck(index);
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              ),
                                             ),
                                           ],
                                         ),

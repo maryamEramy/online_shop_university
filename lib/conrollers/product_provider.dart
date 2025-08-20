@@ -21,8 +21,9 @@ class ProductNotifier extends ChangeNotifier {
   void toggleCheck(int index){
     for(int i = 0 ; i < _shoeSizes.length; i++){
       if( i == index){
-        _shoeSizes[index]['isSelected'] =! _shoeSizes[index]['isSelected'];
+        _shoeSizes[i]['isSelected'] = !_shoeSizes[i]['isSelected'];
       }
     }
+    notifyListeners();
   }
 }

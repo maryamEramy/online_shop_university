@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:uni_online_shop/conrollers/product_provider.dart';
 import 'package:uni_online_shop/views/shared/product_card.dart';
 import 'package:uni_online_shop/views/ui/product_by_category.dart';
 import 'package:uni_online_shop/views/ui/product_page.dart';
@@ -19,6 +21,7 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
     return Column(
       children: [
         SizedBox(
@@ -39,6 +42,8 @@ class HomeWidget extends StatelessWidget {
                     final shoe = snapshot.data![index];
                     return GestureDetector(
                       onTap: () {
+                        productNotifier.shoeSizes = shoe.sizes;
+                        print(productNotifier.shoeSizes);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
