@@ -9,6 +9,7 @@ import 'package:uni_online_shop/services/helper.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 
 import '../../models/sneakers_model.dart';
+import '../shared/checkout_btn.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});
@@ -327,6 +328,38 @@ class _ProductPageState extends State<ProductPage> {
                                             ),
                                           ],
                                         ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Divider(
+                                          indent: 10,
+                                          endIndent: 10,
+                                          color: Colors.black,
+                                        ),
+                                        SizedBox(height: 10,),
+                                        SizedBox(
+                                          width: MediaQuery.of(context).size.width*0.8,
+                                          child: Text(sneaker.title,
+                                          style: appstyle(26, Colors.black, FontWeight.w700),),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          sneaker.description,
+                                          textAlign: TextAlign.justify,
+                                          maxLines: 4,
+                                          style: appstyle(14, Colors.black, FontWeight.normal),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Padding(padding: EdgeInsets.only(top: 12),
+                                          child: CheckoutButton(label: '',),
+                                          ),
+                                        )
                                         // ...
                                       ],
                                     ),
@@ -348,3 +381,4 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 }
+
