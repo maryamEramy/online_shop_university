@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/services/helper.dart';
@@ -22,6 +23,8 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
+  final _cartBox = Hive.box('cart_box');
+
   late Future<Sneakers> _sneakers;
 
   void getShoes() {
@@ -32,6 +35,10 @@ class _ProductPageState extends State<ProductPage> {
     } else {
       _sneakers = Helper().getKidsSneakerById(widget.id);
     }
+  }
+
+  Future<void> _createCart(Map<String, dynamic> newCart) async {
+    await _cartBox.add(newCart);
   }
 
   @override
@@ -294,14 +301,21 @@ class _ProductPageState extends State<ProductPage> {
                                                     Axis.horizontal,
                                                 padding: EdgeInsets.zero,
                                                 itemBuilder: (context, index) {
-
-                                                  final sizes = productNotifier.shoeSizes[index];
+                                                  final sizes =
+                                                      productNotifier
+                                                          .shoeSizes[index];
 
                                                   return Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                                    padding:
+                                                        const EdgeInsets.symmetric(
+                                                          horizontal: 8.0,
+                                                        ),
                                                     child: ChoiceChip(
                                                       shape: RoundedRectangleBorder(
-                                                        borderRadius: BorderRadius.circular(60),
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                              60,
+                                                            ),
                                                         side: BorderSide(
                                                           color: Colors.black,
                                                           width: 1,
@@ -309,16 +323,37 @@ class _ProductPageState extends State<ProductPage> {
                                                               BorderStyle.solid,
                                                         ),
                                                       ),
-                                                      disabledColor: Colors.white,
+                                                      disabledColor:
+                                                          Colors.white,
                                                       label: Text(
                                                         sizes['size'],
-                                                        style: appstyle(18, sizes['isSelected']? Colors.white : Colors.black, FontWeight.w500),
+                                                        style: appstyle(
+                                                          18,
+                                                          sizes['isSelected']
+                                                              ? Colors.white
+                                                              : Colors.black,
+                                                          FontWeight.w500,
+                                                        ),
                                                       ),
-                                                      selectedColor: Colors.black,
-                                                      padding: EdgeInsets.symmetric(vertical: 8),
-                                                      selected: sizes['isSelected'],
-                                                      onSelected: (newState){
-                                                        productNotifier.toggleCheck(index);
+                                                      selectedColor:
+                                                          Colors.black,
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                            vertical: 8,
+                                                          ),
+                                                      selected:
+                                                          sizes['isSelected'],
+                                                      onSelected: (newState) {
+                                                        if(productNotifier.sizes.contains(sizes['size'])){
+                                                          productNotifier.sizes.remove(sizes['size']);
+                                                        }else{
+                                                          productNotifier.sizes.add(sizes[
+                                                            'size'
+                                                          ]);
+                                                        }
+                                                        print(productNotifier.sizes);
+                                                        productNotifier
+                                                            .toggleCheck(index);
                                                       },
                                                     ),
                                                   );
@@ -327,40 +362,63 @@ class _ProductPageState extends State<ProductPage> {
                                             ),
                                           ],
                                         ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
+                                        SizedBox(height: 10),
                                         Divider(
                                           indent: 10,
                                           endIndent: 10,
                                           color: Colors.black,
                                         ),
-                                        SizedBox(height: 10,),
+                                        SizedBox(height: 10),
                                         SizedBox(
-                                          width: MediaQuery.of(context).size.width*0.8,
-                                          child: Text(sneaker.title,
-                                          style: appstyle(26, Colors.black, FontWeight.w700),),
+                                          width:
+                                              MediaQuery.of(
+                                                context,
+                                              ).size.width *
+                                              0.8,
+                                          child: Text(
+                                            sneaker.title,
+                                            style: appstyle(
+                                              26,
+                                              Colors.black,
+                                              FontWeight.w700,
+                                            ),
+                                          ),
                                         ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
+                                        SizedBox(height: 10),
                                         Text(
                                           sneaker.description,
                                           textAlign: TextAlign.justify,
                                           maxLines: 4,
-                                          style: appstyle(14, Colors.black, FontWeight.normal),
+                                          style: appstyle(
+                                            14,
+                                            Colors.black,
+                                            FontWeight.normal,
+                                          ),
                                         ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
+                                        SizedBox(height: 10),
                                         Align(
                                           alignment: Alignment.bottomCenter,
-                                          child: Padding(padding: EdgeInsets.only(top: 12),
-                                          child: CheckoutButton(
-                                            onTap: (){},
-                                            label: 'Add to Cart',),
+                                          child: Padding(
+                                            padding: EdgeInsets.only(top: 12),
+                                            child: CheckoutButton(
+                                              onTap: () async {
+                                                _createCart({
+                                                  "id": sneaker.id,
+                                                  "name": sneaker.name,
+                                                  "category": sneaker.category,
+                                                  "sizes": productNotifier.sizes,
+                                                  "imageUrl": sneaker.imageUrl,
+                                                  "price": sneaker.price,
+                                                  "qty": 1,
+                                                  // "imageUrl": sneaker.imageUrl[0],
+                                                });
+                                                productNotifier.sizes.clear();
+                                                Navigator.pop(context);
+                                              },
+                                              label: 'Add to Cart',
+                                            ),
                                           ),
-                                        )
+                                        ),
                                         // ...
                                       ],
                                     ),
@@ -382,4 +440,3 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 }
-

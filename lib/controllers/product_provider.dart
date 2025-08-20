@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 class ProductNotifier extends ChangeNotifier {
   int _activepage = 0;
   List<dynamic> _shoeSizes = [];
+  List<String> _sizes = [];
 
   int get activepage => _activepage;
 
@@ -24,6 +25,13 @@ class ProductNotifier extends ChangeNotifier {
         _shoeSizes[i]['isSelected'] = !_shoeSizes[i]['isSelected'];
       }
     }
+    notifyListeners();
+  }
+
+  List<String> get sizes => _sizes;
+
+  set sizes(List<String> newSizes){
+    _sizes = newSizes;
     notifyListeners();
   }
 }
