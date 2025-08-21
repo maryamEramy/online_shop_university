@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import '../shared/appstyle.dart';
 
-class CardPage extends StatefulWidget {
-  const CardPage({super.key});
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
   @override
-  State<CardPage> createState() => _CardPageState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _CardPageState extends State<CardPage> {
+class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

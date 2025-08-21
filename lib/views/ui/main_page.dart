@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/main_page_provider.dart';
-import 'package:uni_online_shop/views/ui/card_page.dart';
+import 'package:uni_online_shop/views/ui/cart_page.dart';
 import 'package:uni_online_shop/views/ui/home_page.dart';
 import 'package:uni_online_shop/views/ui/profile_page.dart';
 import 'package:uni_online_shop/views/ui/search_page.dart';
@@ -55,7 +55,7 @@ class _MainPageState extends State<MainPage> {
       HomePage(),
       // ProductByCategory(tabIndex: tabIndex),
       AddPage(),
-      CardPage(),
+      CartPage(),
       ProfilePage(),
     ];
   }
