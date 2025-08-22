@@ -49,14 +49,12 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    pageList = const [
-      HomePage(),
-      SearchPage(),
-      HomePage(),
-      // ProductByCategory(tabIndex: tabIndex),
-      AddPage(),
+    pageList = [
+      const HomePage(),
+      const SearchPage(),
+      const AddPage(),
       CartPage(),
-      ProfilePage(),
+      const ProfilePage(),
     ];
   }
 

@@ -10,6 +10,7 @@ import 'package:uni_online_shop/views/shared/appstyle.dart';
 
 import '../../models/sneakers_model.dart';
 import '../shared/checkout_btn.dart';
+import 'cart_page.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});
@@ -189,6 +190,11 @@ class _ProductPageState extends State<ProductPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        Expanded(child: SingleChildScrollView(child: Column(
+                                          children: [
+
+                                          ],
+                                        ),)),
                                         Text(
                                           sneaker.name,
                                           style: appstyle(
@@ -413,7 +419,8 @@ class _ProductPageState extends State<ProductPage> {
                                                   // "imageUrl": sneaker.imageUrl[0],
                                                 });
                                                 productNotifier.sizes.clear();
-                                                Navigator.pop(context);
+                                                Navigator.push(context , MaterialPageRoute(builder: (context) => CartPage()),
+                                                );
                                               },
                                               label: 'Add to Cart',
                                             ),
