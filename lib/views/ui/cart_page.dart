@@ -32,6 +32,7 @@ class CartPage extends StatelessWidget {
     cart = cartDate.reversed.toList();
 
     return Scaffold(
+      backgroundColor: const Color(0xFFE2E2E2),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -118,6 +119,13 @@ class CartPage extends StatelessWidget {
                                           Text(data['name'],
                                           style: appstyle(16, Colors.black, FontWeight.bold),
                                           ),
+                                          Text(data['category'],
+                                          style: appstyle(14, Colors.grey, FontWeight.normal),
+                                          ),
+                                          Text(data['price'],
+                                          style: appstyle(14, Colors.black, FontWeight.normal),
+                                          ),
+
                                         ],
                                       ),
                                     ),

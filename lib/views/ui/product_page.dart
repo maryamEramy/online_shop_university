@@ -51,6 +51,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFE2E2E2),
       body: FutureBuilder<Sneakers>(
         future: _sneakers,
         builder: (context, snapshot) {

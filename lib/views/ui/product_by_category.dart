@@ -61,7 +61,7 @@ class _ProductByCategoryState extends State<ProductByCategory>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFE2E2E2),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         child: Stack(

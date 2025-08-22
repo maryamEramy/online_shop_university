@@ -68,7 +68,7 @@ class _MainPageState extends State<MainPage> {
         }
 
         return Scaffold(
-          backgroundColor: const Color(0xFFFFFFFF),
+          backgroundColor: const Color(0xFFE2E2E2),
           body: pageList[safeIndex],
           bottomNavigationBar: const BottomNavBar(),
         );
