@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:uni_online_shop/views/shared/checkout_btn.dart';
 import '../shared/appstyle.dart';
 
 class CartPage extends StatelessWidget {
@@ -83,7 +84,7 @@ class CartPage extends StatelessWidget {
                             ],
                           ),
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 0.11,
+                            height: MediaQuery.of(context).size.height*0.16,
                             width: MediaQuery.of(context).size.width,
                             decoration: BoxDecoration(
                               color: Colors.grey.shade100,
@@ -147,6 +148,37 @@ class CartPage extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                                Row(
+                                  children: [
+                                    Padding(padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(Radius.circular(16))
+                                      ),
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          InkWell(
+                                            onTap: (){},
+                                            child: const Icon(AntDesign.minussquare,
+                                            size: 20,
+                                            color: Colors.grey,),
+                                          ),
+                                          Text(data['qty'].toString(),
+                                          style: appstyle(16, Colors.black, FontWeight.w600),),
+                                          InkWell(
+                                            onTap: (){},
+                                            child: const Icon(AntDesign.plussquare,
+                                              size: 20,
+                                              color: Colors.grey,),
+                                          ),
+                                        ],
+                                      ),
+                                    ),),
+
+                                  ],
+                                )
                               ],
                             ),
                           ),
@@ -157,6 +189,8 @@ class CartPage extends StatelessWidget {
                 ),
               ),
             ),
+            Align(alignment: Alignment.bottomCenter,
+            child: CheckoutButton(label: "Proceed to Checkout"),),
           ],
         ),
       ),
