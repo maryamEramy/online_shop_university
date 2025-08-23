@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/main_page_provider.dart';
 
@@ -42,7 +43,7 @@ class BottomNavBar extends StatelessWidget {
                       onTap: () {
                         mainPageNotifier.pageIndex = 2;
                       },
-                      icon: mainPageNotifier.pageIndex == 2 ? Icons.add : Icons.add_outlined,
+                      icon: mainPageNotifier.pageIndex == 2 ? AntDesign.heart : AntDesign.hearto,
                     ),
                     BottomNavWidget(
                       onTap: () {

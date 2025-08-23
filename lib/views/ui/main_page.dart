@@ -6,7 +6,7 @@ import 'package:uni_online_shop/views/ui/home_page.dart';
 import 'package:uni_online_shop/views/ui/profile_page.dart';
 import 'package:uni_online_shop/views/ui/search_page.dart';
 import '../shared/bottom_nav.dart';
-import 'add_page.dart';
+import 'favorites_page.dart';
 //
 // class MainPage extends StatelessWidget {
 //   MainPage({super.key});
@@ -52,7 +52,7 @@ class _MainPageState extends State<MainPage> {
     pageList = [
       const HomePage(),
       const SearchPage(),
-      const AddPage(),
+      const FavoritesPage(),
       CartPage(),
       const ProfilePage(),
     ];
