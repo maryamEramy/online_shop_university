@@ -101,7 +101,8 @@ class CartPage extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Padding(
+                                    Container(
+                                      decoration: BoxDecoration(color: Colors.blue),
                                       padding: EdgeInsets.all(12),
                                       child: CachedNetworkImage(
                                         imageUrl: data['imageUrl'],
@@ -112,20 +113,35 @@ class CartPage extends StatelessWidget {
                                     ),
                                     Padding(
                                       padding: EdgeInsets.only(top: 12, left: 20),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
-                                          Text(data['name'],
-                                          style: appstyle(16, Colors.black, FontWeight.bold),
-                                          ),
-                                          Text(data['category'],
-                                          style: appstyle(14, Colors.grey, FontWeight.normal),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(data['name'],
+                                              style: appstyle(16, Colors.black, FontWeight.bold),
+                                              ),
+                                              Text(data['category'],
+                                              style: appstyle(14, Colors.grey, FontWeight.normal),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text("Size",
+                                                    style: appstyle(14, Colors.black, FontWeight.normal),
+                                                  ),
+                                                  Text('${data['sizes']}',
+                                                    style: appstyle(14, Colors.black, FontWeight.normal),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
                                           ),
                                           Text(data['price'],
-                                          style: appstyle(14, Colors.black, FontWeight.normal),
+                                            style: appstyle(14, Colors.black, FontWeight.normal),
                                           ),
-
                                         ],
                                       ),
                                     ),
