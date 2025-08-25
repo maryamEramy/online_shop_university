@@ -43,7 +43,7 @@ class BottomNavBar extends StatelessWidget {
                       onTap: () {
                         mainPageNotifier.pageIndex = 2;
                       },
-                      icon: mainPageNotifier.pageIndex == 2 ? AntDesign.heart : AntDesign.hearto,
+                      icon: mainPageNotifier.pageIndex == 2 ? Ionicons.heart : Ionicons.heart_circle_outline,
                     ),
                     BottomNavWidget(
                       onTap: () {
