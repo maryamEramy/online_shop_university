@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:uni_online_shop/models/constants.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
+import 'package:uni_online_shop/views/ui/favorites_page.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard({
@@ -23,6 +26,31 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
+
+  final _favBox = Hive.box('fav_box');
+
+  Future<void> _createFav(Map<String , dynamic> addFav) async {
+    await _favBox.add(addFav);
+    getFavorites();
+  }
+
+  getFavorites(){
+    final favData = _favBox.keys.map((key){
+      final item = _favBox.get(key);
+      return{
+        "key" : key,
+        "id" :"id"
+      };
+    }).toList();
+
+    favor = favData.toList();
+    ids = favor.map((item) => item['id']).toList();
+    setState(() {
+
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     bool selected = false;
@@ -64,9 +92,41 @@ class _ProductCardState extends State<ProductCard> {
                   Positioned(
                     right: 10,
                     top: 10,
+                    // Consumer<FavoritesNotifier>(
+                    //     builder: (context . favoritesNotifier , child){
+                    // return GestureDetector(
+                    // onTap: () async{
+                    // if(ids.contains(widget.id)){
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesPage()));
+                    // } else {
+                    // _createFav({
+                    // "id": widget.id,
+                    // "name": widget.name,
+                    // "category": widget.category,
+                    // "price": widget.price,
+                    // "imageUrl": widget.image
+                    // });
+                    // }
+                    // },
+                    // child: ids.contains(widget.id)? Icon(AntDesign.heart) : Icon(AntDesign.hearto),
+                    // ),
+                    // }
+                    // ),
                     child: GestureDetector(
-                      onTap: null,
-                      child: Icon(MaterialCommunityIcons.heart_outline , color: Color(0xFFFE9900),),
+                      onTap: () async{
+                        if(ids.contains(widget.id)){
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesPage()));
+                        } else {
+                          _createFav({
+                            "id": widget.id,
+                            "name": widget.name,
+                            "category": widget.category,
+                            "price": widget.price,
+                            "imageUrl": widget.image
+                          });
+                        }
+                    },
+                      child: ids.contains(widget.id)? Icon(AntDesign.heart) : Icon(AntDesign.hearto),
                     ),
                   ),
                 ],
