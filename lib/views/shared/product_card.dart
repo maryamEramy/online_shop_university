@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
+import 'package:uni_online_shop/controllers/favorites_provider.dart';
 import 'package:uni_online_shop/models/constants.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 import 'package:uni_online_shop/views/ui/favorites_page.dart';
@@ -26,33 +28,15 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-
   final _favBox = Hive.box('fav_box');
-
-  Future<void> _createFav(Map<String , dynamic> addFav) async {
-    await _favBox.add(addFav);
-    getFavorites();
-  }
-
-  getFavorites(){
-    final favData = _favBox.keys.map((key){
-      final item = _favBox.get(key);
-      return{
-        "key" : key,
-        "id" :"id"
-      };
-    }).toList();
-
-    favor = favData.toList();
-    ids = favor.map((item) => item['id']).toList();
-    setState(() {
-
-    });
-  }
-
 
   @override
   Widget build(BuildContext context) {
+    var favoritesNotifier = Provider.of<FavoritesNotifier>(
+      context,
+      listen: true,
+    );
+    favoritesNotifier.getFavorites();
     bool selected = false;
     return Padding(
       padding: EdgeInsets.fromLTRB(8, 0, 10, 0),
@@ -113,20 +97,31 @@ class _ProductCardState extends State<ProductCard> {
                     // }
                     // ),
                     child: GestureDetector(
-                      onTap: () async{
-                        if(ids.contains(widget.id)){
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesPage()));
+                      onTap: () async {
+                        if (favoritesNotifier.ids.contains(widget.id)) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FavoritesPage(),
+                            ),
+                          );
                         } else {
-                          _createFav({
+                          favoritesNotifier.createFav({
                             "id": widget.id,
                             "name": widget.name,
                             "category": widget.category,
                             "price": widget.price,
-                            "imageUrl": widget.image
+                            "imageUrl": widget.image,
                           });
                         }
-                    },
-                      child: ids.contains(widget.id)? Icon(AntDesign.heart) : Icon(AntDesign.hearto),
+                        setState(() {
+
+                        });
+                      },
+                      child:
+                          favoritesNotifier.ids.contains(widget.id)
+                              ? const Icon(AntDesign.heart)
+                              : const Icon(AntDesign.hearto),
                     ),
                   ),
                 ],
@@ -145,7 +140,7 @@ class _ProductCardState extends State<ProductCard> {
                         1.1,
                       ),
                     ),
-                    SizedBox(height: 4,),
+                    SizedBox(height: 4),
                     Text(
                       widget.category,
                       style: appstyleWithHt(
@@ -158,7 +153,7 @@ class _ProductCardState extends State<ProductCard> {
                   ],
                 ),
               ),
-              SizedBox(height: 8,),
+              SizedBox(height: 8),
               Padding(
                 padding: EdgeInsets.only(left: 8, right: 8),
                 child: Row(
@@ -185,7 +180,9 @@ class _ProductCardState extends State<ProductCard> {
                           selectedColor: Colors.transparent,
                           shadowColor: Colors.transparent,
                           surfaceTintColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(200)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(200),
+                          ),
                           label: Container(
                             width: 24,
                             height: 24,

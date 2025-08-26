@@ -46,9 +46,7 @@ class _ProductPageState extends State<ProductPage> {
     await _cartBox.add(newCart);
   }
 
-  Future<void> _createFav(Map<String, dynamic> addFav) async {
-    await _favBox.add(addFav);
-  }
+
 
   @override
   void initState() {
@@ -155,7 +153,7 @@ class _ProductPageState extends State<ProductPage> {
                                                     ),
                                                   );
                                                 } else {
-                                                  _createFav({
+                                                  favoritesNotifier.createFav({
                                                     "id": sneaker.id,
                                                     "name": sneaker.name,
                                                     "category":
