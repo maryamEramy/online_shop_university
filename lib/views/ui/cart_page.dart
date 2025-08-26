@@ -3,35 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
+import 'package:uni_online_shop/controllers/cart_provider.dart';
 import 'package:uni_online_shop/views/shared/checkout_btn.dart';
 import '../shared/appstyle.dart';
 
-class CartPage extends StatelessWidget {
+class CartPage extends StatefulWidget {
   CartPage({super.key});
 
+  @override
+  State<CartPage> createState() => _CartPageState();
+}
+
+class _CartPageState extends State<CartPage> {
   final _cartBox = Hive.box('cart_box');
+  List<dynamic> cart = [];
+
+  // @override
+  // void initState() {
+  //   getCart();
+  //   super.initState();
+  // }
+
+  _deleteCart(int key) async {
+    await _cartBox.delete(key);
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    List<dynamic> cart = [];
-
-    final cartDate = _cartBox.keys.map((key){
-      final item = _cartBox.get(key);
-      return {
-        "key": key,
-        "id": item['id'],
-        "category": item['category'],
-        "name": item['name'],
-        "imageUrl": item['imageUrl'],
-        "price": item['price'],
-        "sizes": item['sizes'],
-        "qty": item['qty'],
-      };
-    }).toList();
-
-    cart = cartDate.reversed.toList();
-
+    var cartProvider = Provider.of<CartProvider>(context);
+    cartProvider.getCart();
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: Padding(
