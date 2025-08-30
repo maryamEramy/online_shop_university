@@ -1,13 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
-import 'package:uni_online_shop/services/helper.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 
-import '../../models/sneakers_model.dart';
 import '../shared/home_widget.dart';
 
 class HomePage extends StatefulWidget {
