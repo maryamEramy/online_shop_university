@@ -4,13 +4,13 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
+import 'package:uni_online_shop/controllers/cart_provider.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/services/helper.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 import 'package:uni_online_shop/views/ui/favorites_page.dart';
 
 import '../../controllers/favorites_provider.dart';
-import '../../models/constants.dart';
 import '../../models/sneakers_model.dart';
 import '../shared/checkout_btn.dart';
 import 'cart_page.dart';
@@ -27,41 +27,27 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
-  final _cartBox = Hive.box('cart_box');
-  final _favBox = Hive.box('fav_box');
 
-  late Future<Sneakers> _sneakers;
-
-  void getShoes() {
-    if (widget.category == "men's Running") {
-      _sneakers = Helper().getMaleSneakerById(widget.id);
-    } else if (widget.category == "female's Running") {
-      _sneakers = Helper().getFemaleSneakerById(widget.id);
-    } else {
-      _sneakers = Helper().getKidsSneakerById(widget.id);
-    }
-  }
-
-  Future<void> _createCart(Map<String, dynamic> newCart) async {
-    await _cartBox.add(newCart);
-  }
-
-
-
-  @override
-  void initState() {
-    super.initState();
-    getShoes();
-  }
+  // final _favBox = Hive.box('fav_box');
+  // Future<void> _createCart(Map<String, dynamic> newCart) async {
+  //   await _cartBox.add(newCart);
+  // }
 
   @override
   Widget build(BuildContext context) {
+
+    var productNotifier = Provider.of<ProductNotifier>(context);
+    productNotifier.getShoes(widget.category, widget.id);
+
+    var cartProvider = Provider.of<CartProvider>(context);
+
     var favoritesNotifier = Provider.of<FavoritesNotifier>(context , listen: true);
     favoritesNotifier.getFavorites();
+
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: FutureBuilder<Sneakers>(
-        future: _sneakers,
+        future: productNotifier.sneakers,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator();
