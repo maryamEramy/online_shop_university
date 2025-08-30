@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/views/shared/category_btn.dart';
 import '../../models/sneakers_model.dart';
 import '../../services/helper.dart';
@@ -25,28 +27,9 @@ class _ProductByCategoryState extends State<ProductByCategory>
 
   );
 
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
-
-  void getMale() {
-    _male = Helper().getMaleSneaker();
-  }
-
-  void getFemale() {
-    _female = Helper().getFemaleSneaker();
-  }
-
-  void getKids() {
-    _kids = Helper().getKidsSneaker();
-  }
-
   @override
   void initState() {
     super.initState();
-    getMale();
-    getFemale();
-    getKids();
   }
 
   List<String> brand =[
@@ -60,6 +43,10 @@ class _ProductByCategoryState extends State<ProductByCategory>
 
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
+    productNotifier.getMale();
+    productNotifier.getFemale();
+    productNotifier.getKids();
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: SizedBox(
@@ -130,9 +117,9 @@ class _ProductByCategoryState extends State<ProductByCategory>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    LatestShoes(gender: _male),
-                    LatestShoes(gender: _female),
-                    LatestShoes(gender: _kids),
+                    LatestShoes(gender: productNotifier.male),
+                    LatestShoes(gender: productNotifier.female),
+                    LatestShoes(gender: productNotifier.kids),
                   ],
                 ),
               ),
