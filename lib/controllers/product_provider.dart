@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
+import '../models/sneakers_model.dart';
+import '../services/helper.dart';
+
 class ProductNotifier extends ChangeNotifier {
   int _activepage = 0;
   List<dynamic> _shoeSizes = [];
@@ -34,4 +37,21 @@ class ProductNotifier extends ChangeNotifier {
     _sizes = newSizes;
     notifyListeners();
   }
+
+  late Future<List<Sneakers>> male;
+  late Future<List<Sneakers>> female;
+  late Future<List<Sneakers>> kids;
+
+  void getMale() {
+    male = Helper().getMaleSneaker();
+  }
+
+  void getFemale() {
+    female = Helper().getFemaleSneaker();
+  }
+
+  void getKids() {
+    kids = Helper().getKidsSneaker();
+  }
+
 }

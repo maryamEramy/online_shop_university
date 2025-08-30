@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
+import 'package:uni_online_shop/controllers/favorites_provider.dart';
+import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/services/helper.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 
@@ -19,36 +22,16 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     length: 3,
     vsync: this,
   );
-  final _favBox = Hive.box('fav_box');
 
-  late Future<List<Sneakers>> _male;
-  late Future<List<Sneakers>> _female;
-  late Future<List<Sneakers>> _kids;
-
-  void getMale() {
-    _male = Helper().getMaleSneaker();
-  }
-
-  void getFemale() {
-    _female = Helper().getFemaleSneaker();
-  }
-
-  void getKids() {
-    _kids = Helper().getKidsSneaker();
-  }
-
-
-
-  @override
-  void initState() {
-    super.initState();
-    getMale();
-    getFemale();
-    getKids();
-  }
 
   @override
   Widget build(BuildContext context) {
+    var productNotifier = Provider.of<ProductNotifier>(context);
+    productNotifier.getMale();
+    productNotifier.getFemale();
+    productNotifier.getKids();
+    var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
+    favoritesNotifier.getFavorites();
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: SizedBox(
@@ -107,9 +90,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    HomeWidget(persona: _male, tabIndex: 0,),
-                    HomeWidget(persona: _female, tabIndex: 1,),
-                    HomeWidget(persona: _kids, tabIndex: 2,),
+                    HomeWidget(persona: productNotifier.male, tabIndex: 0,),
+                    HomeWidget(persona: productNotifier.female, tabIndex: 1,),
+                    HomeWidget(persona: productNotifier.kids, tabIndex: 2,),
                   ],
                 ),
               ),
