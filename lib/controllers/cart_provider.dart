@@ -11,6 +11,12 @@ class CartProvider with ChangeNotifier{
     notifyListeners();
   }
 
+  Future<void> addCart(Map<String, dynamic> newCart) async {
+    await _cartBox.add(newCart);
+    getCart(); // آپدیت لیست بعد از اضافه شدن
+    notifyListeners();
+  }
+
   getCart(){
     final cartDate = _cartBox.keys.map((key){
       final item = _cartBox.get(key);

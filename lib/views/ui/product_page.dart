@@ -28,6 +28,13 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   final PageController pageController = PageController();
 
+
+
+  // final _cartBox = Hive.box('cart_box');
+  // Future<void> _createCart(Map<String, dynamic> newCart) async {
+  //   await _cartBox.add(newCart);
+  // }
+  //
   // final _favBox = Hive.box('fav_box');
   // Future<void> _createCart(Map<String, dynamic> newCart) async {
   //   await _cartBox.add(newCart);
@@ -475,7 +482,7 @@ class _ProductPageState extends State<ProductPage> {
                                             padding: EdgeInsets.only(top: 12),
                                             child: CheckoutButton(
                                               onTap: () async {
-                                                _createCart({
+                                                await cartProvider.addCart({
                                                   "id": sneaker.id,
                                                   "name": sneaker.name,
                                                   "category": sneaker.category,
