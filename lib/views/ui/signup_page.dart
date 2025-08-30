@@ -5,6 +5,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
 
 import '../../controllers/constant.dart';
+import '../../services/auth_service.dart';
 import '../shared/roundedButton.dart';
 
 class SignupPage extends StatefulWidget {
