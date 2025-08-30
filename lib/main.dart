@@ -6,6 +6,8 @@ import 'package:uni_online_shop/controllers/main_page_provider.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
 
+import 'controllers/cart_provider.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +21,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => MainPageNotifier()),
         ChangeNotifierProvider(create: (context) => ProductNotifier()),
         ChangeNotifierProvider(create: (context) => FavoritesNotifier()),
-        // ChangeNotifierProvider(create: (context) => CartProvider()),
+        ChangeNotifierProvider(create: (context) => CartProvider()),
       ],
       child: const MyApp(),
     ),

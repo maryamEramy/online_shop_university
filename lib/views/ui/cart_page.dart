@@ -6,6 +6,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/cart_provider.dart';
 import 'package:uni_online_shop/views/shared/checkout_btn.dart';
+import 'package:uni_online_shop/views/ui/main_page.dart';
 import '../shared/appstyle.dart';
 
 class CartPage extends StatefulWidget {
@@ -16,18 +17,7 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  final _cartBox = Hive.box('cart_box');
-  List<dynamic> cart = [];
 
-  // @override
-  // void initState() {
-  //   getCart();
-  //   super.initState();
-  // }
-
-  _deleteCart(int key) async {
-    await _cartBox.delete(key);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +52,9 @@ class _CartPageState extends State<CartPage> {
                 // height: MediaQuery.of(context).size.height * 0.65,
                 child: ListView.builder(
                   padding: EdgeInsets.zero,
-                  itemCount: cart.length,
+                  itemCount: cartProvider.cart.length,
                   itemBuilder: (context, index) {
-                    final data = cart[index];
+                    final data = cartProvider.cart[index];
                     return Padding(
                       padding: EdgeInsets.all(8),
                       child: ClipRRect(
@@ -76,7 +66,10 @@ class _CartPageState extends State<CartPage> {
                             children: [
                               SlidableAction(
                                 flex: 1,
-                                onPressed: (context) {},
+                                onPressed: (context) {
+                                  cartProvider.deleteCart(data['key']);
+                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
+                                },
                                 backgroundColor: Color(0xFF000000),
                                 foregroundColor: Colors.white,
                                 icon: Icons.delete,

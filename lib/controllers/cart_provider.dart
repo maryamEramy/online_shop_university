@@ -28,6 +28,10 @@ class CartProvider with ChangeNotifier{
     _cart = cartDate.reversed.toList();
   }
 
+  Future<void>deleteCart(int key) async {
+    await _cartBox.delete(key);
+  }
+
 
   int _counter =0;
   int get counter => _counter;

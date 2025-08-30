@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:uni_online_shop/services/helper.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 
@@ -18,6 +19,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     length: 3,
     vsync: this,
   );
+  final _favBox = Hive.box('fav_box');
 
   late Future<List<Sneakers>> _male;
   late Future<List<Sneakers>> _female;
@@ -34,6 +36,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void getKids() {
     _kids = Helper().getKidsSneaker();
   }
+
+
 
   @override
   void initState() {
