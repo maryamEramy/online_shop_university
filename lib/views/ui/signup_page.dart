@@ -163,7 +163,7 @@ class _SignupPageState extends State<SignupPage> {
                       }
                     }
                     print('*********************************************************${_nameController.text}');
-                  },
+                  }, textColor: Colors.white70,
                 ),
                 SizedBox(height: MediaQuery.of(context).viewInsets.bottom > 0 ?
                 MediaQuery.of(context).viewInsets.bottom + 20 :

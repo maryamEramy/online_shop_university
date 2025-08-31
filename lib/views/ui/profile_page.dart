@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_online_shop/controllers/image_path.dart';
+import 'package:uni_online_shop/views/shared/roundedButton.dart';
+import 'package:uni_online_shop/views/ui/cart_page.dart';
+import 'package:uni_online_shop/views/ui/favorites_page.dart';
 import 'package:uni_online_shop/views/ui/registration_page.dart';
 import 'package:uni_online_shop/views/ui/signup_page.dart';
 import '../shared/appstyle.dart';
@@ -48,7 +51,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     Column(
                       children: [
                         SizedBox(height: 90),
-                        ProfileWidget(user: user)
+                        ProfileWidget(user: user),
+                        SizedBox(height: 90),
+                        RoundedButton(title: "Favorites", color: Colors.white70, onPressed: (){
+                          Navigator.push(context,  MaterialPageRoute(builder: (context) => FavoritesPage()));
+                        }, textColor: Colors.black,),
+                        RoundedButton(title: "Your Basket", color: Colors.white70, onPressed: (){
+                          Navigator.push(context,  MaterialPageRoute(builder: (context) => CartPage()));
+                        }, textColor: Colors.black,)
                       ],
                     ),
                   ],

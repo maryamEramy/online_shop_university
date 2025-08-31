@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
-import 'package:uni_online_shop/controllers/image_path.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 
-import '../shared/categories.dart';
 import '../shared/home_widget.dart';
 import '../shared/search_box.dart';
-import '../shared/vertical_image_text.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   late final TabController _tabController = TabController(
-    length: 3,
+    length: 14,
     vsync: this,
   );
 
@@ -27,9 +24,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     var productNotifier = Provider.of<ProductNotifier>(context);
-    productNotifier.getMale();
-    productNotifier.getFemale();
-    productNotifier.getKids();
+    productNotifier.getProducts("mens-shoes");
+    productNotifier.getProducts("beauty");
+    productNotifier.getProducts("fragrances");
+    productNotifier.getProducts("furniture");
+    productNotifier.getProducts("groceries");
+    productNotifier.getProducts("laptops");
+    productNotifier.getProducts("mens-shirts");
+    productNotifier.getProducts("mens-shoes");
+    productNotifier.getProducts("mens-watches");
+    productNotifier.getProducts("home-decoration");
+    productNotifier.getProducts("kitchen-accessories");
+    productNotifier.getProducts("smartphones");
+    productNotifier.getProducts("motorcycle");
+    productNotifier.getProducts("skin-care");
+
+
+    // productNotifier.getMale();
+    // productNotifier.getFemale();
+    // productNotifier.getKids();
     var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
     favoritesNotifier.getFavorites();
     return Scaffold(
@@ -62,9 +75,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     ),
                     SearchBox(text: 'Search'),
                     SizedBox(height: 16,),
-                    Text('Categories'),
-                    SizedBox(height: 8,),
-                    Categories(),
+                    // Text('Categories'),
+                    // SizedBox(height: 8,),
+                    // Categories(),
                     TabBar(
                       tabAlignment: TabAlignment.start,
                       indicatorSize: TabBarIndicatorSize.label,
@@ -75,9 +88,20 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       labelStyle: appstyle(20, Colors.white, FontWeight.w500),
                       unselectedLabelColor: Colors.grey,
                       tabs: const [
-                        Tab(text: "Men Shoes"),
-                        Tab(text: "Women Shoes"),
-                        Tab(text: "Kids Shoes"),
+                        Tab(text: "mens-shoes"),
+                        Tab(text: "beauty"),
+                        Tab(text: "fragrances"),
+                        Tab(text: "furniture"),
+                        Tab(text: "groceries"),
+                        Tab(text: "laptops"),
+                        Tab(text: "mens-shirts"),
+                        Tab(text: "mens-shoes"),
+                        Tab(text: "mens-watches"),
+                        Tab(text: "home-decoration"),
+                        Tab(text: "kitchen-accessories"),
+                        Tab(text: "smartphones"),
+                        Tab(text: "motorcycle"),
+                        Tab(text: "skin-care"),
                       ],
                     ),
                   ],
@@ -90,12 +114,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 padding: const EdgeInsets.only(left: 12),
                 child: TabBarView(
                   controller: _tabController,
-                  children: [
-                    HomeWidget(persona: productNotifier.male, tabIndex: 0,),
-                    HomeWidget(persona: productNotifier.female, tabIndex: 1,),
-                    HomeWidget(persona: productNotifier.kids, tabIndex: 2,),
+                  children: const [
+                    HomeWidget(category: "mens-shoes", tabIndex: 0),
+                    HomeWidget(category: "beauty", tabIndex: 1),
+                    HomeWidget(category: "fragrances", tabIndex: 2),
+                    HomeWidget(category: "furniture", tabIndex: 3),
+                    HomeWidget(category: "groceries", tabIndex: 4),
+                    HomeWidget(category: "laptops", tabIndex: 5),
+                    HomeWidget(category: "mens-shirts", tabIndex: 6),
+                    HomeWidget(category: "mens-shoes", tabIndex: 7),
+                    HomeWidget(category: "mens-watches", tabIndex: 8),
+                    HomeWidget(category: "home-decoration", tabIndex: 9),
+                    HomeWidget(category: "kitchen-accessories", tabIndex: 10),
+                    HomeWidget(category: "smartphones", tabIndex: 11),
+                    HomeWidget(category: "motorcycle", tabIndex: 12),
+                    HomeWidget(category: "skin-care", tabIndex: 13),
                   ],
-                ),
+                )
+
               ),
             ),
           ],

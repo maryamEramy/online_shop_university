@@ -49,7 +49,7 @@ class _Registration_pageState extends State<Registration_page>
               color: Colors.purple[200]!,
               onPressed: () {
                 Navigator.push(context,  MaterialPageRoute(builder: (context) => LoginPage()));
-              },
+              }, textColor: Colors.white70,
             ),
             SizedBox(height: 8,),
             RoundedButton(
@@ -57,7 +57,7 @@ class _Registration_pageState extends State<Registration_page>
               onPressed: () {
                 Navigator.push(context,  MaterialPageRoute(builder: (context) => SignupPage()));
               },
-              title: 'Signup',
+              title: 'Signup', textColor: Colors.white70,
             ),
           ],
         ),

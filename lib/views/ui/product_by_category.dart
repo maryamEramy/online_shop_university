@@ -44,9 +44,20 @@ class _ProductByCategoryState extends State<ProductByCategory>
   @override
   Widget build(BuildContext context) {
     var productNotifier = Provider.of<ProductNotifier>(context);
-    productNotifier.getMale();
-    productNotifier.getFemale();
-    productNotifier.getKids();
+    productNotifier.getProducts("mens-shoes");
+    productNotifier.getProducts("beauty");
+    productNotifier.getProducts("fragrances");
+    productNotifier.getProducts("furniture");
+    productNotifier.getProducts("groceries");
+    productNotifier.getProducts("laptops");
+    productNotifier.getProducts("mens-shirts");
+    productNotifier.getProducts("mens-shoes");
+    productNotifier.getProducts("mens-watches");
+    productNotifier.getProducts("home-decoration");
+    productNotifier.getProducts("kitchen-accessories");
+    productNotifier.getProducts("smartphones");
+    productNotifier.getProducts("motorcycle");
+    productNotifier.getProducts("skin-care");
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: SizedBox(
@@ -97,33 +108,44 @@ class _ProductByCategoryState extends State<ProductByCategory>
                     labelStyle: appstyle(20, Colors.white, FontWeight.w500),
                     unselectedLabelColor: Colors.white54,
                     tabs: const [
-                      Tab(text: "Men Shoes"),
-                      Tab(text: "Women Shoes"),
-                      Tab(text: "Kids Shoes"),
+                      Tab(text: "mens-shoes"),
+                      Tab(text: "beauty"),
+                      Tab(text: "fragrances"),
+                      Tab(text: "furniture"),
+                      Tab(text: "groceries"),
+                      Tab(text: "laptops"),
+                      Tab(text: "mens-shirts"),
+                      Tab(text: "mens-shoes"),
+                      Tab(text: "mens-watches"),
+                      Tab(text: "home-decoration"),
+                      Tab(text: "kitchen-accessories"),
+                      Tab(text: "smartphones"),
+                      Tab(text: "motorcycle"),
+                      Tab(text: "skin-care"),
                     ],
                   ),
                 ],
               ),
             ),
 
-            Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.175,
-                left: 16,
-                right: 16,
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    LatestShoes(gender: productNotifier.male),
-                    LatestShoes(gender: productNotifier.female),
-                    LatestShoes(gender: productNotifier.kids),
-                  ],
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(
+            //     top: MediaQuery.of(context).size.height * 0.175,
+            //     left: 16,
+            //     right: 16,
+            //   ),
+            //   child: ClipRRect(
+            //     borderRadius: BorderRadius.circular(16),
+            //     child: TabBarView(
+            //       controller: _tabController,
+            //       children: [
+            //         LatestShoes(gender: productNotifier.male),
+            //         LatestShoes(gender: productNotifier.female),
+            //         LatestShoes(gender: productNotifier.kids),
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
