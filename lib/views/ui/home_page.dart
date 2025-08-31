@@ -20,31 +20,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     vsync: this,
   );
 
+  @override
+  void initState() {
+    super.initState();
+
+    final productNotifier = Provider.of<ProductNotifier>(context, listen: false);
+    final favoritesNotifier = Provider.of<FavoritesNotifier>(context, listen: false);
+
+    List<String> categories = [
+      "mens-shoes",
+      "beauty",
+      "fragrances",
+      "furniture",
+      "groceries",
+      "laptops",
+      "mens-shirts",
+      "mens-shoes",
+      "mens-watches",
+      "home-decoration",
+      "kitchen-accessories",
+      "smartphones",
+      "motorcycle",
+      "skin-care",
+    ];
+
+    for (var category in categories) {
+      productNotifier.getProducts(category);
+    }
+    favoritesNotifier.getFavorites();
+  }
 
   @override
   Widget build(BuildContext context) {
-    var productNotifier = Provider.of<ProductNotifier>(context);
-    productNotifier.getProducts("mens-shoes");
-    productNotifier.getProducts("beauty");
-    productNotifier.getProducts("fragrances");
-    productNotifier.getProducts("furniture");
-    productNotifier.getProducts("groceries");
-    productNotifier.getProducts("laptops");
-    productNotifier.getProducts("mens-shirts");
-    productNotifier.getProducts("mens-shoes");
-    productNotifier.getProducts("mens-watches");
-    productNotifier.getProducts("home-decoration");
-    productNotifier.getProducts("kitchen-accessories");
-    productNotifier.getProducts("smartphones");
-    productNotifier.getProducts("motorcycle");
-    productNotifier.getProducts("skin-care");
-
-
-    // productNotifier.getMale();
-    // productNotifier.getFemale();
-    // productNotifier.getKids();
-    var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
-    favoritesNotifier.getFavorites();
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
       body: SingleChildScrollView(
@@ -52,7 +59,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           children: [
             Container(
               padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
-              // height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/logo/top_of_screen.png"),
@@ -74,17 +80,15 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                       ),
                     ),
                     SearchBox(text: 'Search'),
-                    SizedBox(height: 16,),
-                    // Text('Categories'),
-                    // SizedBox(height: 8,),
-                    // Categories(),
+                    const SizedBox(height: 16),
                     TabBar(
                       tabAlignment: TabAlignment.start,
                       indicatorSize: TabBarIndicatorSize.label,
                       indicatorColor: Colors.transparent,
                       controller: _tabController,
                       isScrollable: true,
-                      labelColor: Colors.black87,dividerColor: Colors.grey[100],
+                      labelColor: Colors.black87,
+                      dividerColor: Colors.grey,
                       labelStyle: appstyle(20, Colors.white, FontWeight.w500),
                       unselectedLabelColor: Colors.grey,
                       tabs: const [
@@ -110,28 +114,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: Container(
-                padding: const EdgeInsets.only(left: 12),
-                child: TabBarView(
-                  controller: _tabController,
-                  children: const [
-                    HomeWidget(category: "mens-shoes", tabIndex: 0),
-                    HomeWidget(category: "beauty", tabIndex: 1),
-                    HomeWidget(category: "fragrances", tabIndex: 2),
-                    HomeWidget(category: "furniture", tabIndex: 3),
-                    HomeWidget(category: "groceries", tabIndex: 4),
-                    HomeWidget(category: "laptops", tabIndex: 5),
-                    HomeWidget(category: "mens-shirts", tabIndex: 6),
-                    HomeWidget(category: "mens-shoes", tabIndex: 7),
-                    HomeWidget(category: "mens-watches", tabIndex: 8),
-                    HomeWidget(category: "home-decoration", tabIndex: 9),
-                    HomeWidget(category: "kitchen-accessories", tabIndex: 10),
-                    HomeWidget(category: "smartphones", tabIndex: 11),
-                    HomeWidget(category: "motorcycle", tabIndex: 12),
-                    HomeWidget(category: "skin-care", tabIndex: 13),
-                  ],
-                )
-
+              child: TabBarView(
+                controller: _tabController,
+                children: const [
+                  HomeWidget(category: "mens-shoes", tabIndex: 0),
+                  HomeWidget(category: "beauty", tabIndex: 1),
+                  HomeWidget(category: "fragrances", tabIndex: 2),
+                  HomeWidget(category: "furniture", tabIndex: 3),
+                  HomeWidget(category: "groceries", tabIndex: 4),
+                  HomeWidget(category: "laptops", tabIndex: 5),
+                  HomeWidget(category: "mens-shirts", tabIndex: 6),
+                  HomeWidget(category: "mens-shoes", tabIndex: 7),
+                  HomeWidget(category: "mens-watches", tabIndex: 8),
+                  HomeWidget(category: "home-decoration", tabIndex: 9),
+                  HomeWidget(category: "kitchen-accessories", tabIndex: 10),
+                  HomeWidget(category: "smartphones", tabIndex: 11),
+                  HomeWidget(category: "motorcycle", tabIndex: 12),
+                  HomeWidget(category: "skin-care", tabIndex: 13),
+                ],
               ),
             ),
           ],
@@ -140,6 +140,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 }
+
 
 
 

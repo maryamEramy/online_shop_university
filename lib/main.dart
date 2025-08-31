@@ -205,5 +205,5 @@ class MyApp extends StatelessWidget {
 //         ),
 //       ),
 //     );
-//   }
+//   }        future: productNotifier.product,
 // }
