@@ -79,7 +79,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         1.75,
                       ),
                     ),
-                    SearchBox(text: 'Search'),
                     const SizedBox(height: 16),
                     TabBar(
                       tabAlignment: TabAlignment.start,

@@ -4,6 +4,7 @@ import 'package:uni_online_shop/controllers/main_page_provider.dart';
 import 'package:uni_online_shop/views/ui/cart_page.dart';
 import 'package:uni_online_shop/views/ui/home_page.dart';
 import 'package:uni_online_shop/views/ui/profile_page.dart';
+import 'package:uni_online_shop/views/ui/search_page.dart';
 import '../shared/bottom_nav.dart';
 import 'favorites_page.dart';
 
@@ -22,6 +23,7 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     pageList = [
       const HomePage(),
+      const SearchPage(),
       const FavoritesPage(),
       CartPage(),
       const ProfilePage(),

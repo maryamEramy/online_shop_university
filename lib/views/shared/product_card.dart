@@ -3,7 +3,6 @@ import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
-import 'package:uni_online_shop/models/constants.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 import 'package:uni_online_shop/views/ui/favorites_page.dart';
 
