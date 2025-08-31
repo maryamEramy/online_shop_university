@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
+import 'package:uni_online_shop/controllers/image_path.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 
+import '../shared/categories.dart';
 import '../shared/home_widget.dart';
+import '../shared/search_box.dart';
+import '../shared/vertical_image_text.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,13 +34,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     favoritesNotifier.getFavorites();
     return Scaffold(
       backgroundColor: const Color(0xFFE2E2E2),
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             Container(
               padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
-              height: MediaQuery.of(context).size.height,
+              // height: MediaQuery.of(context).size.height,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/logo/top_of_screen.png"),
@@ -57,7 +60,11 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                         1.75,
                       ),
                     ),
-                    SizedBox(height: 50,),
+                    SearchBox(text: 'Search'),
+                    SizedBox(height: 16,),
+                    Text('Categories'),
+                    SizedBox(height: 8,),
+                    Categories(),
                     TabBar(
                       tabAlignment: TabAlignment.start,
                       indicatorSize: TabBarIndicatorSize.label,
@@ -77,10 +84,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.25,
-              ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
               child: Container(
                 padding: const EdgeInsets.only(left: 12),
                 child: TabBarView(
@@ -99,5 +104,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 }
+
+
 
 

@@ -33,29 +33,29 @@ class BottomNavBar extends StatelessWidget {
                       },
                       icon: mainPageNotifier.pageIndex == 0 ? Icons.home : Icons.home_outlined,
                     ),
+                    // BottomNavWidget(
+                    //   onTap: () {
+                    //     mainPageNotifier.pageIndex = 1;
+                    //   },
+                    //   icon: mainPageNotifier.pageIndex == 1 ? Icons.search : Icons.search_outlined,
+                    // ),
                     BottomNavWidget(
                       onTap: () {
                         mainPageNotifier.pageIndex = 1;
                       },
-                      icon: mainPageNotifier.pageIndex == 1 ? Icons.search : Icons.search_outlined,
+                      icon: mainPageNotifier.pageIndex == 1 ? Ionicons.heart : Ionicons.heart_circle_outline,
                     ),
                     BottomNavWidget(
                       onTap: () {
                         mainPageNotifier.pageIndex = 2;
                       },
-                      icon: mainPageNotifier.pageIndex == 2 ? Ionicons.heart : Ionicons.heart_circle_outline,
+                      icon: mainPageNotifier.pageIndex == 2 ? Icons.credit_card : Icons.credit_card_outlined,
                     ),
                     BottomNavWidget(
                       onTap: () {
                         mainPageNotifier.pageIndex = 3;
                       },
-                      icon: mainPageNotifier.pageIndex == 3 ? Icons.credit_card : Icons.credit_card_outlined,
-                    ),
-                    BottomNavWidget(
-                      onTap: () {
-                        mainPageNotifier.pageIndex = 4;
-                      },
-                      icon: mainPageNotifier.pageIndex == 4 ? Icons.person : Icons.person_outline,
+                      icon: mainPageNotifier.pageIndex == 3 ? Icons.person : Icons.person_outline,
                     ),
                   ],
                 ),
