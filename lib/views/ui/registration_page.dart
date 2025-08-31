@@ -6,15 +6,15 @@ import 'package:uni_online_shop/views/ui/signup_page.dart';
 
 import '../shared/roundedButton.dart';
 
-class WelcomeScreen extends StatefulWidget {
+class Registration_page extends StatefulWidget {
   static const String id = 'welcome_screen';
 
-  const WelcomeScreen({super.key});
+  const Registration_page({super.key});
   @override
-  State<WelcomeScreen> createState() => _WelcomeScreenState();
+  State<Registration_page> createState() => _Registration_pageState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen>
+class _Registration_pageState extends State<Registration_page>
     with SingleTickerProviderStateMixin {
   late AnimationController controller;
   late Animation animation;

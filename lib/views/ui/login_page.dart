@@ -9,8 +9,6 @@ import 'package:uni_online_shop/views/ui/main_page.dart';
 import '../../controllers/constant.dart';
 import '../../services/auth_service.dart';
 import '../shared/roundedButton.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   static const String id = 'login_screen';

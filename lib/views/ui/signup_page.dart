@@ -37,43 +37,15 @@ class _SignupPageState extends State<SignupPage> {
       backgroundColor: Colors.black12,
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
-        // Wrap the Padding with SingleChildScrollView
-        child: SingleChildScrollView( // <--- اضافه کردن SingleChildScrollView
-          // Optionally add padding here if you want space around the scrollable content
-          // padding: EdgeInsets.symmetric(horizontal: 24.0), // می توانید پدینگ را اینجا قرار دهید یا در Padding قبلی نگه دارید
-
+        child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              // برای اینکه محتوا حتی وقتی اسکرول دارد، در مرکز باشد،
-              // ارتفاع Column باید حداقل به اندازه ارتفاع صفحه باشد.
-              // می توان از MainAxisSize.min استفاده کرد و سپس Column را داخل Center قرار داد.
-              // یا با SizedBox ارتفاع را تنظیم کرد.
-              // در اینجا، برای فرم‌ها معمولا بهترین کار این است که به جای MainAxisAlignment.center در Column داخلی،
-              // از یک فضای خالی در ابتدا یا انتهای Column استفاده کنیم تا فرم در وسط قرار گیرد.
-              // اما فعلاً به همین صورت اصلی نگه می داریم و اگر باز هم مشکل بود، راه حل های دیگر را امتحان می کنیم.
-              mainAxisAlignment: MainAxisAlignment.center, // این ممکن است با SingleChildScrollView رفتار متفاوتی داشته باشد
-              mainAxisSize: MainAxisSize.min, // <--- این را اضافه کنید تا Column فقط به اندازه محتوایش فضا بگیرد
-
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                // اگر می خواهید لوگو همیشه در بالا ثابت باشد و فقط بقیه اسکرول بخورند،
-                // باید یک Column والد دیگر ایجاد کنید و لوگو را بالای SingleChildScrollView قرار دهید.
-                // اما اگر کل صفحه باید اسکرول بخورد، این ساختار فعلی درست است.
-                // در اینجا، Flexible باعث می شود لوگو سعی کند فضای خودش را کنترل کند.
-                // اما در یک SingleChildScrollView، Flexible تاثیر کمتری دارد.
-                // بهتر است از یک SizedBox ساده برای کنترل ارتفاع استفاده کنید یا نسبت تصویر را کنترل کنید.
-                SizedBox(height: 100), // <--- ارتفاع ثابت برای لوگو
-                Image.asset('images/logo.png'), // <--- خود Image.asset
-                // اگر می خواهید Hero Transition داشته باشید و لوگو جمع و جور شود، می توانید Hero را اطراف Image.asset بگذارید.
-                // Hero(
-                //   tag: 'logo',
-                //   child: SizedBox(
-                //     height: 100, // ارتفاع ثابت برای لوگو
-                //     child: Image.asset('images/logo.png'),
-                //   ),
-                // ),
-
+                SizedBox(height: 100),
                 DefaultTextStyle(
                   style: TextStyle(
                     fontWeight: FontWeight.w900,
@@ -85,7 +57,7 @@ class _SignupPageState extends State<SignupPage> {
                     animatedTexts: [TypewriterAnimatedText('Register....')],
                   ),
                 ),
-                SizedBox(height: 48.0), // <--- فاصله مناسب بعد از متن انیمیشنی
+                SizedBox(height: 48.0),
 
                 Form(
                   key: _formKey,
@@ -186,18 +158,16 @@ class _SignupPageState extends State<SignupPage> {
                         setState(() {
                           showSpinner = false;
                           errorOccurred = true;
-                          // مطمئن شوید که e.toString() دارای ] است قبل از split
                           errorMessage = e.toString().contains(']') ? e.toString().split('] ')[1] : e.toString();
                         });
                       }
                     }
-                    print('*********************************************************${_nameController.text}'); // .text را اضافه کنید
+                    print('*********************************************************${_nameController.text}');
                   },
                 ),
-                // برای ایجاد فضای اضافی در پایین صفحه هنگام اسکرول، به خصوص وقتی کیبورد باز است
                 SizedBox(height: MediaQuery.of(context).viewInsets.bottom > 0 ?
                 MediaQuery.of(context).viewInsets.bottom + 20 :
-                20), // فضای اضافی برای جلوگیری از پوشانده شدن دکمه توسط کیبورد
+                20),
               ],
             ),
           ),

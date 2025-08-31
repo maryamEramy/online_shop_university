@@ -6,6 +6,7 @@ import 'package:uni_online_shop/controllers/favorites_provider.dart';
 import 'package:uni_online_shop/controllers/main_page_provider.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
+import 'package:uni_online_shop/views/ui/registration_page.dart';
 
 import 'controllers/cart_provider.dart';
 
@@ -54,8 +55,9 @@ class MyApp extends StatelessWidget {
        return MaterialApp(
           debugShowCheckedModeBanner: false,
           // home: SplashScreen(),
-          home: MainPage(),
-        );
+          // home: MainPage(),
+         home: Registration_page(),
+       );
       },
     );
   }
