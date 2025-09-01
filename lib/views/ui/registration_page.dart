@@ -8,7 +8,7 @@ import 'package:uni_online_shop/views/ui/signup_page.dart';
 
 import '../shared/login_button.dart';
 import '../shared/roundedButton.dart';
-import '../shared/signin_button.dart';
+import '../shared/signup_button.dart';
 import '../shared/text_title_widget.dart';
 
 class Registration_page extends StatefulWidget {
@@ -40,7 +40,7 @@ class _Registration_pageState extends State<Registration_page>
             ),
             SizedBox(height: 40),
             LogInButton(),
-            SignInButton(),
+            SignUpButton(),
           ],
         ),
       ),

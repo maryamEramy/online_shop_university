@@ -3,9 +3,12 @@ import 'package:uni_online_shop/views/shared/roundedButton.dart';
 import '../../controllers/constant.dart';
 import '../ui/signup_page.dart';
 
-class SignInButton extends StatelessWidget {
-  const SignInButton({
+class SignUpButton extends StatelessWidget {
+  final VoidCallback? onPressed;
+  const SignUpButton({
     super.key,
+    this.onPressed,
+
   });
 
   @override
@@ -15,7 +18,8 @@ class SignInButton extends StatelessWidget {
       textColor: kSecondaryColor,
       color: kPrimaryColor,
       borderColor: kSecondaryColor,
-      onPressed: () {
+      onPressed:  onPressed ??
+              () {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => SignupPage()),
