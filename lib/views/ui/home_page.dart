@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import '../shared/body_ui.dart';
@@ -13,7 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  late final TabController _tabController = TabController(length: 14, vsync: this);
+  late final TabController _tabController = TabController(length: 13, vsync: this);
 
   static const _categories = <String>[
     "mens-shoes",
@@ -23,7 +24,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     "groceries",
     "laptops",
     "mens-shirts",
-    "mens-shoes",
     "mens-watches",
     "home-decoration",
     "kitchen-accessories",
@@ -35,7 +35,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    // خیلی مهم: بعد از اولین فریم صدا بزن تا markNeedsBuild during build نگیری
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final productNotifier = context.read<ProductNotifier>();
       final favoritesNotifier = context.read<FavoritesNotifier>();
@@ -51,6 +50,8 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return BodyUi(
       headerTitle: "Nozama",
       children: [
+        Text('Categories' , style: kMainTextStyle,),
+        const SizedBox(height: 8),
         CategoryTabBar(tabController: _tabController),
         const SizedBox(height: 8),
         Expanded(child: CategoryTabBarsView(tabController: _tabController)),

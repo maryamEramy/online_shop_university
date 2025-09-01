@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:uni_online_shop/controllers/constant.dart';
+import 'package:uni_online_shop/views/shared/text_title_widget.dart';
 import 'appstyle.dart';
+import 'divider_widget.dart';
 
 class BodyUi extends StatelessWidget {
-  const BodyUi({
-    super.key,
-    required this.children,
-    this.headerTitle,
-  });
+  const BodyUi({super.key, required this.children, this.headerTitle});
 
   final List<Widget> children;
   final String? headerTitle;
@@ -14,40 +13,20 @@ class BodyUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE2E2E2),
-      body: SafeArea(
+      backgroundColor: kPrimaryColor,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.fromLTRB(16, 20, 16, 12),
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/logo/top_of_screen.png"),
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (headerTitle != null)
-                    Text(
-                      headerTitle!,
-                      style: appstyleWithHt(40, Colors.white, FontWeight.bold, 1.75),
-                    ),
-                ],
-              ),
-            ),
-            // محتوا: حتما با Expanded تا فضای باقیمانده مدیریت شود
+            SizedBox(height: 40),
+            TextTitleWidget(text: headerTitle ?? "NOZAMA"),
+            DividerWidget(),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: children,
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: children,
               ),
             ),
           ],

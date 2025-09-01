@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'appstyle.dart';
+import 'package:uni_online_shop/controllers/constant.dart';
 import 'category_widget.dart';
 
 class CategoryTabBar extends StatelessWidget {
@@ -18,25 +18,23 @@ class CategoryTabBar extends StatelessWidget {
         indicatorColor: Colors.transparent,
         controller: _tabController,
         isScrollable: true,
-        labelColor: Colors.black87,
-        dividerColor: Colors.grey,
-        labelStyle: appstyle(16, Colors.black87, FontWeight.w500),
-        unselectedLabelColor: Colors.grey,
+        dividerColor: kPrimaryColor,
+        labelStyle: kRegularTextStyle,
+        unselectedLabelColor: kGrayColor,
         tabs: const [
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'mens-shoes'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'beauty'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'fragrances'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'furniture'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'groceries'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'laptops'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'mens-shirts'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'mens-shoes'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'mens-watches'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'home-decoration'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'kitchen-accessories'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'smartphones'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'motorcycle'),
-          CategoryWidget(categoryImage: 'assets/logo/C-book.png', categoryName: 'skin-care'),
+          CategoryWidget(categoryImage: kAppCategoryImages.mensShoes, categoryName: 'mens-shoes'),
+          CategoryWidget(categoryImage: kAppCategoryImages.beauty, categoryName: 'beauty'),
+          CategoryWidget(categoryImage: kAppCategoryImages.fragrances, categoryName: 'fragrances'),
+          CategoryWidget(categoryImage: kAppCategoryImages.furniture, categoryName: 'furniture'),
+          CategoryWidget(categoryImage: kAppCategoryImages.groceries, categoryName: 'groceries'),
+          CategoryWidget(categoryImage: kAppCategoryImages.laptops, categoryName: 'laptops'),
+          CategoryWidget(categoryImage: kAppCategoryImages.mensShirts, categoryName: 'mens-shirts'),
+          CategoryWidget(categoryImage: kAppCategoryImages.mensWatches, categoryName: 'mens-watches'),
+          CategoryWidget(categoryImage: kAppCategoryImages.homeDecoration, categoryName: 'home-decoration'),
+          CategoryWidget(categoryImage: kAppCategoryImages.kitchenAccessories, categoryName: 'kitchen-accessories'),
+          CategoryWidget(categoryImage: kAppCategoryImages.smartphones, categoryName: 'smartphones'),
+          CategoryWidget(categoryImage: kAppCategoryImages.motorcycle, categoryName: 'motorcycle'),
+          CategoryWidget(categoryImage: kAppCategoryImages.skincare, categoryName: 'skin-care'),
         ],
       ),
     );

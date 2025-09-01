@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color(0xFF353F54);
+const kPrimaryColor = Color(0xFF242C3B);
+const kLightPrimaryColor = Color(0xFF353F54);
 const kSecondaryColor = Color(0xFF37B6E9);
 const kGrayColor = Color(0xFFC5C5C5);
 const kWhiteColor = Color(0xFFFFFFFF);
@@ -45,6 +46,22 @@ class kAppIcons {
   static const String like = "${basePath}heart_cart.png";
 }
 
+class kAppCategoryImages {
+  static const String basePath = "assets/logo/";
+  static const String beauty = "${basePath}Beauty.png";
+  static const String fragrances = "${basePath}Fragrances.png";
+  static const String groceries = "${basePath}Groceries.png";
+  static const String furniture = "${basePath}Furniture.png";
+  static const String mensShoes = "${basePath}Mens.png";
+  static const String laptops = "${basePath}Laptops.png";
+  static const String mensShirts = "${basePath}Mens-Shirts.png";
+  static const String mensWatches = "${basePath}Mens-Watches.png";
+  static const String homeDecoration = "${basePath}Home-Decoration.png";
+  static const String skincare = "${basePath}skin-care.png";
+  static const String motorcycle = "${basePath}Motorcycle.png";
+  static const String smartphones = "${basePath}Smartphones.png";
+  static const String kitchenAccessories = "${basePath}KitchenAccessories.png";
+}
 
 
 
