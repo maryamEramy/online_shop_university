@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 const kPrimaryColor = Color(0xFF353F54);
 const kSecondaryColor = Color(0xFF37B6E9);
+const kGrayColor = Color(0xFFC5C5C5);
 const kWhiteColor = Color(0xFFFFFFFF);
+const kErrorColor = Color(0xFFF67070);
 
 
 
@@ -17,6 +19,18 @@ final kMainTextStyle = TextStyle(
   color: kWhiteColor,
   fontWeight: FontWeight.w700,
   fontSize: 18.0,
+);
+final kErrorTextStyle = TextStyle(
+  fontFamily: "Poppins",
+  color: kErrorColor,
+  fontWeight: FontWeight.w500,
+  fontSize: 14.0,
+);
+final kRegularTextStyle = TextStyle(
+  fontFamily: "Poppins",
+  color: kWhiteColor,
+  fontWeight: FontWeight.w200,
+  fontSize: 16.0,
 );
 
 
