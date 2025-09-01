@@ -38,14 +38,14 @@ class _ProductCardState extends State<ProductCard> {
     favoritesNotifier.getFavorites();
     bool selected = false;
     return Padding(
-      padding: EdgeInsets.fromLTRB(8, 0, 10, 0),
+      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
       //وقتی میخوایی عکسی یا ویجتی گوشه هاش گرد باشه => clipRRect
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
           padding: EdgeInsets.all(10),
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width * 0.6,
+          height: MediaQuery.of(context).size.height *0.5,
+          width: MediaQuery.of(context).size.width * 0.5,
           decoration: BoxDecoration(
             color: Colors.grey[100],
             boxShadow: [

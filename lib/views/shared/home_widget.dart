@@ -41,10 +41,10 @@ class HomeWidget extends StatelessWidget {
             children: [
               // لیست افقی بالا
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.4,
+                height: MediaQuery.of(context).size.height,
                 child: ListView.builder(
                   itemCount: products.length,
-                  scrollDirection: Axis.horizontal,
+                  scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     final product = products[index];
                     return GestureDetector(
@@ -72,54 +72,54 @@ class HomeWidget extends StatelessWidget {
               ),
 
               // بخش "Latest"
-              Padding(
-                padding: const EdgeInsets.fromLTRB(12, 20, 12, 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Latest in $category",
-                      style: appstyle(24, Colors.black, FontWeight.bold),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                ProductByCategory(tabIndex: tabIndex),
-                          ),
-                        );
-                      },
-                      child: Row(
-                        children: [
-                          Text(
-                            "Show All",
-                            style: appstyle(22, Colors.black, FontWeight.w500),
-                          ),
-                          const Icon(AntDesign.caretright, size: 20),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              // لیست افقی پایین
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.13,
-                child: ListView.builder(
-                  itemCount: products.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    final product = products[index];
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: NewShoes(imageUrl: product.imageUrl),
-                    );
-                  },
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.fromLTRB(12, 20, 12, 20),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       Text(
+              //         "Latest in $category",
+              //         style: appstyle(24, Colors.black, FontWeight.bold),
+              //       ),
+              //       GestureDetector(
+              //         onTap: () {
+              //           Navigator.push(
+              //             context,
+              //             MaterialPageRoute(
+              //               builder: (context) =>
+              //                   ProductByCategory(tabIndex: tabIndex),
+              //             ),
+              //           );
+              //         },
+              //         child: Row(
+              //           children: [
+              //             Text(
+              //               "Show All",
+              //               style: appstyle(22, Colors.black, FontWeight.w500),
+              //             ),
+              //             const Icon(AntDesign.caretright, size: 20),
+              //           ],
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              //
+              // // لیست افقی پایین
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height * 0.13,
+              //   child: ListView.builder(
+              //     itemCount: products.length,
+              //     scrollDirection: Axis.horizontal,
+              //     itemBuilder: (context, index) {
+              //       final product = products[index];
+              //       return Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: NewShoes(imageUrl: product.imageUrl),
+              //       );
+              //     },
+              //   ),
+              // ),
             ],
           );
         }

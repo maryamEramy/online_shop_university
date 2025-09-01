@@ -13,7 +13,7 @@ class CartProvider with ChangeNotifier{
 
   Future<void> addCart(Map<String, dynamic> newCart) async {
     await _cartBox.add(newCart);
-    getCart(); // آپدیت لیست بعد از اضافه شدن
+    getCart();
     notifyListeners();
   }
 

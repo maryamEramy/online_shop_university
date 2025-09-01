@@ -7,7 +7,7 @@ import '../../models/sneakers_model.dart';
 import '../../services/helper.dart';
 import '../shared/appstyle.dart';
 import '../shared/custom_spacer.dart';
-import '../shared/latest_shoes.dart';
+// import '../shared/latest_shoes.dart';
 
 class ProductByCategory extends StatefulWidget {
   const ProductByCategory({super.key, required this.tabIndex});

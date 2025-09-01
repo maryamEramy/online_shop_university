@@ -13,4 +13,9 @@ flutter_native_splash:
     image: assets/logo/splash_screen.png
     image_dark: assets/logo/splash_screen.png
 
-  web: false
+  web:
+    color: "#FFFFFF"
+    color_dark: "#272727"
+
+    image: assets/logo/splash_screen.png
+    image_dark: assets/logo/splash_screen.png
