@@ -4,9 +4,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/cart_provider.dart';
-import 'package:uni_online_shop/views/shared/checkout_btn.dart';
+import 'package:uni_online_shop/controllers/constant.dart';
+import 'package:uni_online_shop/views/shared/body_ui.dart';
+import 'package:uni_online_shop/views/shared/roundedButton.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
-import '../shared/appstyle.dart';
 
 class CartPage extends StatefulWidget {
   CartPage({super.key});
@@ -16,48 +17,25 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-
-
   @override
   Widget build(BuildContext context) {
     var cartProvider = Provider.of<CartProvider>(context);
     cartProvider.getCart();
-    return Scaffold(
-      backgroundColor: const Color(0xFFE2E2E2),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(AntDesign.close),
-                        ),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text("My Cart", style: appstyle(36, Colors.black, FontWeight.bold)),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: SizedBox(
-                // height: MediaQuery.of(context).size.height * 0.65,
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  itemCount: cartProvider.cart.length,
-                  itemBuilder: (context, index) {
-                    final data = cartProvider.cart[index];
-                    return Padding(
-                      padding: EdgeInsets.all(8),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.all(Radius.circular(12)),
+    return BodyUi(
+      headerTitle: "Your Basket",
+      children: [
+        Expanded(
+          child: Column(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: ListView.builder(
+                    itemCount: cartProvider.cart.length,
+                    itemBuilder: (context, index) {
+                      final data = cartProvider.cart[index];
+                      return SizedBox(
+                        height: 100,
                         child: Slidable(
                           key: const ValueKey(0),
                           endActionPane: ActionPane(
@@ -67,7 +45,12 @@ class _CartPageState extends State<CartPage> {
                                 flex: 1,
                                 onPressed: (context) {
                                   cartProvider.deleteCart(data['key']);
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MainPage(),
+                                    ),
+                                  );
                                 },
                                 backgroundColor: Color(0xFF000000),
                                 foregroundColor: Colors.white,
@@ -76,117 +59,131 @@ class _CartPageState extends State<CartPage> {
                               ),
                             ],
                           ),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height*0.16,
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.shade500,
-                                  spreadRadius: 5,
-                                  blurRadius: 0.3,
-                                  offset: Offset(0, 1),
-                                ),
-                              ],
+                          child: Card(
+                            color: kLightPrimaryColor,
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 8,
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
                               children: [
                                 Row(
                                   children: [
-                                    Container(
-                                      decoration: BoxDecoration(color: Colors.blue),
+                                    Padding(
                                       padding: EdgeInsets.all(12),
                                       child: CachedNetworkImage(
                                         imageUrl: data['imageUrl'],
-                                        // width: 70,
-                                        // height: 70,
+                                        width: 70,
+                                        height: 70,
                                         fit: BoxFit.fill,
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsets.only(top: 12, left: 20),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                      padding: EdgeInsets.only(
+                                        top: 12,
+                                        left: 20,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                          SizedBox(
+                                            width: 200,
+                                            child: Text(
+                                              data['name'],
+                                              style: kRegularTextStyle,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          SizedBox(height: 2),
+                                          Text(
+                                            data['category'],
+                                            style: kSecondTextStyle,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          SizedBox(height: 2),
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(data['name'],
-                                              style: appstyle(16, Colors.black, FontWeight.bold),
-                                              ),
-                                              Text(data['category'],
-                                              style: appstyle(14, Colors.grey, FontWeight.normal),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Text("Size",
-                                                    style: appstyle(14, Colors.black, FontWeight.normal),
-                                                  ),
-                                                  Text('${data['sizes']}',
-                                                    style: appstyle(14, Colors.black, FontWeight.normal),
-                                                  ),
-                                                ],
+                                              Text(
+                                                '${data['price']}',
+                                                style: kSecondTextStyle,
                                               ),
                                             ],
-                                          ),
-                                          Text(data['price'],
-                                            style: appstyle(14, Colors.black, FontWeight.normal),
                                           ),
                                         ],
                                       ),
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  children: [
-                                    Padding(padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.all(Radius.circular(16))
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(16),
                                       ),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          InkWell(
-                                            onTap: (){},
-                                            child: const Icon(AntDesign.minussquare,
-                                            size: 20,
-                                            color: Colors.grey,),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {},
+                                          child: const Icon(
+                                            AntDesign.minussquare,
+                                            size: 16,
+                                            color: kPrimaryColor,
                                           ),
-                                          Text(data['qty'].toString(),
-                                          style: appstyle(16, Colors.black, FontWeight.w600),),
-                                          InkWell(
-                                            onTap: (){},
-                                            child: const Icon(AntDesign.plussquare,
-                                              size: 20,
-                                              color: Colors.grey,),
-                                          ),
-                                        ],
-                                      ),
-                                    ),),
+                                        ),
+                                        Text(
+                                            data['qty'].toString(),
+                                            style: kSecondTextStyle.copyWith(color: kPrimaryColor)
+                                        ),
+                                        InkWell(
+                                          onTap: () {
 
-                                  ],
-                                )
+                                          },
+                                          child: const Icon(
+                                            AntDesign.plussquare,
+                                            size: 16,
+                                            color: kSecondaryColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                         ),
-                      ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: RoundedButton(
+                  title: 'Buy',
+                  color: kSecondaryColor,
+                  textColor: kWhiteColor,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MainPage()),
                     );
                   },
                 ),
               ),
-            ),
-            Align(alignment: Alignment.bottomCenter,
-            child: CheckoutButton(label: "Proceed to Checkout"),),
-          ],
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
