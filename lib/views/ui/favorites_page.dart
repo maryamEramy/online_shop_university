@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
+import 'package:uni_online_shop/views/shared/body_ui.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
+import '../../controllers/constant.dart';
 import '../shared/appstyle.dart';
 
 class FavoritesPage extends StatefulWidget {
@@ -20,47 +22,25 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
     favoritesNotifier.getAllData();
-    return Scaffold(
-      backgroundColor: const Color(0xFFE2E2E2),
-      body: SizedBox(
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: [
-            Container(
-              padding: const EdgeInsets.fromLTRB(16, 20, 0, 0),
-              height: MediaQuery.of(context).size.height * 0.4,
-              width: MediaQuery.of(context).size.width,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/logo/top_of_screen.png"),
-                  alignment: Alignment.topCenter,
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(8),
-                child: Text(
-                  'My Favorites',
-                  style: appstyle(36, Colors.black, FontWeight.bold),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8),
-              child: ListView.builder(
-                itemCount: favoritesNotifier.fav.length,
-                padding: EdgeInsets.only(top: 100),
-                itemBuilder: (BuildContext context, int index) {
-                  final shoe = favoritesNotifier.fav[index];
-                  return Padding(
-                    padding: EdgeInsets.all(8),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
-                      child: Container(
-                        height: MediaQuery.of(context).size.height * 0.11,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade500,
-                          boxShadow: [BoxShadow(color: Colors.black)],
+    return BodyUi(
+      headerTitle: "Wish List",
+      children: [
+        Expanded(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Stack(
+              children: [
+                ListView.builder(
+                  itemCount: favoritesNotifier.fav.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final shoe = favoritesNotifier.fav[index];
+                    return SizedBox(
+                      height: 100,
+                      child: Card(
+                        color: kLightPrimaryColor,
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 8,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -76,42 +56,62 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                     fit: BoxFit.fill,
                                   ),
                                 ),
-                                Padding(padding: EdgeInsets.only(top: 12 , left: 20),child: Column(
+                                Padding(padding: EdgeInsets.only(top: 12 , left: 20),
+                                  child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(shoe['name']),
-                                    SizedBox(height: 5,),
-                                    Text(shoe['category']),
-                                    SizedBox(height: 5,),
+                                    SizedBox(
+                                        width: 200,
+                                        child: Text(shoe['name'] , style: kRegularTextStyle,overflow: TextOverflow.ellipsis,)),
+                                    SizedBox(height: 2,),
+                                    Text(shoe['category'], style: kSecondTextStyle , overflow: TextOverflow.ellipsis,),
+                                    SizedBox(height: 2,),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text('${shoe['price']}'),
+                                        Text('${shoe['price']}' , style: kSecondTextStyle),
                                       ],
                                     )
                                   ],
                                 ),)
                               ],
                             ),
-                            Padding(padding: EdgeInsets.all(8) , child: GestureDetector(
+                            GestureDetector(
                               onTap: (){
                                 favoritesNotifier.deleteFav(shoe['key']);
                                 favoritesNotifier.ids.removeWhere((element) => element == shoe['id']);
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
                               },
-                              child: Icon(Ionicons.md_heart_dislike),
-                            ),)
+                              child: Image(
+                                image: AssetImage(kAppIcons.liked),
+                                height: 16,
+                                width: 16,
+                              ),
+                            ),
+                            SizedBox(width: 1,),
                           ],
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
+                    );
+                  },
+                ),
+              ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
+// ListTile(
+// leading: CachedNetworkImage(
+// imageUrl: shoe['imageUrl'],
+// width: 50,
+// height: 50,
+// fit: BoxFit.cover,
+// ),
+// title: Text(shoe['name'] , style: kRegularTextStyle,),
+// subtitle: Text(
+// "${shoe['category']} - \$${shoe['price']}", style: kSecondTextStyle,
+// ),
+// ),
