@@ -34,6 +34,18 @@ final kRegularTextStyle = TextStyle(
 );
 
 
+class kAppIcons {
+  static const String basePath = "assets/logo/";
+  static const String home = "${basePath}home.png";
+  static const String cart = "${basePath}bag-happy.png";
+  static const String profile = "${basePath}profile.png";
+  static const String search = "${basePath}search-normal.png";
+  static const String searchBox = "${basePath}search-box.png";
+  static const String fave = "${basePath}heart.png";
+  static const String like = "${basePath}heart_cart.png";
+}
+
+
 
 
 var kChatEmailColor = Colors.white54;
@@ -47,34 +59,3 @@ const bubbleRadius = 20.0;
 
 
 
-const kSendButtonTextStyle = TextStyle(
-  color: Colors.lightBlueAccent,
-  fontWeight: FontWeight.bold,
-  fontSize: 18.0,
-);
-
-const kMessageTextFieldDecoration = InputDecoration(
-  contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-  hintText: 'Type your message here...',
-  border: InputBorder.none,
-);
-
-const kMessageContainerDecoration = BoxDecoration(
-  border: Border(
-    bottom: BorderSide(color: Colors.grey, width: 1),
-    top: BorderSide(color: Colors.grey, width: 1),
-  ),
-  borderRadius: BorderRadius.all(Radius.circular(200)),
-  color: Colors.black,
-);
-
-const kTextFieldDecoration = InputDecoration(
-  hintText: 'Enter a value',
-  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 30),
-  border: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10)),
-  ),
-  enabledBorder: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(10)),
-  ),
-);

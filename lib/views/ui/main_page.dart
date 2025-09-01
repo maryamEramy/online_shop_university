@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/controllers/main_page_provider.dart';
 import 'package:uni_online_shop/views/ui/cart_page.dart';
 import 'package:uni_online_shop/views/ui/home_page.dart';
@@ -40,7 +41,7 @@ class _MainPageState extends State<MainPage> {
         }
 
         return Scaffold(
-          backgroundColor: const Color(0xFFE2E2E2),
+          backgroundColor: kPrimaryColor,
           body: pageList[safeIndex],
           bottomNavigationBar: const BottomNavBar(),
         );
