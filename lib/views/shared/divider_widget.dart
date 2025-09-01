@@ -1,0 +1,31 @@
+import 'package:flutter/material.dart';
+import '../../controllers/constant.dart';
+
+
+class DividerWidget extends StatelessWidget {
+  final Color color;
+  final double thickness;
+  final double indent;
+  final double endIndent;
+
+  const DividerWidget({
+    Key? key,
+    this.color = kWhiteColor,
+    this.thickness = 1.0,
+    this.indent = 4.0,
+    this.endIndent = 4.0,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 44 , vertical: 16),
+      child: Divider(
+        color: color,
+        thickness: thickness,
+        indent: indent,
+        endIndent: endIndent,
+      ),
+    );
+  }
+}

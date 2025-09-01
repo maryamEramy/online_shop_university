@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
+import '../../controllers/constant.dart';
+
 class RoundedButton extends StatelessWidget {
   final Color color;
   final Color textColor;
   final String title;
   final VoidCallback onPressed;
+  final double borderRadius;
+  final Color borderColor;
 
   const RoundedButton({
     super.key,
@@ -12,21 +16,37 @@ class RoundedButton extends StatelessWidget {
     required this.color,
     required this.textColor,
     required this.onPressed,
+    this.borderRadius = 12.0,
+    this.borderColor = Colors.transparent,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 12.0),
-      child: Material(
-        borderRadius: BorderRadius.circular(30.0),
-        color: color,
-        elevation: 5.0,
-        child: MaterialButton(
-          onPressed: onPressed,
-          minWidth: 400.0,
-          height: 42.0,
-          child: Text(title, style: TextStyle(color:textColor)),
+      padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 12.0),
+      child: Container(
+        width: double.infinity, // عرض کل صفحه
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(borderRadius),
+          border: Border.all(color: borderColor),
+        ),
+        child: Material(
+          color: Colors.transparent, // برای حفظ رنگ Container
+          child: InkWell(
+            borderRadius: BorderRadius.circular(borderRadius),
+            onTap: onPressed,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14.0),
+              child: Center(
+                child: Text(
+                  title,
+                  style: kMainTextStyle.copyWith(color: textColor),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
     );

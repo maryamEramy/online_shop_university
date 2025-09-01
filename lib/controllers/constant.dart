@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 
-var kBackgroundColor = Color(0xFF353F54);
-var kTitleColor = Color(0xFF37B6E9);
+const kPrimaryColor = Color(0xFF353F54);
+const kSecondaryColor = Color(0xFF37B6E9);
+const kWhiteColor = Color(0xFFFFFFFF);
 
 
 
-final kTitleTextStyle = TextStyle(
+final kPageTitleTextStyle = TextStyle(
   fontFamily: "Poppins",
-  color: kTitleColor,
+  color: kSecondaryColor,
   fontWeight: FontWeight.bold,
   fontSize: 28.0,
+);
+final kMainTextStyle = TextStyle(
+  fontFamily: "Poppins",
+  color: kWhiteColor,
+  fontWeight: FontWeight.w700,
+  fontSize: 18.0,
 );
 
 
 
 
-var kWhiteColor = Colors.white;
 var kChatEmailColor = Colors.white54;
 var kSenderBoxColor = Colors.red[900];
 var kSendButtonColor = Colors.grey;
