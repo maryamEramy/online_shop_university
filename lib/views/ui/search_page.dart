@@ -42,7 +42,6 @@ class _SearchPageState extends State<SearchPage> {
       );
     }
 
-    // فیلتر محصولات بر اساس سرچ و رنج قیمت
     List<ProductInfo> filteredProducts =
         allProducts.where((product) {
           final matchesQuery =
