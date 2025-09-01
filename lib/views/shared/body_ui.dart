@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/views/shared/text_title_widget.dart';
-import 'appstyle.dart';
 import 'divider_widget.dart';
 
 class BodyUi extends StatelessWidget {

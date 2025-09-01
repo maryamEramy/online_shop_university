@@ -11,7 +11,6 @@ class CategoryTabBarsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // نکته‌ی اصلی: دیگه SizedBox با ارتفاع صفحه نگذار!
     return TabBarView(
       controller: _tabController,
       children: const [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
+import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
 import 'package:uni_online_shop/views/shared/appstyle.dart';
 import 'package:uni_online_shop/views/ui/favorites_page.dart';
@@ -27,7 +28,7 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  final _favBox = Hive.box('fav_box');
+  // final _favBox = Hive.box('fav_box');
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +44,14 @@ class _ProductCardState extends State<ProductCard> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          padding: EdgeInsets.all(10),
-          height: MediaQuery.of(context).size.height *0.5,
-          width: MediaQuery.of(context).size.width * 0.5,
+          // padding: EdgeInsets.all(10),
+          height: 140,
+          width: 140,
           decoration: BoxDecoration(
-            color: Colors.grey[100],
+            color: kLightSecondaryColor,
             boxShadow: [
               BoxShadow(
-                color: Colors.black12,
+                color: kGrayColor,
                 spreadRadius: 10,
                 blurRadius: 0.8,
                 offset: Offset(0, 0),
@@ -58,13 +59,16 @@ class _ProductCardState extends State<ProductCard> {
             ],
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Stack(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.2,
+                    height: 100,
+                    width: 100,
                     decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
                       image: DecorationImage(
                         image: NetworkImage(widget.image),
                         fit: BoxFit.cover,
@@ -73,28 +77,8 @@ class _ProductCardState extends State<ProductCard> {
                     ),
                   ),
                   Positioned(
-                    right: 10,
-                    top: 10,
-                    // Consumer<FavoritesNotifier>(
-                    //     builder: (context . favoritesNotifier , child){
-                    // return GestureDetector(
-                    // onTap: () async{
-                    // if(ids.contains(widget.id)){
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => FavoritesPage()));
-                    // } else {
-                    // _createFav({
-                    // "id": widget.id,
-                    // "name": widget.name,
-                    // "category": widget.category,
-                    // "price": widget.price,
-                    // "imageUrl": widget.image
-                    // });
-                    // }
-                    // },
-                    // child: ids.contains(widget.id)? Icon(AntDesign.heart) : Icon(AntDesign.hearto),
-                    // ),
-                    // }
-                    // ),
+                    right: 4,
+                    top: 4,
                     child: GestureDetector(
                       onTap: () async {
                         if (favoritesNotifier.ids.contains(widget.id)) {
@@ -113,88 +97,51 @@ class _ProductCardState extends State<ProductCard> {
                             "imageUrl": widget.image,
                           });
                         }
-                        setState(() {
-
-                        });
+                        setState(() {});
                       },
                       child:
                           favoritesNotifier.ids.contains(widget.id)
-                              ? const Icon(AntDesign.heart)
-                              : const Icon(AntDesign.hearto),
+                              ? Image(
+                                image: AssetImage(kAppIcons.like),
+                                height: 16,
+                                width: 16,
+                              )
+                              : Image(
+                                image: AssetImage(kAppIcons.liked),
+                                height: 16,
+                                width: 16,
+                              ),
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.name,
-                      style: appstyleWithHt(
-                        28,
-                        Colors.black,
-                        FontWeight.bold,
-                        1.1,
-                      ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      widget.category,
-                      style: appstyleWithHt(
-                        16,
-                        Colors.grey,
-                        FontWeight.w500,
-                        1.1,
-                      ),
-                    ),
-                  ],
+              SizedBox(
+                width: 100,
+                child: Text(
+                  widget.name,
+                  style: kRegularTextStyle.copyWith(color: kPrimaryColor),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-              SizedBox(height: 8),
-              Padding(
-                padding: EdgeInsets.only(left: 8, right: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      widget.price,
-                      style: appstyle(16, Colors.black, FontWeight.w600),
+              SizedBox(height: 2),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.category,
+                    style: kSecondTextStyle.copyWith(
+                      color: kPrimaryColor,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Colors",
-                          style: appstyle(12, Colors.grey, FontWeight.w500),
-                        ),
-                        // SizedBox(width: 5),
-                        ChoiceChip(
-                          selected: selected,
-                          labelPadding: EdgeInsets.zero,
-                          padding: EdgeInsets.zero,
-                          visualDensity: VisualDensity.compact,
-                          side: BorderSide.none,
-                          backgroundColor: Colors.transparent,
-                          selectedColor: Colors.transparent,
-                          shadowColor: Colors.transparent,
-                          surfaceTintColor: Colors.transparent,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(200),
-                          ),
-                          label: Container(
-                            width: 24,
-                            height: 24,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                      ],
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(width: 5,),
+                  Text(
+                    widget.price,
+                    style: kSecondTextStyle.copyWith(
+                      color: kPrimaryColor, fontWeight: FontWeight.w700
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

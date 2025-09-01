@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 const kPrimaryColor = Color(0xFF242C3B);
 const kLightPrimaryColor = Color(0xFF353F54);
 const kSecondaryColor = Color(0xFF37B6E9);
+const kLightSecondaryColor = Color(0xFFDFF6FF);
 const kGrayColor = Color(0xFFC5C5C5);
 const kWhiteColor = Color(0xFFFFFFFF);
 const kErrorColor = Color(0xFFF67070);
@@ -33,6 +34,12 @@ final kRegularTextStyle = TextStyle(
   fontWeight: FontWeight.w200,
   fontSize: 16.0,
 );
+final kSecondTextStyle = TextStyle(
+  fontFamily: "Poppins",
+  color: kWhiteColor,
+  fontWeight: FontWeight.w200,
+  fontSize: 12.0,
+);
 
 
 class kAppIcons {
@@ -44,6 +51,7 @@ class kAppIcons {
   static const String searchBox = "${basePath}search-box.png";
   static const String fave = "${basePath}heart.png";
   static const String like = "${basePath}heart_cart.png";
+  static const String liked = "${basePath}liked.png";
 }
 
 class kAppCategoryImages {
