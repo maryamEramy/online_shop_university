@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:uni_online_shop/controllers/constant.dart';
+import 'package:uni_online_shop/views/ui/registration_page.dart';
 import 'dart:async';
 
 import 'main_page.dart';
@@ -17,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // بعد از 3 ثانیه به صفحه اصلی می‌رویم
     Timer(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const MainPage()),
+        MaterialPageRoute(builder: (context) => const Registration_page()),
       );
     });
   }
@@ -25,9 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: Center(
         child: Image.asset(
-          'assets/logo/top_of_screen.png', // لوگوی خودت
+          'assets/logo/splash_screen_image.png', // لوگوی خودت
           width: 200,
           height: 200,
         ),

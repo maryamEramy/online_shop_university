@@ -1,6 +1,20 @@
 import 'package:flutter/material.dart';
 
-var kBackgroundColor = Colors.white12;
+var kBackgroundColor = Color(0xFF353F54);
+var kTitleColor = Color(0xFF37B6E9);
+
+
+
+final kTitleTextStyle = TextStyle(
+  fontFamily: "Poppins",
+  color: kTitleColor,
+  fontWeight: FontWeight.bold,
+  fontSize: 28.0,
+);
+
+
+
+
 var kWhiteColor = Colors.white;
 var kChatEmailColor = Colors.white54;
 var kSenderBoxColor = Colors.red[900];
@@ -9,6 +23,9 @@ var kLoginColor = Colors.purple[200];
 var kRegistrationColor = Colors.orangeAccent[200];
 
 const bubbleRadius = 20.0;
+
+
+
 
 const kSendButtonTextStyle = TextStyle(
   color: Colors.lightBlueAccent,

@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/views/ui/login_page.dart';
 import 'package:uni_online_shop/views/ui/signup_page.dart';
 
@@ -36,13 +37,15 @@ class _Registration_pageState extends State<Registration_page>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black12,
+      backgroundColor: kBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 40),
+            Text("Registration" , style: ,),
             SizedBox(height: 40),
             RoundedButton(
               title: 'LogIn',
