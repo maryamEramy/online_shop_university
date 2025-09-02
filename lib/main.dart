@@ -55,8 +55,8 @@ class MyApp extends StatelessWidget {
       builder: (context , child){
        return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: MainPage(),
-          // home: SplashScreen(),
+          // home: MainPage(),
+          home: SplashScreen(),
          // home: Registration_page(),
        );
       },
