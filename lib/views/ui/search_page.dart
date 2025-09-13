@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/views/shared/body_ui.dart';
 import 'package:uni_online_shop/views/ui/product_page.dart';
-
 import '../../controllers/product_provider.dart';
 import '../../models/sneakers_model.dart';
 

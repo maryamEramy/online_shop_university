@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
-
 import '../../controllers/image_path.dart';
-import '../ui/profile_page.dart';
 import '../ui/registration_page.dart';
 
 class ProfileWidget extends StatelessWidget {
@@ -29,7 +27,6 @@ class ProfileWidget extends StatelessWidget {
                   child: Center(
                     child: Image(
                       image: AssetImage(ImagePath.womanProfile),
-                      // fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -40,7 +37,6 @@ class ProfileWidget extends StatelessWidget {
                 leading: Container(
                   width: 90,
                   height: 90,
-                  // padding: EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(Radius.circular(2000)),
@@ -49,7 +45,6 @@ class ProfileWidget extends StatelessWidget {
                     child: Image(
                       color: kSecondaryColor,
                       image: AssetImage(ImagePath.womanProfile),
-                      // fit: BoxFit.cover,
                     ),
                   ),
                 ),

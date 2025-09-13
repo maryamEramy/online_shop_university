@@ -6,7 +6,6 @@ class VerticalImageText extends StatelessWidget {
   });
 
   final String image , title;
-  // final Color textColor;
   final Color? backgroundColor;
   final void Function()? onTap;
 
@@ -30,7 +29,6 @@ class VerticalImageText extends StatelessWidget {
                 child: Image(image: AssetImage(image) , fit: BoxFit.cover , color: Colors.black,),
               ),
             ),
-            // SizedBox(height: 8,),
             SizedBox(
               width: 55,
               child: Text(

@@ -60,16 +60,3 @@ class RoundedTextField extends StatelessWidget {
     );
   }
 }
-
-// obscureText: true,
-
-// IconButton(
-// onPressed: () {
-// togglePasswordVisibility();
-// },
-// icon: Icon(
-// obscureText
-// ? Icons.visibility_off
-// : Icons.visibility,
-// ),
-// ),

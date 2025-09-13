@@ -25,14 +25,14 @@ class RoundedButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 12.0),
       child: Container(
-        width: double.infinity, // عرض کل صفحه
+        width: double.infinity,
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(color: borderColor),
         ),
         child: Material(
-          color: Colors.transparent, // برای حفظ رنگ Container
+          color: Colors.transparent,
           child: InkWell(
             borderRadius: BorderRadius.circular(borderRadius),
             onTap: onPressed,

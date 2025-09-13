@@ -7,6 +7,7 @@ class AuthService {
 
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
+
   Future<UserCredential> createUserWithEmailAndPassword({
     required String email,
     required String password,

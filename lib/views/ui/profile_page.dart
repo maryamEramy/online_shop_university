@@ -5,7 +5,6 @@ import 'package:uni_online_shop/views/shared/body_ui.dart';
 import 'package:uni_online_shop/views/shared/roundedButton.dart';
 import 'package:uni_online_shop/views/ui/cart_page.dart';
 import 'package:uni_online_shop/views/ui/favorites_page.dart';
-import '../shared/appstyle.dart';
 import '../shared/profile_widget.dart';
 
 class ProfilePage extends StatefulWidget {

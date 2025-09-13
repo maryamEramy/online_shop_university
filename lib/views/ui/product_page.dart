@@ -108,14 +108,10 @@ class _ProductPageState extends State<ProductPage> {
                               "id": sneaker.id,
                               "name": sneaker.name,
                               "category": sneaker.category,
-                              // "sizes":
-                              //     productNotifier.sizes,
                               "imageUrl": sneaker.imageUrl,
                               "price": sneaker.price,
                               "qty": 1,
-                              // "imageUrl": sneaker.imageUrl[0],
                             });
-                            // productNotifier.sizes.clear();
                             Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -1,13 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/views/shared/divider_widget.dart';
 import 'package:uni_online_shop/views/shared/text_box_widget.dart';
-import 'package:uni_online_shop/views/ui/login_page.dart';
-import 'package:uni_online_shop/views/ui/signup_page.dart';
-
 import '../shared/login_button.dart';
-import '../shared/roundedButton.dart';
 import '../shared/signup_button.dart';
 import '../shared/text_title_widget.dart';
 

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
-import 'package:uni_online_shop/views/shared/appstyle.dart';
 import 'package:uni_online_shop/views/ui/favorites_page.dart';
 
 class ProductCard extends StatefulWidget {
@@ -28,7 +25,6 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  // final _favBox = Hive.box('fav_box');
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +33,12 @@ class _ProductCardState extends State<ProductCard> {
       listen: true,
     );
     favoritesNotifier.getFavorites();
-    bool selected = false;
     return Padding(
       padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
       //وقتی میخوایی عکسی یا ویجتی گوشه هاش گرد باشه => clipRRect
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          // padding: EdgeInsets.all(10),
           height: 140,
           width: 140,
           decoration: BoxDecoration(

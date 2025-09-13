@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
 import 'package:uni_online_shop/views/shared/body_ui.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
 import '../../controllers/constant.dart';
-import '../shared/appstyle.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -120,16 +118,3 @@ class _FavoritesPageState extends State<FavoritesPage> {
     );
   }
 }
-
-// ListTile(
-// leading: CachedNetworkImage(
-// imageUrl: shoe['imageUrl'],
-// width: 50,
-// height: 50,
-// fit: BoxFit.cover,
-// ),
-// title: Text(shoe['name'] , style: kRegularTextStyle,),
-// subtitle: Text(
-// "${shoe['category']} - \$${shoe['price']}", style: kSecondTextStyle,
-// ),
-// ),

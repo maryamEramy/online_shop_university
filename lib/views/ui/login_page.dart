@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:uni_online_shop/views/shared/login_button.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
 import '../../controllers/constant.dart';
@@ -40,7 +39,23 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             SizedBox(height: 40),
-            TextTitleWidget(text: 'Login'),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SizedBox(
+                  width: 10,
+                  child: GestureDetector(
+                    child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
+                    onTap: (){
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+                TextTitleWidget(text: 'Login'),
+                SizedBox(width: 10),
+              ],
+            ),
             DividerWidget(),
             Form(
               key: _formKey,
@@ -48,7 +63,9 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   EmailTextFieldWidget(emailController: _emailController),
                   SizedBox(height: 16),
-                  PasswordTextFieldWidget(passwordController: _passwordController)
+                  PasswordTextFieldWidget(
+                    passwordController: _passwordController,
+                  ),
                 ],
               ),
             ),
@@ -79,9 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.pop(context);
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => MainPage(),
-                            ),
+                            MaterialPageRoute(builder: (context) => MainPage()),
                           );
                         });
                     setState(() {
@@ -103,5 +118,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-

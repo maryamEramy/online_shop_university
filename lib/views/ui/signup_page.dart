@@ -1,7 +1,6 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:uni_online_shop/views/shared/email_text_field_widget.dart';
 import 'package:uni_online_shop/views/shared/passwoed_text_field_widget.dart';
 import 'package:uni_online_shop/views/shared/signup_button.dart';
@@ -10,8 +9,6 @@ import '../../controllers/constant.dart';
 import '../../services/auth_service.dart';
 import '../shared/divider_widget.dart';
 import '../shared/name_text_field_widget.dart';
-import '../shared/roundedButton.dart';
-import '../shared/text_field_widget.dart';
 import '../shared/text_title_widget.dart';
 
 class SignupPage extends StatefulWidget {
@@ -25,6 +22,10 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final _fireStore = FirebaseFirestore.instance;
+  final TextEditingController _m = TextEditingController();
+
   String errorMessage = '';
   bool errorOccurred = false, showSpinner = false;
 
@@ -48,7 +49,22 @@ class _SignupPageState extends State<SignupPage> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               SizedBox(height: 40),
-              TextTitleWidget(text: 'SignUp'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 10,
+                    child: GestureDetector(
+                      child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                  TextTitleWidget(text: 'SignUp'),
+                  SizedBox(width: 10),
+                ],
+              ),
               DividerWidget(),
               Form(
                 key: _formKey,
@@ -70,57 +86,72 @@ class _SignupPageState extends State<SignupPage> {
                 child: Text(
                   errorMessage,
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.red, fontSize: 14),
+                  style: kErrorTextStyle,
                 ),
               ),
               SizedBox(height: 16),
-              SignUpButton(onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                  try {
-                    setState(() {
-                      errorOccurred = false;
-                      showSpinner = true;
-                    });
-                    await AuthService()
-                        .createUserWithEmailAndPassword(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      senderName:
-                      _nameController
-                          .text,
-                    )
-                        .then((Value) {
-                      if (mounted) {
-                        Navigator.pop(
-                          context,
-                        );
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MainPage(),
-                          ),
-                        );
-                      }
-                    });
-                    setState(() {
-                      showSpinner = false;
-                    });
-                  } catch (e) {
-                    setState(() {
-                      showSpinner = false;
-                      errorOccurred = true;
-                      errorMessage =
-                      e.toString().contains(']')
-                          ? e.toString().split('] ')[1]
-                          : e.toString();
-                    });
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SignUpButton(onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    try {
+                      setState(() {
+                        errorOccurred = false;
+                        showSpinner = true;
+                      });
+                      await AuthService()
+                          .createUserWithEmailAndPassword(
+                        email: _emailController.text,
+                        password: _passwordController.text,
+                        senderName:
+                        _nameController
+                            .text,
+                      )
+                          .then((Value) {
+                        if (mounted) {
+                          Navigator.pop(
+                            context,
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MainPage(),
+                            ),
+                          );
+                        }
+                      });
+                      setState(() {
+                        showSpinner = false;
+                      });
+                    } catch (e) {
+                      setState(() {
+                        showSpinner = false;
+                        errorOccurred = true;
+                        errorMessage =
+                        e.toString().contains(']')
+                            ? e.toString().split('] ')[1]
+                            : e.toString();
+                      });
+                    }
                   }
-                }
-              },),
+                },),
+              ),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+
+
+
+Future<void> saveUserData(User user, String name) async {
+  await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
+    "uid": user.uid,
+    "name": name,
+    "email": user.email,
+    "createdAt": FieldValue.serverTimestamp(),
+  });
 }
