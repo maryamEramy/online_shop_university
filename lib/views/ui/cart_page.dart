@@ -132,7 +132,9 @@ class _CartPageState extends State<CartPage> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         InkWell(
-                                          onTap: () {},
+                                          onTap: () {
+                                            cartProvider.decrementQty(data['key']);
+                                          },
                                           child: const Icon(
                                             AntDesign.minussquare,
                                             size: 16,
@@ -140,17 +142,17 @@ class _CartPageState extends State<CartPage> {
                                           ),
                                         ),
                                         Text(
-                                            data['qty'].toString(),
-                                            style: kSecondTextStyle.copyWith(color: kPrimaryColor)
+                                          data['qty'].toString(),
+                                          style: kSecondTextStyle.copyWith(color: kPrimaryColor),
                                         ),
                                         InkWell(
                                           onTap: () {
-
+                                            cartProvider.incrementQty(data['key']);
                                           },
                                           child: const Icon(
                                             AntDesign.plussquare,
                                             size: 16,
-                                            color: kSecondaryColor,
+                                            color: kPrimaryColor,
                                           ),
                                         ),
                                       ],

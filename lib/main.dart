@@ -18,6 +18,14 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+
+  // final user = FirebaseAuth.instance.currentUser;
+  // if (user != null) {
+  //   await Hive.initFlutter();
+  //   await Hive.openBox('cart_box_${user.uid}');
+  //   await Hive.openBox('fav_box_${user.uid}');
+  // }
+  //
   await Hive.initFlutter();
   await Hive.openBox('cart_box');
   await Hive.openBox('fav_box');

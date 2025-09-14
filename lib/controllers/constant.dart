@@ -70,17 +70,3 @@ class kAppCategoryImages {
   static const String smartphones = "${basePath}Smartphones.png";
   static const String kitchenAccessories = "${basePath}KitchenAccessories.png";
 }
-
-
-
-var kChatEmailColor = Colors.white54;
-var kSenderBoxColor = Colors.red[900];
-var kSendButtonColor = Colors.grey;
-var kLoginColor = Colors.purple[200];
-var kRegistrationColor = Colors.orangeAccent[200];
-
-const bubbleRadius = 20.0;
-
-
-
-

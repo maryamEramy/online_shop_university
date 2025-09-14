@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
+import 'package:uni_online_shop/views/ui/home_page.dart';
+import 'package:uni_online_shop/views/ui/main_page.dart';
 import 'package:uni_online_shop/views/ui/registration_page.dart';
 import 'dart:async';
 
@@ -16,7 +18,8 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 3), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const Registration_page()),
+        MaterialPageRoute(builder: (context) => const MainPage()),
+        // MaterialPageRoute(builder: (context) => const Registration_page()),
       );
     });
   }

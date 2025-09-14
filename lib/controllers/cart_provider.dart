@@ -39,18 +39,39 @@ class CartProvider with ChangeNotifier{
   }
 
 
-  int _counter =0;
-  int get counter => _counter;
-
-  void increment(){
-    _counter++;
-    notifyListeners();
-  }
-
-  void decrement(){
-    if(_counter >= 1){
-      _counter--;
+  void incrementQty(int key) {
+    final item = _cartBox.get(key);
+    if (item != null) {
+      item['qty'] = (item['qty'] as int) + 1;
+      _cartBox.put(key, item);
+      getCart();
       notifyListeners();
     }
   }
+
+  void decrementQty(int key) {
+    final item = _cartBox.get(key);
+    if (item != null && item['qty'] > 1) {
+      item['qty'] = (item['qty'] as int) - 1;
+      _cartBox.put(key, item);
+      getCart();
+      notifyListeners();
+    }
+  }
+
+//
+//   int _counter =0;
+//   int get counter => _counter;
+//
+//   void increment(){
+//     _counter++;
+//     notifyListeners();
+//   }
+//
+//   void decrement(){
+//     if(_counter >= 1){
+//       _counter--;
+//       notifyListeners();
+//     }
+//   }
 }
