@@ -4,7 +4,7 @@ import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
 import 'package:uni_online_shop/views/ui/favorites_page.dart';
 
-class ProductCard extends StatefulWidget {
+class ProductCard extends StatelessWidget {
   const ProductCard({
     super.key,
     required this.id,
@@ -21,21 +21,13 @@ class ProductCard extends StatefulWidget {
   final String category;
 
   @override
-  State<ProductCard> createState() => _ProductCardState();
-}
-
-class _ProductCardState extends State<ProductCard> {
-
-  @override
   Widget build(BuildContext context) {
-    var favoritesNotifier = Provider.of<FavoritesNotifier>(
-      context,
-      listen: true,
-    );
-    favoritesNotifier.getFavorites();
+    final favoritesNotifier = Provider.of<FavoritesNotifier>(context);
+
+    final isFavorite = favoritesNotifier.ids.contains(id);
+
     return Padding(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      //وقتی میخوایی عکسی یا ویجتی گوشه هاش گرد باشه => clipRRect
+      padding: const EdgeInsets.all(10.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
@@ -64,9 +56,8 @@ class _ProductCardState extends State<ProductCard> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       image: DecorationImage(
-                        image: NetworkImage(widget.image),
+                        image: NetworkImage(image),
                         fit: BoxFit.cover,
-                        alignment: Alignment.center,
                       ),
                     ),
                   ),
@@ -75,7 +66,8 @@ class _ProductCardState extends State<ProductCard> {
                     top: 4,
                     child: GestureDetector(
                       onTap: () async {
-                        if (favoritesNotifier.ids.contains(widget.id)) {
+                        if (isFavorite) {
+                          // اگر میخوای بره به صفحه علاقه‌مندی‌ها
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -83,28 +75,21 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                           );
                         } else {
-                          favoritesNotifier.createFav({
-                            "id": widget.id,
-                            "name": widget.name,
-                            "category": widget.category,
-                            "price": widget.price,
-                            "imageUrl": widget.image,
+                          // اضافه کردن به علاقه‌مندی‌ها
+                          await favoritesNotifier.createFav({
+                            "id": id,
+                            "name": name,
+                            "category": category,
+                            "price": price,
+                            "imageUrl": image,
                           });
                         }
-                        setState(() {});
                       },
-                      child:
-                          favoritesNotifier.ids.contains(widget.id)
-                              ? Image(
-                                image: AssetImage(kAppIcons.like),
-                                height: 16,
-                                width: 16,
-                              )
-                              : Image(
-                                image: AssetImage(kAppIcons.liked),
-                                height: 16,
-                                width: 16,
-                              ),
+                      child: Image.asset(
+                        isFavorite ? kAppIcons.like : kAppIcons.liked,
+                        height: 16,
+                        width: 16,
+                      ),
                     ),
                   ),
                 ],
@@ -112,7 +97,7 @@ class _ProductCardState extends State<ProductCard> {
               SizedBox(
                 width: 100,
                 child: Text(
-                  widget.name,
+                  name,
                   style: kRegularTextStyle.copyWith(color: kPrimaryColor),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -122,17 +107,16 @@ class _ProductCardState extends State<ProductCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.category,
-                    style: kSecondTextStyle.copyWith(
-                      color: kPrimaryColor,
-                    ),
+                    category,
+                    style: kSecondTextStyle.copyWith(color: kPrimaryColor),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(width: 5,),
+                  const SizedBox(width: 5),
                   Text(
-                    widget.price,
+                    price,
                     style: kSecondTextStyle.copyWith(
-                      color: kPrimaryColor, fontWeight: FontWeight.w700
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ],

@@ -1,11 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
 import 'package:uni_online_shop/views/shared/email_text_field_widget.dart';
 import 'package:uni_online_shop/views/shared/passwoed_text_field_widget.dart';
 import 'package:uni_online_shop/views/shared/signup_button.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
+import '../../controllers/cart_provider.dart';
 import '../../controllers/constant.dart';
+import '../../controllers/favorites_provider.dart';
+import '../../controllers/user_provider.dart';
+import '../../models/user_model.dart';
 import '../../services/auth_service.dart';
 import '../shared/divider_widget.dart';
 import '../shared/name_text_field_widget.dart';
@@ -23,8 +29,41 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _nameController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _nameController.dispose();
+  }
+
+  // Future<void> signUp() async {
+  //   try {
+  //     final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //       email: _emailController.text.trim(),
+  //       password: _passwordController.text.trim(),
+  //     );
+  //
+  //     final user = credential.user;
+  //     if (user != null) {
+  //       await saveUserData(user, _nameController.text.trim());
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Signup error: $e");
+  //   }
+  // }
+  //
+  // Future<void> saveUserData(User user, String name) async {
+  //   await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
+  //     "uid": user.uid,
+  //     "name": name,
+  //     "email": user.email,
+  //     "createdAt": FieldValue.serverTimestamp(),
+  //   });
+  // }
+
   final _fireStore = FirebaseFirestore.instance;
-  final TextEditingController _m = TextEditingController();
+  final TextEditingController _user = TextEditingController();
 
   String errorMessage = '';
   bool errorOccurred = false, showSpinner = false;
@@ -56,7 +95,7 @@ class _SignupPageState extends State<SignupPage> {
                     width: 10,
                     child: GestureDetector(
                       child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
-                      onTap: (){
+                      onTap: () {
                         Navigator.pop(context);
                       },
                     ),
@@ -92,49 +131,82 @@ class _SignupPageState extends State<SignupPage> {
               SizedBox(height: 16),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: SignUpButton(onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    try {
-                      setState(() {
-                        errorOccurred = false;
-                        showSpinner = true;
-                      });
-                      await AuthService()
-                          .createUserWithEmailAndPassword(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                        senderName:
-                        _nameController
-                            .text,
-                      )
-                          .then((Value) {
-                        if (mounted) {
-                          Navigator.pop(
+                child: SignUpButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      try {
+                        setState(() {
+                          errorOccurred = false;
+                          showSpinner = true;
+                        });
+
+                        final userCredential = await AuthService()
+                            .createUserWithEmailAndPassword(
+                              email: _emailController.text.trim(),
+                              password: _passwordController.text.trim(),
+                              // senderName: _nameController.text.trim(),
+                            );
+                        final user = userCredential.user;
+                        if (user != null) {
+                          await FirebaseFirestore.instance
+                              .collection("users")
+                              .doc(user.uid)
+                              .update({"name": _nameController.text.trim()});
+                          await Hive.openBox('cart_box_${user.uid}');
+                          await Hive.openBox('fav_box_${user.uid}');
+                          final userProvider = Provider.of<UserProvider>(
                             context,
+                            listen: false,
                           );
-                          Navigator.push(
+                          final newUser = UserModel(
+                            uid: user.uid,
+                            name: _nameController.text.trim(),
+                            email: _emailController.text.trim(),
+                          );
+                          userProvider.setUser(newUser);
+                          final cartProvider = Provider.of<CartProvider>(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => MainPage(),
-                            ),
+                            listen: false,
                           );
+                          await cartProvider.setUserId(user.uid);
+                          final favProvider = Provider.of<FavoritesNotifier>(
+                            context,
+                            listen: false,
+                          );
+                          await favProvider.setUserId(user.uid);
+                          if (mounted) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainPage(),
+                              ),
+                            );
+                          }
                         }
-                      });
-                      setState(() {
-                        showSpinner = false;
-                      });
-                    } catch (e) {
-                      setState(() {
-                        showSpinner = false;
-                        errorOccurred = true;
-                        errorMessage =
-                        e.toString().contains(']')
-                            ? e.toString().split('] ')[1]
-                            : e.toString();
-                      });
+
+                        // final currentUser = FirebaseAuth.instance.currentUser;
+                        // if (currentUser != null) {
+                        //   // await Hive.openBox('cart_box_${currentUser.uid}');
+                        //   // await Hive.openBox('fav_box_${currentUser.uid}');
+                        //   // ذخیره در Provider
+                        // }
+
+                        setState(() {
+                          showSpinner = false;
+                        });
+                      } catch (e) {
+                        setState(() {
+                          showSpinner = false;
+                          errorOccurred = true;
+                          errorMessage =
+                              e.toString().contains(']')
+                                  ? e.toString().split('] ')[1]
+                                  : e.toString();
+                        });
+                      }
                     }
-                  }
-                },),
+                  },
+                ),
               ),
             ],
           ),
@@ -142,16 +214,4 @@ class _SignupPageState extends State<SignupPage> {
       ),
     );
   }
-}
-
-
-
-
-Future<void> saveUserData(User user, String name) async {
-  await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
-    "uid": user.uid,
-    "name": name,
-    "email": user.email,
-    "createdAt": FieldValue.serverTimestamp(),
-  });
 }

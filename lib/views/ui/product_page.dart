@@ -8,6 +8,7 @@ import 'package:uni_online_shop/views/shared/roundedButton.dart';
 import '../../controllers/constant.dart';
 import '../../controllers/favorites_provider.dart';
 import '../../models/sneakers_model.dart';
+import '../shared/text_title_widget.dart';
 import 'cart_page.dart';
 
 class ProductPage extends StatefulWidget {
@@ -21,31 +22,49 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  final PageController pageController = PageController();
+
+  late Future<ProductInfo> _productFuture;
+  @override
+  void initState() {
+    super.initState();
+    _loadProduct();
+  }
+  void _loadProduct() {
+    final productNotifier = Provider.of<ProductNotifier>(context, listen: false);
+    _productFuture = productNotifier.getProduct(widget.category, widget.id);
+  }
+
+  // final PageController pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-
-    var productNotifier = Provider.of<ProductNotifier>(context);
-    productNotifier.getProduct(widget.category, widget.id);
-
     var cartProvider = Provider.of<CartProvider>(context);
+    // var cartProvider = Provider.of<CartProvider>(context);
 
-    var favoritesNotifier = Provider.of<FavoritesNotifier>(context , listen: true);
+    var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
+    // var favoritesNotifier = Provider.of<FavoritesNotifier>(context , listen: true);
+
+    // var productNotifier = Provider.of<ProductNotifier>(context);
+    // productNotifier.getProduct(widget.category, widget.id);
+
+
     favoritesNotifier.getFavorites();
     return BodyUi(
+      headerTitle: 'SignUp',
+      showBackIcon: true,
       children: [
         FutureBuilder<ProductInfo>(
-          future: productNotifier.product,
+          future: _productFuture,
+          // future: productNotifier.product,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
                 child: CircularProgressIndicator(color: kSecondaryColor),
               );
             } else if (snapshot.hasError) {
-              return Text("Error ${snapshot.error}", style: kErrorTextStyle);
+              return Center(child: Text("Error ${snapshot.error}", style: kErrorTextStyle));
             } else if (!snapshot.hasData) {
-              return const Text("No product found");
+              return Center(child: const Text("No product found"));
             } else {
               final sneaker = snapshot.data!;
 
@@ -59,6 +78,11 @@ class _ProductPageState extends State<ProductPage> {
                         width: 200,
                         height: 200,
                         fit: BoxFit.cover,
+
+                        placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -104,21 +128,39 @@ class _ProductPageState extends State<ProductPage> {
                         RoundedButton(
                           color: kSecondaryColor,
                           onPressed: () async {
-                            await cartProvider.addCart({
-                              "id": sneaker.id,
-                              "name": sneaker.name,
-                              "category": sneaker.category,
-                              "imageUrl": sneaker.imageUrl,
-                              "price": sneaker.price,
-                              "qty": 1,
-                            });
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) => CartPage(),
-                              ),
-                            );
+                            try{
+                              await cartProvider.addCart({
+                                "id": sneaker.id,
+                                "name": sneaker.name,
+                                "category": sneaker.category,
+                                "imageUrl": sneaker.imageUrl,
+                                "price": sneaker.price,
+                                "qty": 1,
+                              });
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Added to cart successfully!"),
+                                  duration: Duration(seconds: 2),
+                                ),
+                              );}
+                            catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Error: $e"),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MaterialPageRoute(
+                              //     builder:
+                              //         (context) => CartPage(),
+                              //   ),
+                              // );
+                            }
+
+
                           },
                           textColor: kWhiteColor,
                           title: 'Add to Cart',

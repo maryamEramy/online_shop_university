@@ -20,7 +20,7 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     var cartProvider = Provider.of<CartProvider>(context);
-    cartProvider.getCart();
+    // cartProvider.getCart();
     return BodyUi(
       headerTitle: "Your Basket",
       children: [

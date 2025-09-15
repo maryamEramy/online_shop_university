@@ -1,48 +1,41 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class FavoritesNotifier extends ChangeNotifier{
-  final _favBox = Hive.box('fav_box');
+// FavoritesNotifier.dart
+class FavoritesNotifier extends ChangeNotifier {
+  Box? _favBox;
   List<dynamic> _ids = [];
   List<dynamic> _favorites = [];
   List<dynamic> _fav = [];
 
-
-
   List<dynamic> get ids => _ids;
-  set ids(List<dynamic> newIds){
-    _ids = newIds;
-    notifyListeners();
-  }
   List<dynamic> get favorites => _favorites;
-  set favorites(List<dynamic> newFav){
-    _favorites = newFav;
-    notifyListeners();
-  }
-
   List<dynamic> get fav => _fav;
-  set fav(List<dynamic> newFav){
-    _fav = newFav;
-    notifyListeners();
+
+  Future<void> setUserId(String userId) async {
+    _favBox = await Hive.openBox('fav_box_$userId');
+    getAllData();
   }
 
   getFavorites(){
-    final favData = _favBox.keys.map((key){
-      final item = _favBox.get(key);
+    if (_favBox == null || !_favBox!.isOpen) return;
+    final favData = _favBox!.keys.map((key){
+      final item = _favBox!.get(key);
       return{
         "key" : key,
-        "id" :"id"
+        "id" : item['id']
       };
     }).toList();
 
     _favorites = favData.toList();
     _ids = _favorites.map((item) => item['id']).toList();
+    notifyListeners();
   }
 
   getAllData(){
-    final favData =
-    _favBox.keys.map((key) {
-      final item = _favBox.get(key);
+    if (_favBox == null || !_favBox!.isOpen) return;
+    final favData = _favBox!.keys.map((key) {
+      final item = _favBox!.get(key);
       return {
         "key": key,
         "id": item['id'],
@@ -53,16 +46,18 @@ class FavoritesNotifier extends ChangeNotifier{
       };
     }).toList();
     _fav = favData.reversed.toList();
+    notifyListeners();
   }
 
-
-  Future<void>deleteFav(int key) async {
-    await _favBox.delete(key);
+  Future<void> deleteFav(int key) async {
+    if (_favBox == null) return;
+    await _favBox!.delete(key);
+    getAllData();
   }
-
 
   Future<void> createFav(Map<String, dynamic> addFav) async {
-    await _favBox.add(addFav);
+    if (_favBox == null) return;
+    await _favBox!.add(addFav);
+    getAllData();
   }
-
 }

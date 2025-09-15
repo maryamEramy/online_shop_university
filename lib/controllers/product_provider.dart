@@ -4,31 +4,48 @@ import '../services/helper.dart';
 
 class ProductNotifier extends ChangeNotifier {
   int _activepage = 0;
+  List<ProductInfo> _allProducts = [];
+
+  late Future<ProductInfo> product;
+
 
   int get activepage => _activepage;
+  List<ProductInfo> get allProducts => _allProducts;
+
 
   set activePage(int newIndex) {
     _activepage = newIndex;
     notifyListeners();
   }
 
-  late Future<List<ProductInfo>> products;
-  late Future<ProductInfo> product;
-
-  Future<List<ProductInfo>> getProducts(String category) {
-    products = Helper().getProductsByCategory(category);
-    notifyListeners();
-    return products;
+  Future<List<ProductInfo>> getProducts(String category) async {
+    return await Helper().getProductsByCategory(category);
   }
 
-  void getProduct(String category, String id) {
+  // Future<List<ProductInfo>> getProducts(String category) async {
+  //   final products = await Helper().getProductsByCategory(category);
+  //   // notifyListeners() را حذف کنید چون FutureBuilder خودش مدیریت می‌کند
+  //   return products;
+  // }
+  // Future<List<ProductInfo>> getProducts(String category) {
+  //   products = Helper().getProductsByCategory(category);
+  //   notifyListeners();
+  //   return products;
+  // }
+
+
+  Future<ProductInfo> getProduct(String category, String id) async {
     product = Helper().getProductById(category, id);
-    notifyListeners();
+    notifyListeners(); // اینجا notifyListeners لازم است
+    return await product;
   }
-
-
-  List<ProductInfo> _allProducts = [];
-  List<ProductInfo> get allProducts => _allProducts;
+  // Future<ProductInfo> getProduct(String category, String id) async {
+  //   return await Helper().getProductById(category, id);
+  // }
+  // void getProduct(String category, String id) {
+  //   product = Helper().getProductById(category, id);
+  //   notifyListeners();
+  // }
   Future<void> fetchAllProducts() async {
     final categories = [
       "mens-shoes",
@@ -57,4 +74,12 @@ class ProductNotifier extends ChangeNotifier {
     _allProducts = tempList;
     notifyListeners();
   }
+
+  // late Future<List<ProductInfo>> products;
+
+
+
+
+
+
 }
