@@ -44,23 +44,6 @@ class BodyUi extends StatelessWidget {
                 if (showBackIcon) SizedBox(width: 10),
               ],
             ),
-
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     if (showBackIcon)
-            //       SizedBox(
-            //         width: 10,
-            //         child: GestureDetector(
-            //           child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
-            //           onTap: () {
-            //             Navigator.pop(context);
-            //           },
-            //         ),
-            //       ),
-            //     TextTitleWidget(text: headerTitle ?? "NOZAMA"),
-            //   ],
-            // ),
             DividerWidget(),
             Expanded(
               child: Column(

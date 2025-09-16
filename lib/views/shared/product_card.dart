@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
-import 'package:uni_online_shop/views/ui/favorites_page.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard({
@@ -27,9 +26,6 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
-    final favoritesNotifier = Provider.of<FavoritesNotifier>(context);
-
-    final isFavorite = favoritesNotifier.ids.contains(widget.id);
 
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -73,11 +69,9 @@ class _ProductCardState extends State<ProductCard> {
                     child: Consumer<FavoritesNotifier>(
                       builder: (context, favoritesNotifier, _) {
                         final isFavorite = favoritesNotifier.ids.contains(widget.id);
-
                         return GestureDetector(
                           onTap: () async {
                             if (isFavorite) {
-                              // محصول از قبل لایک شده → حذف از فاووریت
                               Map<String, dynamic>? favItem;
                               try {
                                 favItem = favoritesNotifier.favorites.firstWhere(
@@ -91,7 +85,6 @@ class _ProductCardState extends State<ProductCard> {
                                 await favoritesNotifier.deleteFav(favItem['key']);
                               }
                             } else {
-                              // محصول لایک نشده → اضافه به فاووریت
                               await favoritesNotifier.createFav({
                                 "id": widget.id,
                                 "name": widget.name,
@@ -110,50 +103,6 @@ class _ProductCardState extends State<ProductCard> {
                       },
                     ),
                   ),
-
-
-                  //لایک کردن کاملا درست انجام میضشه در کد زیر
-                  // Positioned(
-                  //   right: 4,
-                  //   top: 4,
-                  //   child: Consumer<FavoritesNotifier>(
-                  //     builder: (context, favoritesNotifier, _) {
-                  //       final isFavorite = favoritesNotifier.ids.contains(widget.id);
-                  //
-                  //       return GestureDetector(
-                  //         onTap: () async {
-                  //           if (isFavorite) {
-                  //             final favItem = favoritesNotifier.favorites.firstWhere(
-                  //                   (item) => item['id'] == widget.id,
-                  //               orElse: () => null,
-                  //             );
-                  //             if (favItem != null) {
-                  //
-                  //               favoritesNotifier.deleteFav(favItem['key']);
-                  //               favoritesNotifier.ids.removeWhere(
-                  //                     (element) => element == favItem['id'],
-                  //               );
-                  //               // await favoritesNotifier.deleteFav(favItem['key']);
-                  //             }
-                  //           } else {
-                  //             await favoritesNotifier.createFav({
-                  //               "id": widget.id,
-                  //               "name": widget.name,
-                  //               "category": widget.category,
-                  //               "price": widget.price,
-                  //               "imageUrl": widget.image,
-                  //             });
-                  //           }
-                  //         },
-                  //         child: Image.asset(
-                  //           isFavorite ? kAppIcons.liked : kAppIcons.like,
-                  //           height: 20,
-                  //           width: 20,
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
                 ],
               ),
               SizedBox(

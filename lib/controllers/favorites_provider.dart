@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-// FavoritesNotifier.dart
 class FavoritesNotifier extends ChangeNotifier {
   Box? _favBox;
   List<dynamic> _ids = [];
@@ -16,7 +15,6 @@ class FavoritesNotifier extends ChangeNotifier {
     _favBox = await Hive.openBox('fav_box_$userId');
     getAllData();
   }
-
 
 
   getAllData(){
@@ -36,43 +34,20 @@ class FavoritesNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<void> deleteFav(int key) async {
-  //   if (_favBox == null) return;
-  //   await _favBox!.delete(key);
-  //   getAllData();
-  // }
   Future<void> deleteFav(int key) async {
     if (_favBox == null) return;
     await _favBox!.delete(key);
-    await getFavorites(); // ← اینو اضافه کن تا ids و favorites آپدیت بشه
-    getAllData(); // برای اطلاعات کامل آیتم‌ها
+    await getFavorites();
+    getAllData();
   }
 
-  // Future<void> createFav(Map<String, dynamic> addFav) async {
-  //   if (_favBox == null) return;
-  //   await _favBox!.add(addFav);
-  //   getAllData();
-  // }
   Future<void> createFav(Map<String, dynamic> addFav) async {
     if (_favBox == null) return;
     await _favBox!.add(addFav);
-    await getFavorites(); // ← اینو اضافه کن
+    await getFavorites();
     getAllData();
   }
-  // getFavorites(){
-  //   if (_favBox == null || !_favBox!.isOpen) return;
-  //   final favData = _favBox!.keys.map((key){
-  //     final item = _favBox!.get(key);
-  //     return{
-  //       "key" : key,
-  //       "id" : item['id']
-  //     };
-  //   }).toList();
-  //
-  //   _favorites = favData.toList();
-  //   _ids = _favorites.map((item) => item['id']).toList();
-  //   notifyListeners();
-  // }
+
   getFavorites() {
     if (_favBox == null || !_favBox!.isOpen) return;
     final favData = _favBox!.keys.map((key) {

@@ -4,9 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/views/shared/body_ui.dart';
 import 'package:uni_online_shop/views/shared/roundedButton.dart';
-import 'package:uni_online_shop/views/ui/cart_page.dart';
-import 'package:uni_online_shop/views/ui/favorites_page.dart';
-import 'package:uni_online_shop/views/ui/main_page.dart';
 import '../../controllers/main_page_provider.dart';
 import '../shared/profile_widget.dart';
 
@@ -40,16 +37,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: "Favorites",
                       color: Colors.transparent,
                       onPressed: () {
-
                         Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 2;
                         Navigator.popUntil(context, (route) => route.isFirst);
-
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => MainPage(currentPage: 2,),
-                        //   ),
-                        // );
                       },
                       textColor: kWhiteColor,
                     ),
@@ -57,14 +46,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: "Your Basket",
                       color: Colors.transparent,
                       onPressed: () {
-
                         Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 3;
                         Navigator.popUntil(context, (route) => route.isFirst);
-
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => MainPage(currentPage: 3,)),
-                        // );
                       },
                       textColor: kWhiteColor,
                     ),

@@ -17,7 +17,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
-    // favoritesNotifier.getAllData();
     return BodyUi(
       headerTitle: "Wish List",
       children: [
