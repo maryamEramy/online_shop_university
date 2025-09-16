@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:uni_online_shop/controllers/cart_provider.dart';
+import 'package:uni_online_shop/controllers/favorites_provider.dart';
 
 class AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -13,16 +15,17 @@ class AuthService {
     required String email,
     required String password,
     required String name,
+    required CartProvider cartProvider,
+    required FavoritesNotifier favoritesNotifier,
   }) async {
     try {
-      // ایجاد کاربر در Firebase Auth
       UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
 
       if (userCredential.user != null) {
         User user = userCredential.user!;
 
-        // ذخیره اطلاعات کامل کاربر در Firestore
+        // ذخیره اطلاعات در Firestore
         await _firestore.collection("users").doc(user.uid).set({
           "uid": user.uid,
           "name": name,
@@ -31,6 +34,10 @@ class AuthService {
           "cart": [],
           "favorites": [],
         });
+
+        // ✅ ست کردن Box های Hive برای یوزر جدید
+        await cartProvider.setUserId(user.uid);
+        await favoritesNotifier.setUserId(user.uid);
       }
 
       return userCredential;
@@ -40,21 +47,33 @@ class AuthService {
     }
   }
 
+  // ✅ ورود
   Future<UserCredential> signinUserWithEmailAndPassword({
     required String email,
     required String password,
+    required CartProvider cartProvider,
+    required FavoritesNotifier favoritesNotifier,
   }) async {
     try {
-      return await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      if (userCredential.user != null) {
+        final uid = userCredential.user!.uid;
+
+        // ✅ ست کردن Box های Hive برای یوزر وارد شده
+        await cartProvider.setUserId(uid);
+        await favoritesNotifier.setUserId(uid);
+      }
+
+      return userCredential;
     } catch (e) {
       print("Error in signinUserWithEmailAndPassword: $e");
       rethrow;
     }
   }
 
+  // خروج
   Future<void> signOutUserWithEmailAndPassword() async {
     try {
       await _firebaseAuth.signOut();

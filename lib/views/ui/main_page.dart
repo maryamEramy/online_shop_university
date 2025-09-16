@@ -10,7 +10,8 @@ import '../shared/bottom_nav.dart';
 import 'favorites_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  const MainPage({super.key , this.currentPage,});
+  final int? currentPage;
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -35,17 +36,18 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Consumer<MainPageNotifier>(
       builder: (context, mainPageNotifier, child) {
-        int safeIndex = mainPageNotifier.pageIndex;
-        if (safeIndex < 0 || safeIndex >= pageList.length) {
-          safeIndex = 0;
+        int index = widget.currentPage ?? mainPageNotifier.pageIndex;
+        if (index < 0 || index >= pageList.length) {
+          index = 0;
         }
 
         return Scaffold(
           backgroundColor: kPrimaryColor,
-          body: pageList[safeIndex],
+          body: pageList[index],
           bottomNavigationBar: const BottomNavBar(),
         );
       },
     );
   }
+
 }

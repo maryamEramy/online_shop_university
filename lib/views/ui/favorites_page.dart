@@ -27,7 +27,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
             child: ListView.builder(
               itemCount: favoritesNotifier.fav.length,
               itemBuilder: (BuildContext context, int index) {
-                final shoe = favoritesNotifier.fav[index];
+                final product = favoritesNotifier.fav[index];
                 return SizedBox(
                   height: 100,
                   child: Card(
@@ -44,7 +44,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                             Padding(
                               padding: EdgeInsets.all(12),
                               child: CachedNetworkImage(
-                                imageUrl: shoe['imageUrl'],
+                                imageUrl: product['imageUrl'],
                                 width: 70,
                                 height: 70,
                                 fit: BoxFit.fill,
@@ -59,14 +59,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   SizedBox(
                                     width: 200,
                                     child: Text(
-                                      shoe['name'],
+                                      product['name'],
                                       style: kRegularTextStyle,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                   SizedBox(height: 2),
                                   Text(
-                                    shoe['category'],
+                                    product['category'],
                                     style: kSecondTextStyle,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -76,7 +76,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '${shoe['price']}',
+                                        '${product['price']}',
                                         style: kSecondTextStyle,
                                       ),
                                     ],
@@ -88,9 +88,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            favoritesNotifier.deleteFav(shoe['key']);
+                            favoritesNotifier.deleteFav(product['key']);
                             favoritesNotifier.ids.removeWhere(
-                              (element) => element == shoe['id'],
+                              (element) => element == product['id'],
                             );
                             Navigator.push(
                               context,

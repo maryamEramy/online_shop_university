@@ -140,12 +140,20 @@ class _SignupPageState extends State<SignupPage> {
                           showSpinner = true;
                         });
 
-                        final userCredential = await AuthService()
-                            .createUserWithEmailAndPassword(
+                        // final userCredential = await AuthService()
+                        //     .createUserWithEmailAndPassword(
+                        //   email: _emailController.text.trim(),
+                        //   password: _passwordController.text.trim(),
+                        //   name: _nameController.text.trim(), // ✅ اضافه شد
+                        // );
+                        final userCredential = await AuthService().createUserWithEmailAndPassword(
                           email: _emailController.text.trim(),
                           password: _passwordController.text.trim(),
-                          name: _nameController.text.trim(), // ✅ اضافه شد
+                          name: _nameController.text.trim(),
+                          cartProvider: Provider.of<CartProvider>(context, listen: false),
+                          favoritesNotifier: Provider.of<FavoritesNotifier>(context, listen: false),
                         );
+
 
                         final user = userCredential.user;
                         if (user != null) {

@@ -4,7 +4,7 @@ import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
 import 'package:uni_online_shop/views/ui/favorites_page.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   const ProductCard({
     super.key,
     required this.id,
@@ -21,10 +21,15 @@ class ProductCard extends StatelessWidget {
   final String category;
 
   @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  @override
   Widget build(BuildContext context) {
     final favoritesNotifier = Provider.of<FavoritesNotifier>(context);
 
-    final isFavorite = favoritesNotifier.ids.contains(id);
+    final isFavorite = favoritesNotifier.ids.contains(widget.id);
 
     return Padding(
       padding: const EdgeInsets.all(10.0),
@@ -56,46 +61,105 @@ class ProductCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       image: DecorationImage(
-                        image: NetworkImage(image),
+                        image: NetworkImage(widget.image),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
+
                   Positioned(
                     right: 4,
                     top: 4,
-                    child: GestureDetector(
-                      onTap: () async {
-                        if (isFavorite) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FavoritesPage(),
-                            ),
-                          );
-                        } else {
-                          await favoritesNotifier.createFav({
-                            "id": id,
-                            "name": name,
-                            "category": category,
-                            "price": price,
-                            "imageUrl": image,
-                          });
-                        }
+                    child: Consumer<FavoritesNotifier>(
+                      builder: (context, favoritesNotifier, _) {
+                        final isFavorite = favoritesNotifier.ids.contains(widget.id);
+
+                        return GestureDetector(
+                          onTap: () async {
+                            if (isFavorite) {
+                              // محصول از قبل لایک شده → حذف از فاووریت
+                              Map<String, dynamic>? favItem;
+                              try {
+                                favItem = favoritesNotifier.favorites.firstWhere(
+                                      (item) => item['id'] == widget.id,
+                                );
+                              } catch (e) {
+                                favItem = null;
+                              }
+
+                              if (favItem != null) {
+                                await favoritesNotifier.deleteFav(favItem['key']);
+                              }
+                            } else {
+                              // محصول لایک نشده → اضافه به فاووریت
+                              await favoritesNotifier.createFav({
+                                "id": widget.id,
+                                "name": widget.name,
+                                "category": widget.category,
+                                "price": widget.price,
+                                "imageUrl": widget.image,
+                              });
+                            }
+                          },
+                          child: Image.asset(
+                            isFavorite ? kAppIcons.liked : kAppIcons.like,
+                            height: 20,
+                            width: 20,
+                          ),
+                        );
                       },
-                      child: Image.asset(
-                        isFavorite ? kAppIcons.like : kAppIcons.liked,
-                        height: 20,
-                        width: 20,
-                      ),
                     ),
                   ),
+
+
+                  //لایک کردن کاملا درست انجام میضشه در کد زیر
+                  // Positioned(
+                  //   right: 4,
+                  //   top: 4,
+                  //   child: Consumer<FavoritesNotifier>(
+                  //     builder: (context, favoritesNotifier, _) {
+                  //       final isFavorite = favoritesNotifier.ids.contains(widget.id);
+                  //
+                  //       return GestureDetector(
+                  //         onTap: () async {
+                  //           if (isFavorite) {
+                  //             final favItem = favoritesNotifier.favorites.firstWhere(
+                  //                   (item) => item['id'] == widget.id,
+                  //               orElse: () => null,
+                  //             );
+                  //             if (favItem != null) {
+                  //
+                  //               favoritesNotifier.deleteFav(favItem['key']);
+                  //               favoritesNotifier.ids.removeWhere(
+                  //                     (element) => element == favItem['id'],
+                  //               );
+                  //               // await favoritesNotifier.deleteFav(favItem['key']);
+                  //             }
+                  //           } else {
+                  //             await favoritesNotifier.createFav({
+                  //               "id": widget.id,
+                  //               "name": widget.name,
+                  //               "category": widget.category,
+                  //               "price": widget.price,
+                  //               "imageUrl": widget.image,
+                  //             });
+                  //           }
+                  //         },
+                  //         child: Image.asset(
+                  //           isFavorite ? kAppIcons.liked : kAppIcons.like,
+                  //           height: 20,
+                  //           width: 20,
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                 ],
               ),
               SizedBox(
                 width: 100,
                 child: Text(
-                  name,
+                  widget.name,
                   style: kRegularTextStyle.copyWith(color: kPrimaryColor),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -105,13 +169,13 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    category,
+                    widget.category,
                     style: kSecondTextStyle.copyWith(color: kPrimaryColor),
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(width: 5),
                   Text(
-                    price,
+                    widget.price,
                     style: kSecondTextStyle.copyWith(
                       color: kPrimaryColor,
                       fontWeight: FontWeight.w700,

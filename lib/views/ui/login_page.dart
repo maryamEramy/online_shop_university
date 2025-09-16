@@ -98,10 +98,17 @@ class _LoginPageState extends State<LoginPage> {
                     });
 
                     // تغییر این قسمت
+                    // final credential = await AuthService().signinUserWithEmailAndPassword(
+                    //   email: _emailController.text.trim(),
+                    //   password: _passwordController.text.trim(),
+                    // );
                     final credential = await AuthService().signinUserWithEmailAndPassword(
                       email: _emailController.text.trim(),
                       password: _passwordController.text.trim(),
+                      cartProvider: Provider.of<CartProvider>(context, listen: false),
+                      favoritesNotifier: Provider.of<FavoritesNotifier>(context, listen: false),
                     );
+
 
                     final user = credential.user;
 

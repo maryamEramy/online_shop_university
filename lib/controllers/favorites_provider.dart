@@ -17,20 +17,7 @@ class FavoritesNotifier extends ChangeNotifier {
     getAllData();
   }
 
-  getFavorites(){
-    if (_favBox == null || !_favBox!.isOpen) return;
-    final favData = _favBox!.keys.map((key){
-      final item = _favBox!.get(key);
-      return{
-        "key" : key,
-        "id" : item['id']
-      };
-    }).toList();
 
-    _favorites = favData.toList();
-    _ids = _favorites.map((item) => item['id']).toList();
-    notifyListeners();
-  }
 
   getAllData(){
     if (_favBox == null || !_favBox!.isOpen) return;
@@ -49,15 +36,55 @@ class FavoritesNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  // Future<void> deleteFav(int key) async {
+  //   if (_favBox == null) return;
+  //   await _favBox!.delete(key);
+  //   getAllData();
+  // }
   Future<void> deleteFav(int key) async {
     if (_favBox == null) return;
     await _favBox!.delete(key);
-    getAllData();
+    await getFavorites(); // ← اینو اضافه کن تا ids و favorites آپدیت بشه
+    getAllData(); // برای اطلاعات کامل آیتم‌ها
   }
 
+  // Future<void> createFav(Map<String, dynamic> addFav) async {
+  //   if (_favBox == null) return;
+  //   await _favBox!.add(addFav);
+  //   getAllData();
+  // }
   Future<void> createFav(Map<String, dynamic> addFav) async {
     if (_favBox == null) return;
     await _favBox!.add(addFav);
+    await getFavorites(); // ← اینو اضافه کن
     getAllData();
+  }
+  // getFavorites(){
+  //   if (_favBox == null || !_favBox!.isOpen) return;
+  //   final favData = _favBox!.keys.map((key){
+  //     final item = _favBox!.get(key);
+  //     return{
+  //       "key" : key,
+  //       "id" : item['id']
+  //     };
+  //   }).toList();
+  //
+  //   _favorites = favData.toList();
+  //   _ids = _favorites.map((item) => item['id']).toList();
+  //   notifyListeners();
+  // }
+  getFavorites() {
+    if (_favBox == null || !_favBox!.isOpen) return;
+    final favData = _favBox!.keys.map((key) {
+      final item = _favBox!.get(key);
+      return {
+        "key": key,
+        "id": item['id'],
+      };
+    }).toList();
+
+    _favorites = favData.toList();
+    _ids = _favorites.map((item) => item['id']).toList();
+    notifyListeners();
   }
 }
