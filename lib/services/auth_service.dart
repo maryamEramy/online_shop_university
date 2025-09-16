@@ -8,9 +8,11 @@ class AuthService {
   User? get getCurrentUser => _firebaseAuth.currentUser;
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
+  // ✅ ثبت نام با ایمیل، پسورد و نام
   Future<UserCredential> createUserWithEmailAndPassword({
     required String email,
     required String password,
+    required String name,
   }) async {
     try {
       // ایجاد کاربر در Firebase Auth
@@ -20,9 +22,10 @@ class AuthService {
       if (userCredential.user != null) {
         User user = userCredential.user!;
 
-        // ذخیره اطلاعات کاربر در Firestore
+        // ذخیره اطلاعات کامل کاربر در Firestore
         await _firestore.collection("users").doc(user.uid).set({
           "uid": user.uid,
+          "name": name,
           "email": user.email,
           "createdAt": FieldValue.serverTimestamp(),
           "cart": [],
@@ -31,9 +34,7 @@ class AuthService {
       }
 
       return userCredential;
-
     } catch (e) {
-      // مدیریت خطا و پرتاب مجدد آن
       print("Error in createUserWithEmailAndPassword: $e");
       rethrow;
     }
@@ -44,7 +45,6 @@ class AuthService {
     required String password,
   }) async {
     try {
-      // ورود کاربر
       return await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
@@ -60,36 +60,6 @@ class AuthService {
       await _firebaseAuth.signOut();
     } catch (e) {
       print("Error in signOutUserWithEmailAndPassword: $e");
-      rethrow;
-    }
-  }
-
-  // متد کمکی برای بررسی وجود کاربر
-  Future<bool> userExists(String uid) async {
-    try {
-      final doc = await _firestore.collection("users").doc(uid).get();
-      return doc.exists;
-    } catch (e) {
-      print("Error checking if user exists: $e");
-      return false;
-    }
-  }
-
-  // متد برای به روزرسانی پروفایل کاربر
-  // در AuthService - متد updateUserProfile
-  Future<void> updateUserProfile({
-    required String uid,
-    String? name,
-  }) async {
-    try {
-      Map<String, dynamic> updateData = {};
-
-      if (name != null) updateData['name'] = name;
-
-      await _firestore.collection("users").doc(uid).update(updateData);
-
-    } catch (e) {
-      print("Error updating user profile: $e");
       rethrow;
     }
   }

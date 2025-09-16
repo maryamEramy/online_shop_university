@@ -31,7 +31,7 @@ class ProductCard extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          height: 140,
+          height: 200,
           width: 140,
           decoration: BoxDecoration(
             color: kLightSecondaryColor,
@@ -67,7 +67,6 @@ class ProductCard extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () async {
                         if (isFavorite) {
-                          // اگر میخوای بره به صفحه علاقه‌مندی‌ها
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -75,7 +74,6 @@ class ProductCard extends StatelessWidget {
                             ),
                           );
                         } else {
-                          // اضافه کردن به علاقه‌مندی‌ها
                           await favoritesNotifier.createFav({
                             "id": id,
                             "name": name,
@@ -87,8 +85,8 @@ class ProductCard extends StatelessWidget {
                       },
                       child: Image.asset(
                         isFavorite ? kAppIcons.like : kAppIcons.liked,
-                        height: 16,
-                        width: 16,
+                        height: 20,
+                        width: 20,
                       ),
                     ),
                   ),

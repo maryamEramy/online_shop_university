@@ -142,54 +142,37 @@ class _SignupPageState extends State<SignupPage> {
 
                         final userCredential = await AuthService()
                             .createUserWithEmailAndPassword(
-                              email: _emailController.text.trim(),
-                              password: _passwordController.text.trim(),
-                              // senderName: _nameController.text.trim(),
-                            );
+                          email: _emailController.text.trim(),
+                          password: _passwordController.text.trim(),
+                          name: _nameController.text.trim(), // ✅ اضافه شد
+                        );
+
                         final user = userCredential.user;
                         if (user != null) {
-                          await FirebaseFirestore.instance
-                              .collection("users")
-                              .doc(user.uid)
-                              .update({"name": _nameController.text.trim()});
                           await Hive.openBox('cart_box_${user.uid}');
                           await Hive.openBox('fav_box_${user.uid}');
-                          final userProvider = Provider.of<UserProvider>(
-                            context,
-                            listen: false,
-                          );
+
+                          final userProvider = Provider.of<UserProvider>(context, listen: false);
                           final newUser = UserModel(
                             uid: user.uid,
                             name: _nameController.text.trim(),
                             email: _emailController.text.trim(),
                           );
                           userProvider.setUser(newUser);
-                          final cartProvider = Provider.of<CartProvider>(
-                            context,
-                            listen: false,
-                          );
+
+                          final cartProvider = Provider.of<CartProvider>(context, listen: false);
                           await cartProvider.setUserId(user.uid);
-                          final favProvider = Provider.of<FavoritesNotifier>(
-                            context,
-                            listen: false,
-                          );
+
+                          final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
                           await favProvider.setUserId(user.uid);
+
                           if (mounted) {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                builder: (context) => MainPage(),
-                              ),
+                              MaterialPageRoute(builder: (context) => MainPage()),
                             );
                           }
                         }
-
-                        // final currentUser = FirebaseAuth.instance.currentUser;
-                        // if (currentUser != null) {
-                        //   // await Hive.openBox('cart_box_${currentUser.uid}');
-                        //   // await Hive.openBox('fav_box_${currentUser.uid}');
-                        //   // ذخیره در Provider
-                        // }
 
                         setState(() {
                           showSpinner = false;
@@ -198,15 +181,15 @@ class _SignupPageState extends State<SignupPage> {
                         setState(() {
                           showSpinner = false;
                           errorOccurred = true;
-                          errorMessage =
-                              e.toString().contains(']')
-                                  ? e.toString().split('] ')[1]
-                                  : e.toString();
+                          errorMessage = e.toString().contains(']')
+                              ? e.toString().split('] ')[1]
+                              : e.toString();
                         });
                       }
                     }
                   },
                 ),
+
               ),
             ],
           ),
