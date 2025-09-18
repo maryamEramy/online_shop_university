@@ -25,6 +25,11 @@ class AuthService {
       if (userCredential.user != null) {
         User user = userCredential.user!;
 
+        // ✅ ست کردن displayName روی User
+        await user.updateDisplayName(name);
+        await user.reload(); // بروزرسانی اطلاعات کاربر بعد از تغییر displayName
+        user = _firebaseAuth.currentUser!; // آپدیت متغیر user با اطلاعات جدید
+
         // ذخیره اطلاعات در Firestore
         await _firestore.collection("users").doc(user.uid).set({
           "uid": user.uid,
@@ -46,6 +51,42 @@ class AuthService {
       rethrow;
     }
   }
+
+  // Future<UserCredential> createUserWithEmailAndPassword({
+  //   required String email,
+  //   required String password,
+  //   required String name,
+  //   required CartProvider cartProvider,
+  //   required FavoritesNotifier favoritesNotifier,
+  // }) async {
+  //   try {
+  //     UserCredential userCredential = await _firebaseAuth
+  //         .createUserWithEmailAndPassword(email: email, password: password);
+  //
+  //     if (userCredential.user != null) {
+  //       User user = userCredential.user!;
+  //
+  //       // ذخیره اطلاعات در Firestore
+  //       await _firestore.collection("users").doc(user.uid).set({
+  //         "uid": user.uid,
+  //         "name": name,
+  //         "email": user.email,
+  //         "createdAt": FieldValue.serverTimestamp(),
+  //         "cart": [],
+  //         "favorites": [],
+  //       });
+  //
+  //       // ✅ ست کردن Box های Hive برای یوزر جدید
+  //       await cartProvider.setUserId(user.uid);
+  //       await favoritesNotifier.setUserId(user.uid);
+  //     }
+  //
+  //     return userCredential;
+  //   } catch (e) {
+  //     print("Error in createUserWithEmailAndPassword: $e");
+  //     rethrow;
+  //   }
+  // }
 
   // ✅ ورود
   Future<UserCredential> signinUserWithEmailAndPassword({

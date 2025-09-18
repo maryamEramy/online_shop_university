@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
@@ -36,34 +34,6 @@ class _SignupPageState extends State<SignupPage> {
     _passwordController.dispose();
     _nameController.dispose();
   }
-
-  // Future<void> signUp() async {
-  //   try {
-  //     final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-  //       email: _emailController.text.trim(),
-  //       password: _passwordController.text.trim(),
-  //     );
-  //
-  //     final user = credential.user;
-  //     if (user != null) {
-  //       await saveUserData(user, _nameController.text.trim());
-  //     }
-  //   } catch (e) {
-  //     debugPrint("Signup error: $e");
-  //   }
-  // }
-  //
-  // Future<void> saveUserData(User user, String name) async {
-  //   await FirebaseFirestore.instance.collection("users").doc(user.uid).set({
-  //     "uid": user.uid,
-  //     "name": name,
-  //     "email": user.email,
-  //     "createdAt": FieldValue.serverTimestamp(),
-  //   });
-  // }
-
-  final _fireStore = FirebaseFirestore.instance;
-  final TextEditingController _user = TextEditingController();
 
   String errorMessage = '';
   bool errorOccurred = false, showSpinner = false;
@@ -139,7 +109,6 @@ class _SignupPageState extends State<SignupPage> {
                           errorOccurred = false;
                           showSpinner = true;
                         });
-
                         // ثبت نام با Email/Password و Name + ست کردن provider ها
                         final userCredential = await AuthService().createUserWithEmailAndPassword(
                           email: _emailController.text.trim(),
@@ -197,8 +166,6 @@ class _SignupPageState extends State<SignupPage> {
                     }
                   },
                 ),
-
-
               ),
             ],
           ),

@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import '../../controllers/image_path.dart';
-import '../ui/registration_page.dart';
-
 class ProfileWidget extends StatelessWidget {
   const ProfileWidget({super.key, required this.user});
 
@@ -11,56 +9,119 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = FirebaseAuth.instance.currentUser;
+    // از user پاس داده شده استفاده کنید
+    final currentUser = user;
 
-    return SizedBox(
-      child:
-          user != null
-              ? ListTile(
-                leading: Container(
-                  width: 90,
-                  height: 90,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(2000)),
-                  ),
-                  child: Center(
-                    child: Image(
-                      image: AssetImage(ImagePath.womanProfile),
-                    ),
-                  ),
-                ),
-                title: Text(user.displayName ?? "no name" , style: kMainTextStyle,),
-                subtitle: Text("${user.email}" , style: kSecondTextStyle,),
-              )
-              : ListTile(
-                leading: Container(
-                  width: 90,
-                  height: 90,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(2000)),
-                  ),
-                  child: Center(
-                    child: Image(
-                      color: kSecondaryColor,
-                      image: AssetImage(ImagePath.womanProfile),
-                    ),
-                  ),
-                ),
-                title: Text("you have no account" , style: kMainTextStyle,),
-                trailing: IconButton(
-                  icon: Icon(Icons.login),
-                  onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => Registration_page(),
-                      ),
-                    );
-                  },
+    return Row(
+      children: [
+        currentUser != null
+            ? Row(
+          children: [
+            Container(
+              width: 90,
+              height: 90,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(1000),
+              ),
+              child: Center(
+                child: Image(image: AssetImage(ImagePath.womanProfile)),
+              ),
+            ),
+            SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(currentUser.displayName ?? "no name", style: kMainTextStyle),
+                Text("${currentUser.email}", style: kSecondTextStyle),
+              ],
+            ),
+          ],
+        )
+            : Row(
+          children: [
+            Container(
+              width: 90,
+              height: 90,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(1000),
+              ),
+              child: Center(
+                child: Image(
+                  color: kSecondaryColor,
+                  image: AssetImage(ImagePath.womanProfile),
                 ),
               ),
+            ),
+            SizedBox(width: 10),
+            Text("you have no account", style: kMainTextStyle),
+          ],
+        ),
+      ],
     );
   }
 }
+
+// class ProfileWidget extends StatelessWidget {
+//   const ProfileWidget({super.key, required this.user});
+//
+//   final User? user;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//
+//     final User? user = this.user; // بجای FirebaseAuth.instance.currentUser
+//
+//     // final User? user = FirebaseAuth.instance.currentUser;
+//
+//     return Row(
+//       children: [
+//         user != null
+//             ? Row(
+//               children: [
+//                 Container(
+//                   width: 90,
+//                   height: 90,
+//                   decoration: BoxDecoration(
+//                     color: Colors.white,
+//                     borderRadius: BorderRadius.circular(1000),
+//                   ),
+//                   child: Center(
+//                     child: Image(image: AssetImage(ImagePath.womanProfile)),
+//                   ),
+//                 ),
+//                 SizedBox(width: 10,),
+//                 Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Text(user.displayName ?? "no name", style: kMainTextStyle),
+//                     Text("${user.email}", style: kSecondTextStyle),
+//                   ],
+//                 ),
+//               ],
+//             )
+//             : Row(
+//               children: [
+//                 Container(
+//                   width: 90,
+//                   height: 90,
+//                   decoration: BoxDecoration(
+//                     color: Colors.white,
+//                     borderRadius: BorderRadius.circular(1000),
+//                   ),
+//                   child: Center(
+//                     child: Image(
+//                       color: kSecondaryColor,
+//                       image: AssetImage(ImagePath.womanProfile),
+//                     ),
+//                   ),
+//                 ),
+//                 SizedBox(width: 10,),
+//                 Text("you have no account", style: kMainTextStyle),
+//               ],
+//             ),
+//       ],
+//     );
+//   }
+// }
