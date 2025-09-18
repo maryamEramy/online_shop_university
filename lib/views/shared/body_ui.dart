@@ -19,41 +19,82 @@ class BodyUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kPrimaryColor,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 40),
+      body: Column(
+        children: [
+          SizedBox(height: 20),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // Header
+          SizedBox(
+            height: 40,
+            width: double.infinity,
+            child: Row(
               children: [
                 if (showBackIcon)
-                  SizedBox(
-                    width: 10,
-                    child: GestureDetector(
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16),
                       child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
                     ),
-                  ),
-                TextTitleWidget(text: headerTitle ?? "NOZAMA"),
-                if (showBackIcon) SizedBox(width: 10),
+                  )
+                else
+                  const SizedBox(width: 48), // بالانس
+
+                Expanded(
+                  child: TextTitleWidget(text: headerTitle ?? "NOZAMA"),
+                ),
+
+                const SizedBox(width: 48), // بالانس سمت راست
               ],
             ),
-            DividerWidget(),
-            Expanded(
+          ),
+
+          // SizedBox(
+          //   height: 40,
+          //   width: double.infinity, // مهم: عرض کامل صفحه
+          //   child: Stack(
+          //     children: [
+          //       // تایتل همیشه وسط صفحه
+          //       Center(
+          //         child: TextTitleWidget(
+          //           text: headerTitle ?? "NOZAMA",
+          //         ),
+          //       ),
+          //
+          //       // آیکون بک سمت چپ
+          //       if (showBackIcon)
+          //         Positioned(
+          //           left: 0, // همیشه سمت چپ
+          //           top: 0,
+          //           bottom: 0,
+          //           child: GestureDetector(
+          //             onTap: () => Navigator.pop(context),
+          //             child: const Padding(
+          //               padding: EdgeInsets.symmetric(horizontal: 16),
+          //               child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
+          //             ),
+          //           ),
+          //         ),
+          //     ],
+          //   ),
+          // ),
+
+          DividerWidget(),
+
+          // محتوا
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: children,
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
+
+

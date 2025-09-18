@@ -25,7 +25,7 @@ class _Registration_pageState extends State<Registration_page>
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 40),
+            SizedBox(height: 20),
             TextTitleWidget(text: 'Registration'),
             DividerWidget(),
             TextBoxWidget(

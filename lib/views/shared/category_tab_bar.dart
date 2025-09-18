@@ -13,14 +13,14 @@ class CategoryTabBar extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: TabBar(
+
         tabAlignment: TabAlignment.start,
-        indicatorSize: TabBarIndicatorSize.label,
-        indicatorColor: Colors.transparent,
         controller: _tabController,
         isScrollable: true,
         dividerColor: kPrimaryColor,
         labelStyle: kRegularTextStyle,
         unselectedLabelColor: kGrayColor,
+        indicator: const BoxDecoration(),
         tabs: const [
           CategoryWidget(categoryImage: kAppCategoryImages.mensShoes, categoryName: 'mens-shoes'),
           CategoryWidget(categoryImage: kAppCategoryImages.beauty, categoryName: 'beauty'),

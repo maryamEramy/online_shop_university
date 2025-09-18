@@ -11,7 +11,7 @@ class DividerWidget extends StatelessWidget {
   const DividerWidget({
     Key? key,
     this.color = kWhiteColor,
-    this.thickness = 1.0,
+    this.thickness = 0.5,
     this.indent = 4.0,
     this.endIndent = 4.0,
   }) : super(key: key);

@@ -44,25 +44,33 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     var cartProvider = Provider.of<CartProvider>(context);
 
-    return BodyUi(
-      headerTitle: '',
-      showBackIcon: true,
-      children: [
-        FutureBuilder<ProductInfo>(
-          future: _productFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(color: kSecondaryColor),
-              );
-            } else if (snapshot.hasError) {
-              return Center(child: Text("Error ${snapshot.error}", style: kErrorTextStyle));
-            } else if (!snapshot.hasData) {
-              return const Center(child: Text("No product found"));
-            } else {
-              final sneaker = snapshot.data!;
+    return FutureBuilder<ProductInfo>(
+      future: _productFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(color: kSecondaryColor),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Scaffold(
+            body: Center(
+              child: Text("Error ${snapshot.error}", style: kErrorTextStyle),
+            ),
+          );
+        } else if (!snapshot.hasData) {
+          return const Scaffold(
+            body: Center(child: Text("No product found")),
+          );
+        } else {
+          final sneaker = snapshot.data!;
 
-              return SingleChildScrollView(
+          return BodyUi(
+            headerTitle: sneaker.name, // ✅ حالا اینجا مقدار داره
+            showBackIcon: true,
+            children: [
+              SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -72,8 +80,10 @@ class _ProductPageState extends State<ProductPage> {
                         width: 200,
                         height: 200,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) => const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                        placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -92,8 +102,12 @@ class _ProductPageState extends State<ProductPage> {
                           const SizedBox(height: 8),
                           Text(sneaker.category, style: kSecondTextStyle),
                           const SizedBox(height: 12),
-                          Text("\$${sneaker.price}",
-                              style: kMainTextStyle.copyWith(color: kSecondaryColor)),
+                          Text(
+                            "\$${sneaker.price}",
+                            style: kMainTextStyle.copyWith(
+                              color: kSecondaryColor,
+                            ),
+                          ),
                           const Divider(height: 24, color: Colors.black26),
                           Text(
                             sneaker.description,
@@ -142,13 +156,14 @@ class _ProductPageState extends State<ProductPage> {
                     ),
                   ],
                 ),
-              );
-            }
-          },
-        ),
-      ],
+              ),
+            ],
+          );
+        }
+      },
     );
   }
+
 }
 
 

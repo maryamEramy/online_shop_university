@@ -15,9 +15,7 @@ class Categories extends StatelessWidget {
       child: ListView.builder(
         shrinkWrap: true,
         itemBuilder: (_ , index){
-          return VerticalImageText(image: ImagePath.bag, title: "Bag" , onTap: (){
-
-          },);
+          return VerticalImageText(image: ImagePath.bag, title: "Bag" , onTap: (){},);
         },
         itemCount: 6,
         scrollDirection: Axis.horizontal,
