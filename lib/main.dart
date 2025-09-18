@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -19,34 +20,35 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-
-  // final user = FirebaseAuth.instance.currentUser;
-  // if (user != null) {
-  //   await Hive.initFlutter();
-  //   await Hive.openBox('cart_box_${user.uid}');
-  //   await Hive.openBox('fav_box_${user.uid}');
-  // }
-  //
   await Hive.initFlutter();
-
   await Hive.openBox('app_config');
-  //
-  // await Hive.openBox('cart_box');
-  // await Hive.openBox('fav_box');
+
+  // ✅ اگر کاربر قبلاً لاگین است، باکس‌ها رو باز کن
+  final user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    if(!Hive.isBoxOpen('cart_box_${user.uid}')){
+      await Hive.openBox('cart_box_${user.uid}');
+    }
+    if(!Hive.isBoxOpen('fav_box_${user.uid}')){
+      await Hive.openBox('fav_box_${user.uid}');
+    }
+  }
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
         ChangeNotifierProvider(create: (_) => MainPageNotifier()),
-        ChangeNotifierProvider(create: (context) => ProductNotifier()),
-        ChangeNotifierProvider(create: (context) => FavoritesNotifier()),
-        ChangeNotifierProvider(create: (context) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => ProductNotifier()),
+        ChangeNotifierProvider(create: (_) => FavoritesNotifier()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
       child: const MyApp(),
     ),
   );
 }
+
+
 
 
 class MyApp extends StatelessWidget {

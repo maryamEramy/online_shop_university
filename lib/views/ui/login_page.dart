@@ -109,14 +109,9 @@ class _LoginPageState extends State<LoginPage> {
                       favoritesNotifier: Provider.of<FavoritesNotifier>(context, listen: false),
                     );
 
-
                     final user = credential.user;
 
                     if (user != null) {
-                      // باز کردن باکس‌های مخصوص کاربر
-                      await Hive.openBox('cart_box_${user.uid}');
-                      await Hive.openBox('fav_box_${user.uid}');
-
                       // دریافت اطلاعات کاربر از Firestore
                       final doc = await FirebaseFirestore.instance
                           .collection("users")
@@ -130,6 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                         final userProvider = Provider.of<UserProvider>(context, listen: false);
                         userProvider.setUser(loggedInUser);
 
+                        // ✅ ست کردن provider ها بدون باز کردن دوباره باکس‌ها
                         final cartProvider = Provider.of<CartProvider>(context, listen: false);
                         await cartProvider.setUserId(user.uid);
 
@@ -144,6 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       }
                     }
+
 
                     setState(() {
                       showSpinner = false;

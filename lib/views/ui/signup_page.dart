@@ -140,12 +140,7 @@ class _SignupPageState extends State<SignupPage> {
                           showSpinner = true;
                         });
 
-                        // final userCredential = await AuthService()
-                        //     .createUserWithEmailAndPassword(
-                        //   email: _emailController.text.trim(),
-                        //   password: _passwordController.text.trim(),
-                        //   name: _nameController.text.trim(), // ✅ اضافه شد
-                        // );
+                        // ثبت نام با Email/Password و Name + ست کردن provider ها
                         final userCredential = await AuthService().createUserWithEmailAndPassword(
                           email: _emailController.text.trim(),
                           password: _passwordController.text.trim(),
@@ -154,12 +149,17 @@ class _SignupPageState extends State<SignupPage> {
                           favoritesNotifier: Provider.of<FavoritesNotifier>(context, listen: false),
                         );
 
-
                         final user = userCredential.user;
                         if (user != null) {
-                          await Hive.openBox('cart_box_${user.uid}');
-                          await Hive.openBox('fav_box_${user.uid}');
+                          // ✅ باز کردن باکس‌های کاربر (اگر باز نبود)
+                          if(!Hive.isBoxOpen('cart_box_${user.uid}')){
+                            await Hive.openBox('cart_box_${user.uid}');
+                          }
+                          if(!Hive.isBoxOpen('fav_box_${user.uid}')){
+                            await Hive.openBox('fav_box_${user.uid}');
+                          }
 
+                          // ✅ ست کردن provider ها
                           final userProvider = Provider.of<UserProvider>(context, listen: false);
                           final newUser = UserModel(
                             uid: user.uid,
@@ -190,13 +190,14 @@ class _SignupPageState extends State<SignupPage> {
                           showSpinner = false;
                           errorOccurred = true;
                           errorMessage = e.toString().contains(']')
-                              ? e.toString().split('] ')[1]
+                              ? (e.toString().split('] ').length > 1 ? e.toString().split('] ')[1] : e.toString())
                               : e.toString();
                         });
                       }
                     }
                   },
                 ),
+
 
               ),
             ],

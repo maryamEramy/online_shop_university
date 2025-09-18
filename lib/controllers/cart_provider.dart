@@ -14,9 +14,14 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> setUserId(String userId) async {
-    _cartBox = await Hive.openBox('cart_box_$userId');
+    if(Hive.isBoxOpen('cart_box_$userId')){
+      _cartBox = Hive.box('cart_box_$userId');
+    } else {
+      _cartBox = await Hive.openBox('cart_box_$userId');
+    }
     getCart();
   }
+
 
 
   Future<void> addCart(Map<String, dynamic> newCart) async {

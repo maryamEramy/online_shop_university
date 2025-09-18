@@ -50,7 +50,7 @@ class _ProductPageState extends State<ProductPage> {
 
     favoritesNotifier.getFavorites();
     return BodyUi(
-      headerTitle: 'SignUp',
+      headerTitle: '',
       showBackIcon: true,
       children: [
         FutureBuilder<ProductInfo>(

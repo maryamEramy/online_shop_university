@@ -12,9 +12,15 @@ class FavoritesNotifier extends ChangeNotifier {
   List<dynamic> get fav => _fav;
 
   Future<void> setUserId(String userId) async {
-    _favBox = await Hive.openBox('fav_box_$userId');
+    if(Hive.isBoxOpen('fav_box_$userId')){
+      _favBox = Hive.box('fav_box_$userId');
+    } else {
+      _favBox = await Hive.openBox('fav_box_$userId');
+    }
     getAllData();
+    getFavorites();
   }
+
 
 
   getAllData(){
