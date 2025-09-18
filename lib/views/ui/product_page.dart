@@ -22,40 +22,36 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-
   late Future<ProductInfo> _productFuture;
+
   @override
   void initState() {
     super.initState();
     _loadProduct();
+
+    // ✅ getFavorites فقط یکبار بعد از لود شدن ویجت
+    Future.microtask(() {
+      final favoritesNotifier = Provider.of<FavoritesNotifier>(context, listen: false);
+      favoritesNotifier.getFavorites();
+    });
   }
+
   void _loadProduct() {
     final productNotifier = Provider.of<ProductNotifier>(context, listen: false);
     _productFuture = productNotifier.getProduct(widget.category, widget.id);
   }
 
-  // final PageController pageController = PageController();
-
   @override
   Widget build(BuildContext context) {
     var cartProvider = Provider.of<CartProvider>(context);
-    // var cartProvider = Provider.of<CartProvider>(context);
-
     var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
-    // var favoritesNotifier = Provider.of<FavoritesNotifier>(context , listen: true);
 
-    // var productNotifier = Provider.of<ProductNotifier>(context);
-    // productNotifier.getProduct(widget.category, widget.id);
-
-
-    favoritesNotifier.getFavorites();
     return BodyUi(
       headerTitle: '',
       showBackIcon: true,
       children: [
         FutureBuilder<ProductInfo>(
           future: _productFuture,
-          // future: productNotifier.product,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -64,7 +60,7 @@ class _ProductPageState extends State<ProductPage> {
             } else if (snapshot.hasError) {
               return Center(child: Text("Error ${snapshot.error}", style: kErrorTextStyle));
             } else if (!snapshot.hasData) {
-              return Center(child: const Text("No product found"));
+              return const Center(child: Text("No product found"));
             } else {
               final sneaker = snapshot.data!;
 
@@ -78,11 +74,8 @@ class _ProductPageState extends State<ProductPage> {
                         width: 200,
                         height: 200,
                         fit: BoxFit.cover,
-
-                        placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                        placeholder: (context, url) => const CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -97,20 +90,12 @@ class _ProductPageState extends State<ProductPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            sneaker.name,
-                            style: kMainTextStyle,
-                          ),
+                          Text(sneaker.name, style: kMainTextStyle),
                           const SizedBox(height: 8),
-                          Text(
-                            sneaker.category,
-                            style: kSecondTextStyle,
-                          ),
+                          Text(sneaker.category, style: kSecondTextStyle),
                           const SizedBox(height: 12),
-                          Text(
-                            "\$${sneaker.price}",
-                            style: kMainTextStyle.copyWith(color: kSecondaryColor)
-                          ),
+                          Text("\$${sneaker.price}",
+                              style: kMainTextStyle.copyWith(color: kSecondaryColor)),
                           const Divider(height: 24, color: Colors.black26),
                           Text(
                             sneaker.description,
@@ -123,12 +108,11 @@ class _ProductPageState extends State<ProductPage> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
-                        padding: EdgeInsets.only(top: 12),
-                        child:
-                        RoundedButton(
+                        padding: const EdgeInsets.only(top: 12),
+                        child: RoundedButton(
                           color: kSecondaryColor,
                           onPressed: () async {
-                            try{
+                            try {
                               await cartProvider.addCart({
                                 "id": sneaker.id,
                                 "name": sneaker.name,
@@ -143,24 +127,15 @@ class _ProductPageState extends State<ProductPage> {
                                   content: Text("Added to cart successfully!"),
                                   duration: Duration(seconds: 2),
                                 ),
-                              );}
-                            catch (e) {
+                              );
+                            } catch (e) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text("Error: $e"),
                                   backgroundColor: Colors.red,
                                 ),
                               );
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder:
-                              //         (context) => CartPage(),
-                              //   ),
-                              // );
                             }
-
-
                           },
                           textColor: kWhiteColor,
                           title: 'Add to Cart',
@@ -177,4 +152,5 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 }
+
 
