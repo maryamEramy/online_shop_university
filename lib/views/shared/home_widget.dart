@@ -39,11 +39,11 @@ class HomeWidget extends StatelessWidget {
               Text('Products', style: kMainTextStyle),
               Expanded(
                 child: GridView.builder(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(8),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 0,
+                    crossAxisSpacing: 0,
                     childAspectRatio: 1,
                   ),
                   itemCount: products.length,

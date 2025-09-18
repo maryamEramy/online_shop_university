@@ -28,22 +28,14 @@ class _ProductCardState extends State<ProductCard> {
   Widget build(BuildContext context) {
 
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(4.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Container(
-          height: 200,
-          width: 140,
+          // height: 200,
+          // width: 140,
           decoration: BoxDecoration(
             color: kLightSecondaryColor,
-            boxShadow: [
-              BoxShadow(
-                color: kGrayColor,
-                spreadRadius: 10,
-                blurRadius: 0.8,
-                offset: Offset(0, 0),
-              ),
-            ],
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -114,30 +106,16 @@ class _ProductCardState extends State<ProductCard> {
                 ),
               ),
               SizedBox(height: 2),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Flexible(
-                    child: Text(
-                      widget.category,
-                      style: kSecondTextStyle.copyWith(color: kPrimaryColor),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
+              Flexible(
+                child: Text(
+                  widget.price,
+                  style: kSecondTextStyle.copyWith(
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.w700,
                   ),
-                  const SizedBox(width: 5),
-                  Flexible(
-                    child: Text(
-                      widget.price,
-                      style: kSecondTextStyle.copyWith(
-                        color: kPrimaryColor,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                    ),
-                  ),
-                ],
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
               ),
             ],
           ),

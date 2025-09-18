@@ -16,7 +16,10 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   // late TabController _tabController;
 
-  late final TabController _tabController = TabController(length: 13, vsync: this);
+  late final TabController _tabController = TabController(
+    length: 13,
+    vsync: this,
+  );
 
   static const _categories = <String>[
     "mens-shoes",
@@ -62,7 +65,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return BodyUi(
       headerTitle: "Nozama",
       children: [
-        Text('Categories' , style: kMainTextStyle,),
+        Text('Categories', style: kMainTextStyle),
         const SizedBox(height: 8),
         // CategoryTabBar(tabController: _tabController, categories: _categories),
         CategoryTabBar(tabController: _tabController),

@@ -4,7 +4,7 @@ import 'category_widget.dart';
 
 class CategoryTabBar extends StatelessWidget {
   const CategoryTabBar({super.key, required TabController tabController})
-      : _tabController = tabController;
+    : _tabController = tabController;
 
   final TabController _tabController;
 
@@ -13,7 +13,7 @@ class CategoryTabBar extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: TabBar(
-
+        labelPadding: EdgeInsets.symmetric(horizontal: 4),
         tabAlignment: TabAlignment.start,
         controller: _tabController,
         isScrollable: true,
@@ -22,19 +22,58 @@ class CategoryTabBar extends StatelessWidget {
         unselectedLabelColor: kGrayColor,
         indicator: const BoxDecoration(),
         tabs: const [
-          CategoryWidget(categoryImage: kAppCategoryImages.mensShoes, categoryName: 'mens-shoes'),
-          CategoryWidget(categoryImage: kAppCategoryImages.beauty, categoryName: 'beauty'),
-          CategoryWidget(categoryImage: kAppCategoryImages.fragrances, categoryName: 'fragrances'),
-          CategoryWidget(categoryImage: kAppCategoryImages.furniture, categoryName: 'furniture'),
-          CategoryWidget(categoryImage: kAppCategoryImages.groceries, categoryName: 'groceries'),
-          CategoryWidget(categoryImage: kAppCategoryImages.laptops, categoryName: 'laptops'),
-          CategoryWidget(categoryImage: kAppCategoryImages.mensShirts, categoryName: 'mens-shirts'),
-          CategoryWidget(categoryImage: kAppCategoryImages.mensWatches, categoryName: 'mens-watches'),
-          CategoryWidget(categoryImage: kAppCategoryImages.homeDecoration, categoryName: 'home-decoration'),
-          CategoryWidget(categoryImage: kAppCategoryImages.kitchenAccessories, categoryName: 'kitchen-accessories'),
-          CategoryWidget(categoryImage: kAppCategoryImages.smartphones, categoryName: 'smartphones'),
-          CategoryWidget(categoryImage: kAppCategoryImages.motorcycle, categoryName: 'motorcycle'),
-          CategoryWidget(categoryImage: kAppCategoryImages.skincare, categoryName: 'skin-care'),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.mensShoes,
+            categoryName: 'mens-shoes',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.beauty,
+            categoryName: 'beauty',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.fragrances,
+            categoryName: 'fragrances',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.furniture,
+            categoryName: 'furniture',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.groceries,
+            categoryName: 'groceries',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.laptops,
+            categoryName: 'laptops',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.mensShirts,
+            categoryName: 'mens-shirts',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.mensWatches,
+            categoryName: 'mens-watches',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.homeDecoration,
+            categoryName: 'home-decoration',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.kitchenAccessories,
+            categoryName: 'kitchen-accessories',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.smartphones,
+            categoryName: 'smartphones',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.motorcycle,
+            categoryName: 'motorcycle',
+          ),
+          CategoryWidget(
+            categoryImage: kAppCategoryImages.skincare,
+            categoryName: 'skin-care',
+          ),
         ],
       ),
     );

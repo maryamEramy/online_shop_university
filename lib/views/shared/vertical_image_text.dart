@@ -18,8 +18,8 @@ class VerticalImageText extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              width: 56,
-              height: 56,
+              // width: 56,
+              // height: 56,
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: backgroundColor,
