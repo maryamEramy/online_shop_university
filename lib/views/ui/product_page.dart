@@ -8,8 +8,7 @@ import 'package:uni_online_shop/views/shared/roundedButton.dart';
 import '../../controllers/constant.dart';
 import '../../controllers/favorites_provider.dart';
 import '../../models/sneakers_model.dart';
-import '../shared/text_title_widget.dart';
-import 'cart_page.dart';
+
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});
@@ -44,7 +43,6 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     var cartProvider = Provider.of<CartProvider>(context);
-    var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
 
     return BodyUi(
       headerTitle: '',

@@ -51,15 +51,13 @@ class _ProductCardState extends State<ProductCard> {
             children: [
               Stack(
                 children: [
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: DecorationImage(
-                        image: NetworkImage(widget.image),
-                        fit: BoxFit.cover,
-                      ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.network(
+                      widget.image,
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.contain,
                     ),
                   ),
 
@@ -111,23 +109,32 @@ class _ProductCardState extends State<ProductCard> {
                   widget.name,
                   style: kRegularTextStyle.copyWith(color: kPrimaryColor),
                   overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
                 ),
               ),
               SizedBox(height: 2),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    widget.category,
-                    style: kSecondTextStyle.copyWith(color: kPrimaryColor),
-                    overflow: TextOverflow.ellipsis,
+                  Flexible(
+                    child: Text(
+                      widget.category,
+                      style: kSecondTextStyle.copyWith(color: kPrimaryColor),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
                   ),
                   const SizedBox(width: 5),
-                  Text(
-                    widget.price,
-                    style: kSecondTextStyle.copyWith(
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.w700,
+                  Flexible(
+                    child: Text(
+                      widget.price,
+                      style: kSecondTextStyle.copyWith(
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                     ),
                   ),
                 ],
