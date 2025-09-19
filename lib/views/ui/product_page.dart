@@ -28,7 +28,6 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
     _loadProduct();
 
-    // ✅ getFavorites فقط یکبار بعد از لود شدن ویجت
     Future.microtask(() {
       final favoritesNotifier = Provider.of<FavoritesNotifier>(context, listen: false);
       favoritesNotifier.getFavorites();

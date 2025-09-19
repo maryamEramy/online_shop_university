@@ -23,16 +23,16 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('app_config');
 
-  // ✅ اگر کاربر قبلاً لاگین است، باکس‌ها رو باز کن
-  final user = FirebaseAuth.instance.currentUser;
-  if (user != null) {
-    if(!Hive.isBoxOpen('cart_box_${user.uid}')){
-      await Hive.openBox('cart_box_${user.uid}');
-    }
-    if(!Hive.isBoxOpen('fav_box_${user.uid}')){
-      await Hive.openBox('fav_box_${user.uid}');
-    }
-  }
+
+  // final user = FirebaseAuth.instance.currentUser;
+  // if (user != null) {
+  //   if(!Hive.isBoxOpen('cart_box_${user.uid}')){
+  //     await Hive.openBox('cart_box_${user.uid}');
+  //   }
+  //   if(!Hive.isBoxOpen('fav_box_${user.uid}')){
+  //     await Hive.openBox('fav_box_${user.uid}');
+  //   }
+  // }
 
   runApp(
     MultiProvider(
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
       builder: (context , child){
        return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: SplashScreen(),
+          home: const SplashScreen(),
        );
       },
     );

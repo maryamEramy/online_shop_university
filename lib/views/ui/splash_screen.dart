@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../controllers/cart_provider.dart';
+import '../../controllers/favorites_provider.dart';
 import '../../controllers/user_provider.dart';
 import '../../controllers/constant.dart';
 import 'main_page.dart';
@@ -23,16 +25,19 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _initializeAndNavigate() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
+
 
     try {
-      // 1. لود کردن اطلاعات کاربر از Firestore
       await userProvider.loadUserData();
+      await Future.delayed(const Duration(seconds: 2));
 
-      // 2. تاخیر 3 ثانیه برای نمایش اسپلش
-      await Future.delayed(const Duration(seconds: 3));
-
-      // 3. هدایت به صفحه مناسب
       if (userProvider.user != null) {
+        final userId = userProvider.user!.uid;
+        await cartProvider.setUserId(userId);
+        await favProvider.setUserId(userId);
+
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => const MainPage()),
         );
@@ -43,7 +48,6 @@ class _SplashScreenState extends State<SplashScreen> {
       }
     } catch (e) {
       debugPrint("SplashScreen error: $e");
-      // در صورت خطا هم کاربر رو به صفحه ثبت‌نام هدایت کن
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (_) => const Registration_page()),
       );

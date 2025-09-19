@@ -104,12 +104,12 @@ class _SignupPageState extends State<SignupPage> {
                 child: SignUpButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
+                      setState(() {
+                        errorOccurred = false;
+                        showSpinner = true;
+                      });
+
                       try {
-                        setState(() {
-                          errorOccurred = false;
-                          showSpinner = true;
-                        });
-                        // ثبت نام با Email/Password و Name + ست کردن provider ها
                         final userCredential = await AuthService().createUserWithEmailAndPassword(
                           email: _emailController.text.trim(),
                           password: _passwordController.text.trim(),
@@ -120,41 +120,26 @@ class _SignupPageState extends State<SignupPage> {
 
                         final user = userCredential.user;
                         if (user != null) {
-                          // ✅ باز کردن باکس‌های کاربر (اگر باز نبود)
                           if(!Hive.isBoxOpen('cart_box_${user.uid}')){
                             await Hive.openBox('cart_box_${user.uid}');
                           }
                           if(!Hive.isBoxOpen('fav_box_${user.uid}')){
                             await Hive.openBox('fav_box_${user.uid}');
                           }
-
-                          // ✅ ست کردن provider ها
-                          final userProvider = Provider.of<UserProvider>(context, listen: false);
-                          final newUser = UserModel(
-                            uid: user.uid,
-                            name: _nameController.text.trim(),
-                            email: _emailController.text.trim(),
+                          /**/
+                          Provider.of<UserProvider>(context, listen: false).setUser(
+                            UserModel(uid: user.uid, name: _nameController.text.trim(), email: _emailController.text.trim()),
                           );
-                          userProvider.setUser(newUser);
-
-                          final cartProvider = Provider.of<CartProvider>(context, listen: false);
-                          await cartProvider.setUserId(user.uid);
-
-                          final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
-                          await favProvider.setUserId(user.uid);
-
-                          if (mounted) {
+                          await Provider.of<CartProvider>(context, listen: false).setUserId(user.uid);
+                          await Provider.of<FavoritesNotifier>(context, listen: false).setUserId(user.uid);
+                          if (!mounted) return;
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(builder: (context) => MainPage()),
                             );
-                          }
                         }
-
-                        setState(() {
-                          showSpinner = false;
-                        });
                       } catch (e) {
+                        if(!mounted) return;
                         setState(() {
                           showSpinner = false;
                           errorOccurred = true;

@@ -39,7 +39,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.transparent,
                       onPressed: () {
                         Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 2;
-                        Navigator.popUntil(context, (route) => route.isFirst);
+                        // Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 2;
+                        // Navigator.popUntil(context, (route) => route.isFirst);
                       },
                       textColor: kWhiteColor,
                     ),
@@ -48,7 +49,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       color: Colors.transparent,
                       onPressed: () {
                         Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 3;
-                        Navigator.popUntil(context, (route) => route.isFirst);
+                        // Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 3;
+                        // Navigator.popUntil(context, (route) => route.isFirst);
                       },
                       textColor: kWhiteColor,
                     ),
