@@ -5,6 +5,7 @@ List<ProductInfo> sneakersFromJson(String str) => List<ProductInfo>.from(
 );
 
 class ProductInfo {
+  int ? key;
   final String id;
   final String name;
   final String category;
@@ -13,6 +14,7 @@ class ProductInfo {
   final String description;
 
   ProductInfo({
+    this.key,
     required this.id,
     required this.name,
     required this.imageUrl,

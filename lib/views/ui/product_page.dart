@@ -27,12 +27,13 @@ class _ProductPageState extends State<ProductPage> {
   void initState() {
     super.initState();
     _loadProduct();
-
+//*************************************************************************************************
     Future.microtask(() {
       final favoritesNotifier = Provider.of<FavoritesNotifier>(context, listen: false);
       favoritesNotifier.getFavorites();
     });
   }
+//*************************************************************************************************
 
   void _loadProduct() {
     final productNotifier = Provider.of<ProductNotifier>(context, listen: false);

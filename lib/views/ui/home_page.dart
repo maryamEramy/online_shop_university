@@ -41,18 +41,17 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    // _tabController = TabController(length: _categories.length, vsync: this);
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final productNotifier = context.read<ProductNotifier>();
       final favoritesNotifier = context.read<FavoritesNotifier>();
-
+//******************************************************************************
       for (final c in _categories) {
         productNotifier.getProducts(c);
       }
       favoritesNotifier.getFavorites();
     });
   }
+//******************************************************************************
 
   @override
   void dispose() {

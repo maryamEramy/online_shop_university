@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import '../models/sneakers_model.dart';  // اینو اضافه کن تا ProductInfo رو داشته باشی
+
 
 class FavoritesNotifier extends ChangeNotifier {
   Box? _favBox;
@@ -21,25 +23,6 @@ class FavoritesNotifier extends ChangeNotifier {
     getFavorites();
   }
 
-
-
-  getAllData(){
-    if (_favBox == null || !_favBox!.isOpen) return;
-    final favData = _favBox!.keys.map((key) {
-      final item = _favBox!.get(key);
-      return {
-        "key": key,
-        "id": item['id'],
-        "name": item['name'],
-        "category": item['category'],
-        "price": item['price'],
-        "imageUrl": item['imageUrl'],
-      };
-    }).toList();
-    _fav = favData.reversed.toList();
-    notifyListeners();
-  }
-
   Future<void> deleteFav(int key) async {
     if (_favBox == null) return;
     await _favBox!.delete(key);
@@ -52,6 +35,25 @@ class FavoritesNotifier extends ChangeNotifier {
     await _favBox!.add(addFav);
     await getFavorites();
     getAllData();
+  }
+
+  getAllData(){
+    if (_favBox == null || !_favBox!.isOpen) return;
+    final favData = _favBox!.keys.map((key) {
+      final item = _favBox!.get(key);
+      return ProductInfo(
+        key: key,
+        id: item['id'].toString(),
+        name: item['name'],
+        category: item['category'],
+        price: item['price'],
+        imageUrl: item['imageUrl'],
+        description: "",
+      );
+    }).toList();
+    _fav = favData.reversed.toList();
+    _ids = _fav.map((item) => item.id).toList();
+    notifyListeners();
   }
 
   getFavorites() {
