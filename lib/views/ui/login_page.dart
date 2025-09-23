@@ -4,7 +4,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/views/shared/login_button.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
-import '../../controllers/cart_provider.dart';
+import '../../controllers/basket_provider.dart';
 import '../../controllers/constant.dart';
 import '../../controllers/favorites_provider.dart';
 import '../../controllers/user_provider.dart';
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                     final credential = await AuthService().signinUserWithEmailAndPassword(
                       email: _emailController.text.trim(),
                       password: _passwordController.text.trim(),
-                      cartProvider: Provider.of<CartProvider>(context, listen: false),
+                      cartProvider: Provider.of<BasketProvider>(context, listen: false),
                       favoritesNotifier: Provider.of<FavoritesNotifier>(context, listen: false),
                     );
 
@@ -126,7 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                         userProvider.setUser(loggedInUser);
 
                         // ✅ ست کردن provider ها بدون باز کردن دوباره باکس‌ها
-                        final cartProvider = Provider.of<CartProvider>(context, listen: false);
+                        final cartProvider = Provider.of<BasketProvider>(context, listen: false);
                         await cartProvider.setUserId(user.uid);
 
                         final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);

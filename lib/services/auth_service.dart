@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uni_online_shop/controllers/cart_provider.dart';
+import 'package:uni_online_shop/controllers/basket_provider.dart';
 import 'package:uni_online_shop/controllers/favorites_provider.dart';
 
 class AuthService {
@@ -15,7 +15,7 @@ class AuthService {
     required String email,
     required String password,
     required String name,
-    required CartProvider cartProvider,
+    required BasketProvider cartProvider,
     required FavoritesNotifier favoritesNotifier,
   }) async {
     try {
@@ -92,7 +92,7 @@ class AuthService {
   Future<UserCredential> signinUserWithEmailAndPassword({
     required String email,
     required String password,
-    required CartProvider cartProvider,
+    required BasketProvider cartProvider,
     required FavoritesNotifier favoritesNotifier,
   }) async {
     try {

@@ -5,7 +5,7 @@ import 'package:uni_online_shop/views/shared/email_text_field_widget.dart';
 import 'package:uni_online_shop/views/shared/passwoed_text_field_widget.dart';
 import 'package:uni_online_shop/views/shared/signup_button.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
-import '../../controllers/cart_provider.dart';
+import '../../controllers/basket_provider.dart';
 import '../../controllers/constant.dart';
 import '../../controllers/favorites_provider.dart';
 import '../../controllers/user_provider.dart';
@@ -114,7 +114,7 @@ class _SignupPageState extends State<SignupPage> {
                           email: _emailController.text.trim(),
                           password: _passwordController.text.trim(),
                           name: _nameController.text.trim(),
-                          cartProvider: Provider.of<CartProvider>(context, listen: false),
+                          cartProvider: Provider.of<BasketProvider>(context, listen: false),
                           favoritesNotifier: Provider.of<FavoritesNotifier>(context, listen: false),
                         );
 
@@ -130,7 +130,7 @@ class _SignupPageState extends State<SignupPage> {
                           Provider.of<UserProvider>(context, listen: false).setUser(
                             UserModel(uid: user.uid, name: _nameController.text.trim(), email: _emailController.text.trim()),
                           );
-                          await Provider.of<CartProvider>(context, listen: false).setUserId(user.uid);
+                          await Provider.of<BasketProvider>(context, listen: false).setUserId(user.uid);
                           await Provider.of<FavoritesNotifier>(context, listen: false).setUserId(user.uid);
                           if (!mounted) return;
                             Navigator.pushReplacement(

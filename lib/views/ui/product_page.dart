@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uni_online_shop/controllers/cart_provider.dart';
+import 'package:uni_online_shop/controllers/basket_provider.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/views/shared/body_ui.dart';
 import 'package:uni_online_shop/views/shared/roundedButton.dart';
@@ -42,7 +42,7 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
-    var cartProvider = Provider.of<CartProvider>(context);
+    var cartProvider = Provider.of<BasketProvider>(context);
 
     return FutureBuilder<ProductInfo>(
       future: _productFuture,
@@ -67,7 +67,7 @@ class _ProductPageState extends State<ProductPage> {
           final sneaker = snapshot.data!;
 
           return BodyUi(
-            headerTitle: sneaker.name, // ✅ حالا اینجا مقدار داره
+            headerTitle: sneaker.name,
             showBackIcon: true,
             children: [
               SingleChildScrollView(
@@ -125,7 +125,7 @@ class _ProductPageState extends State<ProductPage> {
                           color: kSecondaryColor,
                           onPressed: () async {
                             try {
-                              await cartProvider.addCart({
+                              await cartProvider.addBasket({
                                 "id": sneaker.id,
                                 "name": sneaker.name,
                                 "category": sneaker.category,

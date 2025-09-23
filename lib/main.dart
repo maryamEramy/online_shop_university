@@ -7,7 +7,7 @@ import 'package:uni_online_shop/controllers/favorites_provider.dart';
 import 'package:uni_online_shop/controllers/main_page_provider.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/views/ui/splash_screen.dart';
-import 'controllers/cart_provider.dart';
+import 'controllers/basket_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'controllers/user_provider.dart';
 import 'firebase_options.dart';
@@ -41,7 +41,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => MainPageNotifier()),
         ChangeNotifierProvider(create: (_) => ProductNotifier()),
         ChangeNotifierProvider(create: (_) => FavoritesNotifier()),
-        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => BasketProvider()),
       ],
       child: const MyApp(),
     ),

@@ -38,50 +38,15 @@ class BodyUi extends StatelessWidget {
                     ),
                   )
                 else
-                  const SizedBox(width: 48), // بالانس
-
+                  const SizedBox(width: 48),
                 Expanded(
                   child: TextTitleWidget(text: headerTitle ?? "NOZAMA"),
                 ),
-
-                const SizedBox(width: 48), // بالانس سمت راست
+                const SizedBox(width: 48),
               ],
             ),
           ),
-
-          // SizedBox(
-          //   height: 40,
-          //   width: double.infinity, // مهم: عرض کامل صفحه
-          //   child: Stack(
-          //     children: [
-          //       // تایتل همیشه وسط صفحه
-          //       Center(
-          //         child: TextTitleWidget(
-          //           text: headerTitle ?? "NOZAMA",
-          //         ),
-          //       ),
-          //
-          //       // آیکون بک سمت چپ
-          //       if (showBackIcon)
-          //         Positioned(
-          //           left: 0, // همیشه سمت چپ
-          //           top: 0,
-          //           bottom: 0,
-          //           child: GestureDetector(
-          //             onTap: () => Navigator.pop(context),
-          //             child: const Padding(
-          //               padding: EdgeInsets.symmetric(horizontal: 16),
-          //               child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
-          //             ),
-          //           ),
-          //         ),
-          //     ],
-          //   ),
-          // ),
-
           DividerWidget(),
-
-          // محتوا
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/controllers/main_page_provider.dart';
-import 'package:uni_online_shop/views/ui/cart_page.dart';
+import 'package:uni_online_shop/views/ui/basket_page.dart';
 import 'package:uni_online_shop/views/ui/home_page.dart';
 import 'package:uni_online_shop/views/ui/profile_page.dart';
 import 'package:uni_online_shop/views/ui/search_page.dart';
@@ -27,7 +27,7 @@ class _MainPageState extends State<MainPage> {
       const HomePage(),
       const SearchPage(),
       const FavoritesPage(),
-      CartPage(),
+      BasketPage(),
       const ProfilePage(),
     ];
   }

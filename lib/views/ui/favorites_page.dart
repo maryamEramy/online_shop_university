@@ -56,12 +56,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           favoritesNotifier.ids.removeWhere(
                                 (element) => element == product.id,
                           );
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => MainPage(),
-                          //   ),
-                          // );
                         },
                         child: Image(
                           image: AssetImage(kAppIcons.liked),
