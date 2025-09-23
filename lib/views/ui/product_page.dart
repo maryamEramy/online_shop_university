@@ -133,7 +133,7 @@ class _ProductPageState extends State<ProductPage> {
                                 "price": sneaker.price,
                                 "qty": 1,
                               });
-                              await cartProvider.addCart(sneaker);
+                              // await cartProvider.addCart(sneaker);
 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
