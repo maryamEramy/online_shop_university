@@ -20,8 +20,6 @@ class BasketPage extends StatefulWidget {
 class _BasketPageState extends State<BasketPage> {
   @override
   Widget build(BuildContext context) {
-    int total_price = 0;
-    int single_product_total_price = 0;
 
     var cartProvider = Provider.of<BasketProvider>(context);
     // cartProvider.getCart();

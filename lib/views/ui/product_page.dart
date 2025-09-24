@@ -27,13 +27,11 @@ class _ProductPageState extends State<ProductPage> {
   void initState() {
     super.initState();
     _loadProduct();
-//*************************************************************************************************
     Future.microtask(() {
       final favoritesNotifier = Provider.of<FavoritesNotifier>(context, listen: false);
       favoritesNotifier.getFavorites();
     });
   }
-//*************************************************************************************************
 
   void _loadProduct() {
     final productNotifier = Provider.of<ProductNotifier>(context, listen: false);
@@ -70,51 +68,60 @@ class _ProductPageState extends State<ProductPage> {
             headerTitle: sneaker.name,
             showBackIcon: true,
             children: [
-              SingleChildScrollView(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: CachedNetworkImage(
-                        imageUrl: sneaker.imageUrl,
-                        width: 200,
-                        height: 200,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                        errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(16),
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: kLightPrimaryColor,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(sneaker.name, style: kMainTextStyle),
-                          const SizedBox(height: 8),
-                          Text(sneaker.category, style: kSecondTextStyle),
-                          const SizedBox(height: 12),
-                          Text(
-                            "\$${sneaker.price}",
-                            style: kMainTextStyle.copyWith(
-                              color: kSecondaryColor,
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Center(
+                              child: CachedNetworkImage(
+                                imageUrl: sneaker.imageUrl,
+                                width: 200,
+                                height: 200,
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                              ),
                             ),
-                          ),
-                          const Divider(height: 24, color: Colors.black26),
-                          Text(
-                            sneaker.description,
-                            style: kRegularTextStyle,
-                            textAlign: TextAlign.justify,
-                          ),
-                        ],
+                            const SizedBox(height: 20),
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              margin: const EdgeInsets.symmetric(horizontal: 16),
+                              decoration: BoxDecoration(
+                                color: kLightPrimaryColor,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(sneaker.name, style: kMainTextStyle),
+                                  const SizedBox(height: 8),
+                                  Text(sneaker.category, style: kSecondTextStyle),
+                                  const SizedBox(height: 12),
+                                  Text(
+                                    "\$${sneaker.price}",
+                                    style: kMainTextStyle.copyWith(
+                                      color: kSecondaryColor,
+                                    ),
+                                  ),
+                                  const Divider(height: 24, color: Colors.black26),
+                                  Text(
+                                    sneaker.description,
+                                    style: kRegularTextStyle,
+                                    textAlign: TextAlign.justify,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
                       ),
                     ),
                     Align(
@@ -151,7 +158,7 @@ class _ProductPageState extends State<ProductPage> {
                             }
                           },
                           textColor: kWhiteColor,
-                          title: 'Add to Cart',
+                          title: 'Add to Basket',
                         ),
                       ),
                     ),
