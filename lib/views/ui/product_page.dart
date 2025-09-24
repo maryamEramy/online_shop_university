@@ -157,7 +157,7 @@ class _ProductPageState extends State<ProductPage> {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 12),
+                        padding: const EdgeInsets.only(top: 12 , bottom: 42),
                         child: Column(
                           children: [
                             (qty == 0)

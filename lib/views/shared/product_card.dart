@@ -29,97 +29,105 @@ class _ProductCardState extends State<ProductCard> {
 
     return Padding(
       padding: const EdgeInsets.all(4.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Container(
-          // height: 200,
-          // width: 140,
-          decoration: BoxDecoration(
-            color: kLightSecondaryColor,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.network(
-                      widget.image,
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.contain,
-                    ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Container(
+            decoration: BoxDecoration(
+              color: kLightSecondaryColor,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    widget.image,
+                    height: 100,
+                    width: 100,
+                    fit: BoxFit.contain,
                   ),
-
-                  Positioned(
-                    right: 4,
-                    top: 4,
-                    child: Consumer<FavoritesNotifier>(
-                      builder: (context, favoritesNotifier, _) {
-                        final isFavorite = favoritesNotifier.ids.contains(widget.id);
-                        return GestureDetector(
-                          onTap: () async {
-                            if (isFavorite) {
-                              Map<String, dynamic>? favItem;
-                              try {
-                                favItem = favoritesNotifier.favorites.firstWhere(
-                                      (item) => item['id'] == widget.id,
-                                );
-                              } catch (e) {
-                                favItem = null;
-                              }
-
-                              if (favItem != null) {
-                                await favoritesNotifier.deleteFav(favItem['key']);
-                              }
-                            } else {
-                              await favoritesNotifier.createFav({
-                                "id": widget.id,
-                                "name": widget.name,
-                                "category": widget.category,
-                                "price": widget.price,
-                                "imageUrl": widget.image,
-                              });
-                            }
-                          },
-                          child: Image.asset(
-                            isFavorite ? kAppIcons.liked : kAppIcons.like,
-                            height: 22,
-                            width: 22,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                width: 100,
-                child: Text(
-                  widget.name,
-                  style: kRegularTextStyle.copyWith(color: kPrimaryColor),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
                 ),
-              ),
-              SizedBox(height: 2),
-              Flexible(
-                child: Text(
-                  widget.price,
-                  style: kSecondTextStyle.copyWith(
-                    color: kPrimaryColor,
-                    fontWeight: FontWeight.w700,
+                SizedBox(
+                  width: 100,
+                  child: Text(
+                    widget.name,
+                    style: kRegularTextStyle.copyWith(color: kPrimaryColor),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
                   ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
                 ),
-              ),
-            ],
+                SizedBox(height: 2),
+                Flexible(
+                  child: Text(
+                    widget.price,
+                    style: kSecondTextStyle.copyWith(
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
+          Positioned(
+            top: 0,
+            right: 0,
+            // left: 6,
+            // bottom: 5,
+            // top: 0,
+            child: Consumer<FavoritesNotifier>(
+              builder: (context, favoritesNotifier, _) {
+                final isFavorite = favoritesNotifier.ids.contains(widget.id);
+                return GestureDetector(
+                  onTap: () async {
+                    if (isFavorite) {
+                      Map<String, dynamic>? favItem;
+                      try {
+                        favItem = favoritesNotifier.favorites.firstWhere(
+                              (item) => item['id'] == widget.id,
+                        );
+                      } catch (e) {
+                        favItem = null;
+                      }
+
+                      if (favItem != null) {
+                        await favoritesNotifier.deleteFav(favItem['key']);
+                      }
+                    } else {
+                      await favoritesNotifier.createFav({
+                        "id": widget.id,
+                        "name": widget.name,
+                        "category": widget.category,
+                        "price": widget.price,
+                        "imageUrl": widget.image,
+                      });
+                    }
+                  },
+                  child: Container(color: Colors.transparent,
+                    width: 60,
+                    height: 60,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Image.asset(
+                        isFavorite ? kAppIcons.liked : kAppIcons.like,
+                        // height: 22,
+                        // width: 22,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ]
       ),
     );
   }
