@@ -34,7 +34,7 @@ class BodyUi extends StatelessWidget {
                     onTap: () => Navigator.pop(context),
                     child: const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
+                      child: Icon(Icons.arrow_back_ios, color: kSecondaryColor , size: 22,),
                     ),
                   )
                 else

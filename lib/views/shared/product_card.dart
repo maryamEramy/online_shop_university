@@ -86,8 +86,8 @@ class _ProductCardState extends State<ProductCard> {
                           },
                           child: Image.asset(
                             isFavorite ? kAppIcons.liked : kAppIcons.like,
-                            height: 20,
-                            width: 20,
+                            height: 22,
+                            width: 22,
                           ),
                         );
                       },

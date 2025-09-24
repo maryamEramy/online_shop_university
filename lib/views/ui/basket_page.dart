@@ -93,7 +93,7 @@ class _BasketPageState extends State<BasketPage> {
                                           },
                                           child: Icon(
                                             Icons.delete,
-                                            size: 16,
+                                            size: 22,
                                             color: kSecondaryColor,
                                           ),
                                         )
@@ -105,7 +105,7 @@ class _BasketPageState extends State<BasketPage> {
                                           },
                                           child: const Icon(
                                             AntDesign.minus,
-                                            size: 16,
+                                            size: 22,
                                             color: kSecondaryColor,
                                           ),
                                         ),
@@ -132,7 +132,7 @@ class _BasketPageState extends State<BasketPage> {
                                       },
                                       child: const Icon(
                                         AntDesign.plus,
-                                        size: 16,
+                                        size: 22,
                                         color: kSecondaryColor,
                                       ),
                                     ),
@@ -155,7 +155,7 @@ class _BasketPageState extends State<BasketPage> {
                       padding: const EdgeInsets.fromLTRB(22.0, 12.0, 22.0 , 0),
                       child: Row(
                         children: [
-                          Text('Total: ' , style: kRegularTextStyle.copyWith(color: kSecondaryColor),),
+                          Text('Total: ' , style: kRegularTextStyle),
                           Text(
                             "${basketProvider.totalPrice.toStringAsFixed(2)} \$",
                             style: kMainTextStyle.copyWith(color: kSecondaryColor),
