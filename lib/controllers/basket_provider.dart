@@ -30,6 +30,11 @@ class BasketProvider with ChangeNotifier {
       throw Exception("Basket box not initialized. Call setUserId first.");
     }
 
+    if (newBasketItem['price'] is String) {
+      newBasketItem['price'] = double.tryParse(newBasketItem['price']) ?? 0.0;
+    }
+
+
     final existingItems = _basketBox!.values.where((item) =>
     item['id'] == newBasketItem['id']).toList();
 
@@ -89,4 +94,26 @@ class BasketProvider with ChangeNotifier {
       getBasket();
     }
   }
+
+  double get totalPrice {
+    double total = 0;
+    if (_basketBox != null) {
+      for (var key in _basketBox!.keys) {
+        final item = _basketBox!.get(key);
+        if (item != null) {
+          final rawPrice = item['price'];
+          final price = rawPrice is String
+              ? double.tryParse(rawPrice) ?? 0.0
+              : (rawPrice as num).toDouble();
+          final qty = (item['qty'] as num).toInt();
+          total += price * qty;
+        }
+      }
+    }
+    return total;
+  }
+
+
+
+
 }

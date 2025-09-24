@@ -20,6 +20,9 @@ class BasketPage extends StatefulWidget {
 class _BasketPageState extends State<BasketPage> {
   @override
   Widget build(BuildContext context) {
+    int total_price = 0;
+    int single_product_total_price = 0;
+
     var cartProvider = Provider.of<BasketProvider>(context);
     // cartProvider.getCart();
     return BodyUi(
@@ -109,7 +112,7 @@ class _BasketPageState extends State<BasketPage> {
                                             color: kSecondaryColor,
                                           ),
                                         ),
-                                    SizedBox(width: 4,),
+                                    SizedBox(width: 4),
                                     SizedBox(
                                       width: 16,
                                       height: 16,
@@ -123,7 +126,7 @@ class _BasketPageState extends State<BasketPage> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: 4,),
+                                    SizedBox(width: 4),
                                     InkWell(
                                       onTap: () {
                                         cartProvider.incrementQty(
@@ -149,16 +152,32 @@ class _BasketPageState extends State<BasketPage> {
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: RoundedButton(
-                  title: 'Buy',
-                  color: kSecondaryColor,
-                  textColor: kWhiteColor,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainPage()),
-                    );
-                  },
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(22.0, 12.0, 22.0 , 0),
+                      child: Row(
+                        children: [
+                          Text('Total: ' , style: kRegularTextStyle.copyWith(color: kSecondaryColor),),
+                          Text(
+                            "${cartProvider.totalPrice.toStringAsFixed(2)} \$",
+                            style: kMainTextStyle.copyWith(color: kSecondaryColor),
+                          ),
+                        ],
+                      ),
+                    ),
+                    RoundedButton(
+                      title: 'Buy',
+                      color: kSecondaryColor,
+                      textColor: kWhiteColor,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MainPage()),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],

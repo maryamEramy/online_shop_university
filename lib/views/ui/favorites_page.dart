@@ -26,15 +26,15 @@ class _FavoritesPageState extends State<FavoritesPage> {
             itemBuilder: (BuildContext context, int index) {
               final product = favoritesNotifier.fav[index];
               return InkWell(
-                onTap: (){
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder:
                           (context) => ProductPage(
-                        id: product.id,
-                        category: product.category,
-                      ),
+                            id: product.id,
+                            category: product.category,
+                          ),
                     ),
                   );
                 },
@@ -47,14 +47,27 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       vertical: 8,
                     ),
                     child: ListTile(
-                      leading: CachedNetworkImage(imageUrl: product.imageUrl , width: 50,height: 50,fit: BoxFit.cover,),
-                      title: Text(product.name , style: kRegularTextStyle,),
-                      subtitle: Text("${product.category}  -   ${product.price}" , style: kSecondTextStyle,),
+                      leading: CachedNetworkImage(
+                        imageUrl: product.imageUrl,
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                      ),
+                      title: Text(
+                        product.name,
+                        style: kRegularTextStyle,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      subtitle: Text(
+                        "${product.category}  -   ${product.price}",
+                        style: kSecondTextStyle,
+                      ),
                       trailing: GestureDetector(
                         onTap: () {
                           favoritesNotifier.deleteFav(product.key!);
                           favoritesNotifier.ids.removeWhere(
-                                (element) => element == product.id,
+                            (element) => element == product.id,
                           );
                         },
                         child: Image(
