@@ -6,16 +6,16 @@ class ProductNotifier extends ChangeNotifier {
 
   late Future<ProductInfo> product;
 
-  int _activepage = 0;
+  int _activePage = 0;
   List<ProductInfo> _allProducts = [];
   ProductInfo? _selectedProduct;
 
-  int get activepage => _activepage;
+  int get activepage => _activePage;
   List<ProductInfo> get allProducts => _allProducts;
   ProductInfo? get selectedProduct => _selectedProduct;
 
   set activePage(int newIndex) {
-    _activepage = newIndex;
+    _activePage = newIndex;
     notifyListeners();
   }
 

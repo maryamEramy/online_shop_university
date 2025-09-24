@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/basket_provider.dart';
@@ -21,8 +20,8 @@ class _BasketPageState extends State<BasketPage> {
   @override
   Widget build(BuildContext context) {
 
-    var cartProvider = Provider.of<BasketProvider>(context);
-    // cartProvider.getCart();
+    var basketProvider = Provider.of<BasketProvider>(context);
+    // basketProvider.getCart();
     return BodyUi(
       headerTitle: "Your Basket",
       children: [
@@ -31,9 +30,9 @@ class _BasketPageState extends State<BasketPage> {
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: cartProvider.cart.length,
+                  itemCount: basketProvider.cart.length,
                   itemBuilder: (context, index) {
-                    final product = cartProvider.cart[index];
+                    final product = basketProvider.cart[index];
                     return InkWell(
                       onTap: () {
                         Navigator.push(
@@ -88,7 +87,7 @@ class _BasketPageState extends State<BasketPage> {
                                     (product['qty'] <= 1)
                                         ? GestureDetector(
                                           onTap: () {
-                                            cartProvider.deleteBasketItem(
+                                            basketProvider.deleteBasketItem(
                                               product['key'],
                                             );
                                           },
@@ -100,7 +99,7 @@ class _BasketPageState extends State<BasketPage> {
                                         )
                                         : InkWell(
                                           onTap: () {
-                                            cartProvider.decrementQty(
+                                            basketProvider.decrementQty(
                                               product['key'],
                                             );
                                           },
@@ -127,7 +126,7 @@ class _BasketPageState extends State<BasketPage> {
                                     SizedBox(width: 4),
                                     InkWell(
                                       onTap: () {
-                                        cartProvider.incrementQty(
+                                        basketProvider.incrementQty(
                                           product['key'],
                                         );
                                       },
@@ -158,7 +157,7 @@ class _BasketPageState extends State<BasketPage> {
                         children: [
                           Text('Total: ' , style: kRegularTextStyle.copyWith(color: kSecondaryColor),),
                           Text(
-                            "${cartProvider.totalPrice.toStringAsFixed(2)} \$",
+                            "${basketProvider.totalPrice.toStringAsFixed(2)} \$",
                             style: kMainTextStyle.copyWith(color: kSecondaryColor),
                           ),
                         ],

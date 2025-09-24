@@ -113,6 +113,33 @@ class BasketProvider with ChangeNotifier {
     return total;
   }
 
+  double productTotalPrice(String productId) {
+    if (_basketBox == null) return 0.0;
+
+    final item = _basketBox!.values.firstWhere(
+          (element) => element['id'] == productId,
+      orElse: () =>  <String, dynamic>{
+        "id": "",
+        "name": "",
+        "category": "",
+        "imageUrl": "",
+        "price": 0.0,
+        "qty": 0,
+      },
+    );
+
+    if (item == null) return 0.0;
+
+    final rawPrice = item['price'];
+    final price = rawPrice is String
+        ? double.tryParse(rawPrice) ?? 0.0
+        : (rawPrice as num).toDouble();
+    final qty = (item['qty'] as num).toInt();
+
+    return price * qty;
+  }
+
+
 
 
 
