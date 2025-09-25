@@ -49,111 +49,118 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kPrimaryColor,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    width: 10,
-                    child: GestureDetector(
-                      child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                    ),
+                  SizedBox(height: 40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 10,
+                        child: GestureDetector(
+                          child: Icon(Icons.arrow_back_ios, color: kSecondaryColor),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      TextTitleWidget(text: 'SignUp'),
+                      SizedBox(width: 10),
+                    ],
                   ),
-                  TextTitleWidget(text: 'SignUp'),
-                  SizedBox(width: 10),
+                  DividerWidget(),
+                  Column(
+                    children: [
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            NameTextFieldWidget(nameController: _nameController),
+                            SizedBox(height: 16),
+                            EmailTextFieldWidget(emailController: _emailController),
+                            SizedBox(height: 16),
+                            PasswordTextFieldWidget(
+                              passwordController: _passwordController,
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Visibility(
+                        visible: errorOccurred,
+                        child: Text(
+                          errorMessage,
+                          textAlign: TextAlign.center,
+                          style: kErrorTextStyle,
+                        ),
+                      ),
+                      SizedBox(height: 16),
+                    ],
+                  ),
                 ],
               ),
-              DividerWidget(),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    NameTextFieldWidget(nameController: _nameController),
-                    SizedBox(height: 16),
-                    EmailTextFieldWidget(emailController: _emailController),
-                    SizedBox(height: 16),
-                    PasswordTextFieldWidget(
-                      passwordController: _passwordController,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 8),
-              Visibility(
-                visible: errorOccurred,
-                child: Text(
-                  errorMessage,
-                  textAlign: TextAlign.center,
-                  style: kErrorTextStyle,
-                ),
-              ),
-              SizedBox(height: 16),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SignUpButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      setState(() {
-                        errorOccurred = false;
-                        showSpinner = true;
-                      });
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SignUpButton(
+                onPressed: () async {
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      errorOccurred = false;
+                      showSpinner = true;
+                    });
 
-                      try {
-                        final userCredential = await AuthService().createUserWithEmailAndPassword(
-                          email: _emailController.text.trim(),
-                          password: _passwordController.text.trim(),
-                          name: _nameController.text.trim(),
-                          cartProvider: Provider.of<BasketProvider>(context, listen: false),
-                          favoritesNotifier: Provider.of<FavoritesNotifier>(context, listen: false),
-                        );
+                    try {
+                      final userCredential = await AuthService().createUserWithEmailAndPassword(
+                        email: _emailController.text.trim(),
+                        password: _passwordController.text.trim(),
+                        name: _nameController.text.trim(),
+                        cartProvider: Provider.of<BasketProvider>(context, listen: false),
+                        favoritesNotifier: Provider.of<FavoritesNotifier>(context, listen: false),
+                      );
 
-                        final user = userCredential.user;
-                        if (user != null) {
-                          if(!Hive.isBoxOpen('cart_box_${user.uid}')){
-                            await Hive.openBox('cart_box_${user.uid}');
-                          }
-                          if(!Hive.isBoxOpen('fav_box_${user.uid}')){
-                            await Hive.openBox('fav_box_${user.uid}');
-                          }
-                          /**/
-                          Provider.of<UserProvider>(context, listen: false).setUser(
-                            UserModel(uid: user.uid, name: _nameController.text.trim(), email: _emailController.text.trim()),
-                          );
-                          await Provider.of<BasketProvider>(context, listen: false).setUserId(user.uid);
-                          await Provider.of<FavoritesNotifier>(context, listen: false).setUserId(user.uid);
-                          if (!mounted) return;
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => MainPage()),
-                            );
+                      final user = userCredential.user;
+                      if (user != null) {
+                        if(!Hive.isBoxOpen('cart_box_${user.uid}')){
+                          await Hive.openBox('cart_box_${user.uid}');
                         }
-                      } catch (e) {
-                        if(!mounted) return;
-                        setState(() {
-                          showSpinner = false;
-                          errorOccurred = true;
-                          errorMessage = e.toString().contains(']')
-                              ? (e.toString().split('] ').length > 1 ? e.toString().split('] ')[1] : e.toString())
-                              : e.toString();
-                        });
+                        if(!Hive.isBoxOpen('fav_box_${user.uid}')){
+                          await Hive.openBox('fav_box_${user.uid}');
+                        }
+                        /**/
+                        Provider.of<UserProvider>(context, listen: false).setUser(
+                          UserModel(uid: user.uid, name: _nameController.text.trim(), email: _emailController.text.trim()),
+                        );
+                        await Provider.of<BasketProvider>(context, listen: false).setUserId(user.uid);
+                        await Provider.of<FavoritesNotifier>(context, listen: false).setUserId(user.uid);
+                        if (!mounted) return;
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => MainPage()),
+                          );
                       }
+                    } catch (e) {
+                      if(!mounted) return;
+                      setState(() {
+                        showSpinner = false;
+                        errorOccurred = true;
+                        errorMessage = e.toString().contains(']')
+                            ? (e.toString().split('] ').length > 1 ? e.toString().split('] ')[1] : e.toString())
+                            : e.toString();
+                      });
                     }
-                  },
-                ),
+                  }
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
