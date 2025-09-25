@@ -34,6 +34,19 @@ class UserProvider with ChangeNotifier {
   }
 
 
+  Future<void> saveProfileImage(String path) async {
+    final box = Hive.box('userProfile');
+    await box.put('profileImagePath', path);
+  }
+
+  Future<String?> getProfileImage() async {
+    final box = Hive.box('userProfile');
+    return box.get('profileImagePath');
+  }
+
+
+
+
   void setUser(UserModel user) {
     _user = user;
     notifyListeners();

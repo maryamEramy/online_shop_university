@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
+import 'package:uni_online_shop/controllers/user_provider.dart';
 import '../../controllers/image_path.dart';
 
 class ProfileWidget extends StatefulWidget {
@@ -16,6 +17,10 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
+
+
+
+
   File? _imageFile;
   Future<void> _pickImage() async {
     final picker = ImagePicker();
@@ -25,12 +30,30 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         _imageFile = File(pickedFile.path);
       });
 
+      await UserProvider().saveProfileImage(pickedFile.path);
+
       //upload image to Firebase Storage
       //then
       //save the URL in user's profile
       // uploadToFirebase(_imageFile);
     }
   }
+
+
+  @override
+  void initState() {
+    super.initState();
+    UserProvider().getProfileImage().then((path) {
+      if (path != null && File(path).existsSync()) {
+        setState(() {
+          _imageFile = File(path);
+        });
+      }
+    });
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {

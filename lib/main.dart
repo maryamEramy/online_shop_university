@@ -22,6 +22,8 @@ void main() async {
 
   await Hive.initFlutter();
   await Hive.openBox('app_config');
+  await Hive.openBox('userProfile');
+
 
 
   // final user = FirebaseAuth.instance.currentUser;
