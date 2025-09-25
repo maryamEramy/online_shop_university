@@ -88,6 +88,7 @@ class _ProductPageState extends State<ProductPage> {
           return BodyUi(
             headerTitle: product.name,
             showBackIcon: true,
+            showBasketIcon: true,
             children: [
               Expanded(
                 child: Column(
@@ -95,62 +96,65 @@ class _ProductPageState extends State<ProductPage> {
                   children: [
                     Expanded(
                       child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Center(
-                              child: CachedNetworkImage(
-                                imageUrl: product.imageUrl,
-                                width: 200,
-                                height: 200,
-                                fit: BoxFit.cover,
-                                placeholder:
-                                    (context, url) =>
-                                        const CircularProgressIndicator(),
-                                errorWidget:
-                                    (context, url, error) =>
-                                        const Icon(Icons.error),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 22),
+                          child: Column(
+                            children: [
+                              Center(
+                                child: CachedNetworkImage(
+                                  imageUrl: product.imageUrl,
+                                  width: 200,
+                                  height: 200,
+                                  fit: BoxFit.cover,
+                                  placeholder:
+                                      (context, url) =>
+                                          const CircularProgressIndicator(),
+                                  errorWidget:
+                                      (context, url, error) =>
+                                          const Icon(Icons.error),
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 20),
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.all(16),
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                              ),
-                              decoration: BoxDecoration(
-                                color: kLightPrimaryColor,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(product.name, style: kMainTextStyle),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    product.category,
-                                    style: kSecondTextStyle,
-                                  ),
-                                  const SizedBox(height: 12),
-                                  Text(
-                                    "\$${product.price}",
-                                    style: kMainTextStyle.copyWith(
-                                      color: kSecondaryColor,
+                              const SizedBox(height: 20),
+                              Container(
+                                width: double.infinity,
+                                padding: const EdgeInsets.all(16),
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: kLightPrimaryColor,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(product.name, style: kMainTextStyle),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      product.category,
+                                      style: kSecondTextStyle,
                                     ),
-                                  ),
-                                  const Divider(
-                                    height: 24,
-                                    color: Colors.black26,
-                                  ),
-                                  Text(
-                                    product.description,
-                                    style: kRegularTextStyle,
-                                    textAlign: TextAlign.justify,
-                                  ),
-                                ],
+                                    const SizedBox(height: 12),
+                                    Text(
+                                      "\$${product.price}",
+                                      style: kMainTextStyle.copyWith(
+                                        color: kSecondaryColor,
+                                      ),
+                                    ),
+                                    const Divider(
+                                      height: 24,
+                                      color: Colors.black26,
+                                    ),
+                                    Text(
+                                      product.description,
+                                      style: kRegularTextStyle,
+                                      textAlign: TextAlign.justify,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
