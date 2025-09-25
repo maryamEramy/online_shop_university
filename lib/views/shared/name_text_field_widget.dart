@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:uni_online_shop/views/shared/text_field_widget.dart';
+import 'package:uni_online_shop/views/shared/rounded_text_field_widget.dart';
 
 class NameTextFieldWidget extends StatelessWidget {
   const NameTextFieldWidget({
@@ -11,7 +11,7 @@ class NameTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RoundedTextField(
+    return RoundedTextFieldWidget(
       controller: _nameController,
       hintText: 'Enter your Name',
       validator: (name) {

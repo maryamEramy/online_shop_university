@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:uni_online_shop/views/shared/text_field_widget.dart';
+import 'package:uni_online_shop/views/shared/rounded_text_field_widget.dart';
 
 class PasswordTextFieldWidget extends StatefulWidget {
   const PasswordTextFieldWidget({
@@ -16,7 +16,7 @@ class PasswordTextFieldWidget extends StatefulWidget {
 class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
-    return RoundedTextField(
+    return RoundedTextFieldWidget(
       isPasswordField: true,
       controller: widget._passwordController,
       hintText: 'Enter your password',

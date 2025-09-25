@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:uni_online_shop/views/shared/text_field_widget.dart';
+import 'package:uni_online_shop/views/shared/rounded_text_field_widget.dart';
 
 class EmailTextFieldWidget extends StatelessWidget {
   const EmailTextFieldWidget({
@@ -12,7 +12,7 @@ class EmailTextFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RoundedTextField(
+    return RoundedTextFieldWidget(
       controller: _emailController,
       hintText: 'Enter your email',
       validator: (email) {

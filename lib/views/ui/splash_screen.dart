@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uni_online_shop/views/ui/login_page.dart';
 import '../../controllers/basket_provider.dart';
 import '../../controllers/favorites_provider.dart';
 import '../../controllers/user_provider.dart';
 import '../../controllers/constant.dart';
 import 'main_page.dart';
-import 'registration_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -43,13 +43,13 @@ class _SplashScreenState extends State<SplashScreen> {
         );
       } else {
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const Registration_page()),
+          MaterialPageRoute(builder: (_) => const LoginPage()),
         );
       }
     } catch (e) {
       debugPrint("SplashScreen error: $e");
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const Registration_page()),
+        MaterialPageRoute(builder: (_) => const LoginPage()),
       );
     }
   }

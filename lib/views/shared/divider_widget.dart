@@ -19,7 +19,7 @@ class DividerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 44 , vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 22 , vertical: 16),
       child: Divider(
         color: color,
         thickness: thickness,

@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/views/shared/body_ui.dart';
 import 'package:uni_online_shop/views/shared/roundedButton.dart';
-import 'package:uni_online_shop/views/ui/registration_page.dart';
+import 'package:uni_online_shop/views/ui/login_page.dart';
 import '../../controllers/main_page_provider.dart';
 import '../shared/profile_widget.dart';
 
@@ -73,7 +73,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           );
                         } else {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Registration_page()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
                         }
                       },
                       textColor: kWhiteColor,
