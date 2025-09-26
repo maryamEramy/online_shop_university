@@ -26,6 +26,36 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
   late Animation animation;
   late Animation backgroundAnimation;
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+  //   controller = AnimationController(
+  //     vsync: this,
+  //     duration: const Duration(seconds: 2),
+  //     // upperBound: 100,
+  //   );
+  //   animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
+  //   backgroundAnimation = ColorTween(
+  //     begin: kPrimaryColor,
+  //     end: kLightSecondaryColor
+  //   ).animate(controller);
+  //   controller.forward();
+  //   controller.addListener(() {
+  //     print(animation.value);
+  //     setState(() {});
+  //   });
+  //
+  //   _loadProduct();
+  //   Future.microtask(() {
+  //     final favoritesNotifier = Provider.of<FavoritesNotifier>(
+  //       context,
+  //       listen: false,
+  //     );
+  //     favoritesNotifier.getFavorites();
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
@@ -33,20 +63,20 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
     controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
-      // upperBound: 100,
     );
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
     backgroundAnimation = ColorTween(
       begin: kPrimaryColor,
-      end: kLightSecondaryColor
+      end: kLightSecondaryColor,
     ).animate(controller);
+
     controller.forward();
     controller.addListener(() {
-      print(animation.value);
       setState(() {});
     });
 
     _loadProduct();
+
     Future.microtask(() {
       final favoritesNotifier = Provider.of<FavoritesNotifier>(
         context,
@@ -56,19 +86,37 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
     });
   }
 
-  @override
-  void dispose(){
-    controller.dispose();
-    super.dispose();
-  }
-
   void _loadProduct() {
     final productNotifier = Provider.of<ProductNotifier>(
       context,
       listen: false,
     );
     _productFuture = productNotifier.getProduct(widget.category, widget.id);
+
+    _productFuture.then((product) {
+      _precacheProductImage(product.imageUrl);
+    });
   }
+
+
+  void _precacheProductImage(String url) {
+    precacheImage(NetworkImage(url), context);
+  }
+
+
+  @override
+  void dispose(){
+    controller.dispose();
+    super.dispose();
+  }
+
+  // void _loadProduct() {
+  //   final productNotifier = Provider.of<ProductNotifier>(
+  //     context,
+  //     listen: false,
+  //   );
+  //   _productFuture = productNotifier.getProduct(widget.category, widget.id);
+  // }
 
 
   @override
@@ -96,19 +144,25 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
       future: _productFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(color: kSecondaryColor),
-            ),
+          return BodyUi(
+            children: [
+              Center(
+                child: CircularProgressIndicator(color: kSecondaryColor),
+              ),
+            ],
           );
         } else if (snapshot.hasError) {
-          return Scaffold(
-            body: Center(
-              child: Text("Error ${snapshot.error}", style: kErrorTextStyle),
-            ),
+          return BodyUi(
+            children: [
+              Center(
+                child: Text("Error ${snapshot.error}", style: kErrorTextStyle),
+              ),
+            ],
           );
         } else if (!snapshot.hasData) {
-          return const Scaffold(body: Center(child: Text("No product found")));
+          return const BodyUi(children: [
+            Center(child: Text("No product found"))
+          ]);
         } else {
           final product = snapshot.data!;
 
@@ -133,20 +187,37 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
                                   Hero(
                                     tag: "productImage_${product.id}",
                                     child: Center(
-                                      child: CachedNetworkImage(
-                                        imageUrl: product.imageUrl,
-                                        width: animation.value*200/**2*/,
-                                        height: animation.value*200/**2*/,
-                                        fit: BoxFit.cover,
-                                        placeholder:
-                                            (context, url) =>
-                                        const CircularProgressIndicator(),
-                                        errorWidget:
-                                            (context, url, error) =>
-                                        const Icon(Icons.error),
+                                      child: Transform.scale(
+                                        scale: animation.value, // فقط container scale میشه
+                                        child: CachedNetworkImage(
+                                          imageUrl: product.imageUrl,
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                          const CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                        ),
                                       ),
                                     ),
                                   ),
+
+                                  // Hero(
+                                  //   tag: "productImage_${product.id}",
+                                  //   child: Center(
+                                  //     child: CachedNetworkImage(
+                                  //       imageUrl: product.imageUrl,
+                                  //       width: animation.value*200/**2*/,
+                                  //       height: animation.value*200/**2*/,
+                                  //       fit: BoxFit.cover,
+                                  //       placeholder:
+                                  //           (context, url) =>
+                                  //       const CircularProgressIndicator(),
+                                  //       errorWidget:
+                                  //           (context, url, error) =>
+                                  //       const Icon(Icons.error),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   const SizedBox(height: 20),
                                   Container(
                                     width: double.infinity,
