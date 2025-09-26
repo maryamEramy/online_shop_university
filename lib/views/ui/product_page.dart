@@ -20,12 +20,32 @@ class ProductPage extends StatefulWidget {
   State<ProductPage> createState() => _ProductPageState();
 }
 
-class _ProductPageState extends State<ProductPage> {
+class _ProductPageState extends State<ProductPage> with SingleTickerProviderStateMixin {
   late Future<ProductInfo> _productFuture;
+  late AnimationController controller;
+  late Animation animation;
+  late Animation backgroundAnimation;
 
   @override
   void initState() {
     super.initState();
+
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+      // upperBound: 100,
+    );
+    animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    backgroundAnimation = ColorTween(
+      begin: kPrimaryColor,
+      end: kLightSecondaryColor
+    ).animate(controller);
+    controller.forward();
+    controller.addListener(() {
+      print(animation.value);
+      setState(() {});
+    });
+
     _loadProduct();
     Future.microtask(() {
       final favoritesNotifier = Provider.of<FavoritesNotifier>(
@@ -36,6 +56,12 @@ class _ProductPageState extends State<ProductPage> {
     });
   }
 
+  @override
+  void dispose(){
+    controller.dispose();
+    super.dispose();
+  }
+
   void _loadProduct() {
     final productNotifier = Provider.of<ProductNotifier>(
       context,
@@ -43,6 +69,7 @@ class _ProductPageState extends State<ProductPage> {
     );
     _productFuture = productNotifier.getProduct(widget.category, widget.id);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +113,7 @@ class _ProductPageState extends State<ProductPage> {
           final product = snapshot.data!;
 
           return BodyUi(
+            backgroundColor: backgroundAnimation.value,
             headerTitle: product.name,
             showBackIcon: true,
             showBasketIcon: true,
@@ -102,18 +130,21 @@ class _ProductPageState extends State<ProductPage> {
                             children: [
                               Column(
                                 children: [
-                                  Center(
-                                    child: CachedNetworkImage(
-                                      imageUrl: product.imageUrl,
-                                      width: 200,
-                                      height: 200,
-                                      fit: BoxFit.cover,
-                                      placeholder:
-                                          (context, url) =>
-                                      const CircularProgressIndicator(),
-                                      errorWidget:
-                                          (context, url, error) =>
-                                      const Icon(Icons.error),
+                                  Hero(
+                                    tag: "productImage_${product.id}",
+                                    child: Center(
+                                      child: CachedNetworkImage(
+                                        imageUrl: product.imageUrl,
+                                        width: animation.value*200/**2*/,
+                                        height: animation.value*200/**2*/,
+                                        fit: BoxFit.cover,
+                                        placeholder:
+                                            (context, url) =>
+                                        const CircularProgressIndicator(),
+                                        errorWidget:
+                                            (context, url, error) =>
+                                        const Icon(Icons.error),
+                                      ),
                                     ),
                                   ),
                                   const SizedBox(height: 20),

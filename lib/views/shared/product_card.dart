@@ -44,11 +44,14 @@ class _ProductCardState extends State<ProductCard> {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
-                  child: Image.network(
-                    widget.image,
-                    height: 100,
-                    width: 100,
-                    fit: BoxFit.contain,
+                  child: Hero(
+                    tag: "productImage_${widget.id}",
+                    child: Image.network(
+                      widget.image,
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.contain,
+                    ),
                   ),
                 ),
                 SizedBox(

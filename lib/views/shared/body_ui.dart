@@ -12,10 +12,12 @@ class BodyUi extends StatelessWidget {
     this.headerTitle,
     this.showBackIcon = false,
     this.showBasketIcon = false,
+    this.backgroundColor,
   });
 
   final List<Widget> children;
   final String? headerTitle;
+  final Color? backgroundColor;
   final bool showBackIcon;
   final bool showBasketIcon;
 
@@ -23,7 +25,7 @@ class BodyUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: backgroundColor ?? kPrimaryColor,
         body: Column(
           children: [
             SizedBox(height: 20),

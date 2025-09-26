@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +50,17 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   SizedBox(height: 40),
-                  TextTitleWidget(text: 'Hi! Welcome to Nozama!'),
+                  DefaultTextStyle(
+                    style: kPageTitleTextStyle,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    child: AnimatedTextKit(
+                      totalRepeatCount: 1,
+                        animatedTexts: [
+                      TypewriterAnimatedText('Hi! Welcome to Nozama!')
+                    ]),
+                  ),
+                  // TextTitleWidget(text: 'Hi! Welcome to Nozama!'),
                   DividerWidget(),
                   Form(
                     key: _formKey,
