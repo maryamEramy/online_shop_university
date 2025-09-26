@@ -80,9 +80,6 @@ class _ProductCardState extends State<ProductCard> {
           Positioned(
             top: 0,
             right: 0,
-            // left: 6,
-            // bottom: 5,
-            // top: 0,
             child: Consumer<FavoritesNotifier>(
               builder: (context, favoritesNotifier, _) {
                 final isFavorite = favoritesNotifier.ids.contains(widget.id);
@@ -111,7 +108,8 @@ class _ProductCardState extends State<ProductCard> {
                       });
                     }
                   },
-                  child: Container(color: Colors.transparent,
+                  child: Container(
+                    color: Colors.transparent,
                     width: 60,
                     height: 60,
                     child: Padding(

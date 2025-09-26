@@ -98,59 +98,111 @@ class _ProductPageState extends State<ProductPage> {
                       child: SingleChildScrollView(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 22),
-                          child: Column(
+                          child: Stack(
                             children: [
-                              Center(
-                                child: CachedNetworkImage(
-                                  imageUrl: product.imageUrl,
-                                  width: 200,
-                                  height: 200,
-                                  fit: BoxFit.cover,
-                                  placeholder:
-                                      (context, url) =>
-                                          const CircularProgressIndicator(),
-                                  errorWidget:
-                                      (context, url, error) =>
-                                          const Icon(Icons.error),
-                                ),
+                              Column(
+                                children: [
+                                  Center(
+                                    child: CachedNetworkImage(
+                                      imageUrl: product.imageUrl,
+                                      width: 200,
+                                      height: 200,
+                                      fit: BoxFit.cover,
+                                      placeholder:
+                                          (context, url) =>
+                                      const CircularProgressIndicator(),
+                                      errorWidget:
+                                          (context, url, error) =>
+                                      const Icon(Icons.error),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Container(
+                                    width: double.infinity,
+                                    padding: const EdgeInsets.all(16),
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: kLightPrimaryColor,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(product.name, style: kMainTextStyle),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          product.category,
+                                          style: kSecondTextStyle,
+                                        ),
+                                        const SizedBox(height: 12),
+                                        Text(
+                                          "\$${product.price}",
+                                          style: kMainTextStyle.copyWith(
+                                            color: kSecondaryColor,
+                                          ),
+                                        ),
+                                        const Divider(
+                                          height: 24,
+                                          color: Colors.black26,
+                                        ),
+                                        Text(
+                                          product.description,
+                                          style: kRegularTextStyle,
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(height: 20),
-                              Container(
-                                width: double.infinity,
-                                padding: const EdgeInsets.all(16),
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: kLightPrimaryColor,
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(product.name, style: kMainTextStyle),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      product.category,
-                                      style: kSecondTextStyle,
-                                    ),
-                                    const SizedBox(height: 12),
-                                    Text(
-                                      "\$${product.price}",
-                                      style: kMainTextStyle.copyWith(
-                                        color: kSecondaryColor,
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: Consumer<FavoritesNotifier>(
+                                  builder: (context, favoritesNotifier, _) {
+                                    final isFavorite = favoritesNotifier.ids.contains(widget.id);
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        if (isFavorite) {
+                                          Map<String, dynamic>? favItem;
+                                          try {
+                                            favItem = favoritesNotifier.favorites.firstWhere(
+                                                  (item) => item['id'] == product.id,
+                                            );
+                                          } catch (e) {
+                                            favItem = null;
+                                          }
+
+                                          if (favItem != null) {
+                                            await favoritesNotifier.deleteFav(favItem['key']);
+                                          }
+                                        } else {
+                                          await favoritesNotifier.createFav({
+                                            "id": product.id,
+                                            "name": product.name,
+                                            "category": product.category,
+                                            "price": product.price,
+                                            "imageUrl": product.imageUrl,
+                                          });
+                                        }
+                                      },
+                                      child: Container(
+                                        color: Colors.transparent,
+                                        width: 60,
+                                        height: 60,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Image.asset(
+                                            isFavorite ? kAppIcons.liked : kAppIcons.like,
+                                            // height: 22,
+                                            // width: 22,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    const Divider(
-                                      height: 24,
-                                      color: Colors.black26,
-                                    ),
-                                    Text(
-                                      product.description,
-                                      style: kRegularTextStyle,
-                                      textAlign: TextAlign.justify,
-                                    ),
-                                  ],
+                                    );
+                                  },
                                 ),
                               ),
                             ],
