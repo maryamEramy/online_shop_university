@@ -72,7 +72,7 @@ class _SearchPageState extends State<SearchPage> {
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Image.asset(
-                  kAppIcons.searchBox,
+                  KAppIcons.searchBox,
                   width: 24,
                   height: 24,
                   fit: BoxFit.contain,
@@ -87,7 +87,7 @@ class _SearchPageState extends State<SearchPage> {
             },
           ),
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
@@ -95,8 +95,8 @@ class _SearchPageState extends State<SearchPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text("Min: \$${minPrice.toInt()}" , style: kSecondTextStyle,),
-                  Text("Max: \$${maxPrice.toInt()}" , style: kSecondTextStyle,),
+                  Text("Min: \$${minPrice.toInt()}", style: kSecondTextStyle),
+                  Text("Max: \$${maxPrice.toInt()}", style: kSecondTextStyle),
                 ],
               ),
               RangeSlider(
@@ -122,7 +122,9 @@ class _SearchPageState extends State<SearchPage> {
         Expanded(
           child:
               filteredProducts.isEmpty
-                  ? Center(child: Text("No products found" , style: kRegularTextStyle,))
+                  ? Center(
+                    child: Text("No products found", style: kRegularTextStyle),
+                  )
                   : ListView.builder(
                     itemCount: filteredProducts.length,
                     itemBuilder: (context, index) {
@@ -155,9 +157,13 @@ class _SearchPageState extends State<SearchPage> {
                                 height: 50,
                                 fit: BoxFit.cover,
                               ),
-                              title: Text(product.name , style: kRegularTextStyle,),
+                              title: Text(
+                                product.name,
+                                style: kRegularTextStyle,
+                              ),
                               subtitle: Text(
-                                "${product.category} - \$${product.price}", style: kSecondTextStyle,
+                                "${product.category} - \$${product.price}",
+                                style: kSecondTextStyle,
                               ),
                             ),
                           ),

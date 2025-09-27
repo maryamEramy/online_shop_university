@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-
 import '../../controllers/constant.dart';
 
 class TextTitleWidget extends StatelessWidget {

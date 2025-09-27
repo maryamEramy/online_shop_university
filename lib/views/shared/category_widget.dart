@@ -13,18 +13,18 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 12 , horizontal: 12 ),
+      padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
       width: 110,
       height: 110,
       decoration: BoxDecoration(
         color: kLightPrimaryColor,
-        borderRadius: BorderRadius.circular(12)
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image(image: AssetImage(categoryImage) , height: 46,width: 46),
-          Text(categoryName , overflow: TextOverflow.ellipsis,),
+          Image(image: AssetImage(categoryImage), height: 46, width: 46),
+          Text(categoryName, overflow: TextOverflow.ellipsis),
         ],
       ),
     );

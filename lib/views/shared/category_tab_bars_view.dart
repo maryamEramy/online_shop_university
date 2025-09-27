@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'home_widget.dart';
 
 class CategoryTabBarsView extends StatelessWidget {
-  const CategoryTabBarsView({
-    super.key,
-    required TabController tabController,
-  }) : _tabController = tabController;
+  const CategoryTabBarsView({super.key, required TabController tabController})
+    : _tabController = tabController;
 
   final TabController _tabController;
 

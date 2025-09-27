@@ -12,9 +12,8 @@ import '../../models/user_model.dart';
 import '../../services/auth_service.dart';
 import '../shared/divider_widget.dart';
 import '../shared/email_text_field_widget.dart';
-import '../shared/passwoed_text_field_widget.dart';
+import '../shared/password_text_field_widget.dart';
 import '../shared/signup_button.dart';
-import '../shared/text_title_widget.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -56,11 +55,11 @@ class _LoginPageState extends State<LoginPage> {
                     maxLines: 1,
                     child: AnimatedTextKit(
                       totalRepeatCount: 1,
-                        animatedTexts: [
-                      TypewriterAnimatedText('Hi! Welcome to Nozama!')
-                    ]),
+                      animatedTexts: [
+                        TypewriterAnimatedText('Hi! Welcome to Nozama!'),
+                      ],
+                    ),
                   ),
-                  // TextTitleWidget(text: 'Hi! Welcome to Nozama!'),
                   DividerWidget(),
                   Form(
                     key: _formKey,
@@ -85,8 +84,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   SizedBox(height: 16),
                   LogInButton(
-
-                    // login_page.dart - بخش onPressed دکمه Login
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         try {
@@ -95,50 +92,63 @@ class _LoginPageState extends State<LoginPage> {
                             showSpinner = true;
                           });
 
-                          // تغییر این قسمت
-                          // final credential = await AuthService().signinUserWithEmailAndPassword(
-                          //   email: _emailController.text.trim(),
-                          //   password: _passwordController.text.trim(),
-                          // );
-                          final credential = await AuthService().signinUserWithEmailAndPassword(
-                            email: _emailController.text.trim(),
-                            password: _passwordController.text.trim(),
-                            cartProvider: Provider.of<BasketProvider>(context, listen: false),
-                            favoritesNotifier: Provider.of<FavoritesNotifier>(context, listen: false),
-                          );
+                          final credential = await AuthService()
+                              .signInUserWithEmailAndPassword(
+                                email: _emailController.text.trim(),
+                                password: _passwordController.text.trim(),
+                                cartProvider: Provider.of<BasketProvider>(
+                                  context,
+                                  listen: false,
+                                ),
+                                favoritesNotifier:
+                                    Provider.of<FavoritesNotifier>(
+                                      context,
+                                      listen: false,
+                                    ),
+                              );
 
                           final user = credential.user;
 
                           if (user != null) {
-                            // دریافت اطلاعات کاربر از Firestore
-                            final doc = await FirebaseFirestore.instance
-                                .collection("users")
-                                .doc(user.uid)
-                                .get();
+                            final doc =
+                                await FirebaseFirestore.instance
+                                    .collection("users")
+                                    .doc(user.uid)
+                                    .get();
 
                             if (doc.exists) {
                               final data = doc.data()!;
                               final loggedInUser = UserModel.fromMap(data);
 
-                              final userProvider = Provider.of<UserProvider>(context, listen: false);
+                              final userProvider = Provider.of<UserProvider>(
+                                context,
+                                listen: false,
+                              );
                               userProvider.setUser(loggedInUser);
 
-                              // ✅ ست کردن provider ها بدون باز کردن دوباره باکس‌ها
-                              final cartProvider = Provider.of<BasketProvider>(context, listen: false);
+                              final cartProvider = Provider.of<BasketProvider>(
+                                context,
+                                listen: false,
+                              );
                               await cartProvider.setUserId(user.uid);
 
-                              final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
+                              final favProvider =
+                                  Provider.of<FavoritesNotifier>(
+                                    context,
+                                    listen: false,
+                                  );
                               await favProvider.setUserId(user.uid);
 
                               if (mounted) {
                                 Navigator.pushReplacement(
                                   context,
-                                  MaterialPageRoute(builder: (context) => MainPage()),
+                                  MaterialPageRoute(
+                                    builder: (context) => MainPage(),
+                                  ),
                                 );
                               }
                             }
                           }
-
 
                           setState(() {
                             showSpinner = false;
@@ -147,12 +157,12 @@ class _LoginPageState extends State<LoginPage> {
                           setState(() {
                             showSpinner = false;
                             errorOccurred = true;
-                            // تصحیح این خط - احتمالاً خط 164
-                            errorMessage = e.toString().contains(']')
-                                ? (e.toString().split('] ').length > 1
-                                ? e.toString().split('] ')[1]
-                                : e.toString())
-                                : e.toString();
+                            errorMessage =
+                                e.toString().contains(']')
+                                    ? (e.toString().split('] ').length > 1
+                                        ? e.toString().split('] ')[1]
+                                        : e.toString())
+                                    : e.toString();
                           });
                         }
                       }
@@ -165,7 +175,10 @@ class _LoginPageState extends State<LoginPage> {
               alignment: Alignment.bottomCenter,
               child: Column(
                 children: [
-                  Text('If you don\'t have account let\'s SignUp!' , style: kRegularTextStyle,),
+                  Text(
+                    'If you don\'t have account let\'s SignUp!',
+                    style: kRegularTextStyle,
+                  ),
                   SignUpButton(),
                 ],
               ),

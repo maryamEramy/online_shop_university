@@ -3,7 +3,6 @@ import '../models/sneakers_model.dart';
 import '../services/helper.dart';
 
 class ProductNotifier extends ChangeNotifier {
-
   late Future<ProductInfo> product;
 
   int _activePage = 0;
@@ -19,14 +18,12 @@ class ProductNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-
   Future<List<ProductInfo>> getProducts(String category) async {
     return await Helper().getProductsByCategory(category);
   }
 
   Future<ProductInfo> getProduct(String category, String id) async {
     product = Helper().getProductById(category, id);
-    // notifyListeners();
     return await product;
   }
 
@@ -58,5 +55,4 @@ class ProductNotifier extends ChangeNotifier {
     _allProducts = tempList;
     notifyListeners();
   }
-
 }

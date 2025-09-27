@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/basket_provider.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/views/shared/body_ui.dart';
-import 'package:uni_online_shop/views/shared/roundedButton.dart';
+import 'package:uni_online_shop/views/shared/rounded_button.dart';
 import '../../controllers/constant.dart';
 import '../../controllers/favorites_provider.dart';
 import '../../models/sneakers_model.dart';
@@ -20,41 +20,12 @@ class ProductPage extends StatefulWidget {
   State<ProductPage> createState() => _ProductPageState();
 }
 
-class _ProductPageState extends State<ProductPage> with SingleTickerProviderStateMixin {
+class _ProductPageState extends State<ProductPage>
+    with SingleTickerProviderStateMixin {
   late Future<ProductInfo> _productFuture;
   late AnimationController controller;
   late Animation animation;
   late Animation backgroundAnimation;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //
-  //   controller = AnimationController(
-  //     vsync: this,
-  //     duration: const Duration(seconds: 2),
-  //     // upperBound: 100,
-  //   );
-  //   animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
-  //   backgroundAnimation = ColorTween(
-  //     begin: kPrimaryColor,
-  //     end: kLightSecondaryColor
-  //   ).animate(controller);
-  //   controller.forward();
-  //   controller.addListener(() {
-  //     print(animation.value);
-  //     setState(() {});
-  //   });
-  //
-  //   _loadProduct();
-  //   Future.microtask(() {
-  //     final favoritesNotifier = Provider.of<FavoritesNotifier>(
-  //       context,
-  //       listen: false,
-  //     );
-  //     favoritesNotifier.getFavorites();
-  //   });
-  // }
 
   @override
   void initState() {
@@ -98,26 +69,15 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
     });
   }
 
-
   void _precacheProductImage(String url) {
     precacheImage(NetworkImage(url), context);
   }
 
-
   @override
-  void dispose(){
+  void dispose() {
     controller.dispose();
     super.dispose();
   }
-
-  // void _loadProduct() {
-  //   final productNotifier = Provider.of<ProductNotifier>(
-  //     context,
-  //     listen: false,
-  //   );
-  //   _productFuture = productNotifier.getProduct(widget.category, widget.id);
-  // }
-
 
   @override
   Widget build(BuildContext context) {
@@ -146,9 +106,7 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
         if (snapshot.connectionState == ConnectionState.waiting) {
           return BodyUi(
             children: [
-              Center(
-                child: CircularProgressIndicator(color: kSecondaryColor),
-              ),
+              Center(child: CircularProgressIndicator(color: kSecondaryColor)),
             ],
           );
         } else if (snapshot.hasError) {
@@ -160,9 +118,9 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
             ],
           );
         } else if (!snapshot.hasData) {
-          return const BodyUi(children: [
-            Center(child: Text("No product found"))
-          ]);
+          return const BodyUi(
+            children: [Center(child: Text("No product found"))],
+          );
         } else {
           final product = snapshot.data!;
 
@@ -188,36 +146,20 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
                                     tag: "productImage_${product.id}",
                                     child: Center(
                                       child: Transform.scale(
-                                        scale: animation.value, // فقط container scale میشه
+                                        scale: animation.value,
                                         child: CachedNetworkImage(
                                           imageUrl: product.imageUrl,
                                           fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                          const CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
+                                          placeholder:
+                                              (context, url) =>
+                                                  const CircularProgressIndicator(),
+                                          errorWidget:
+                                              (context, url, error) =>
+                                                  const Icon(Icons.error),
                                         ),
                                       ),
                                     ),
                                   ),
-
-                                  // Hero(
-                                  //   tag: "productImage_${product.id}",
-                                  //   child: Center(
-                                  //     child: CachedNetworkImage(
-                                  //       imageUrl: product.imageUrl,
-                                  //       width: animation.value*200/**2*/,
-                                  //       height: animation.value*200/**2*/,
-                                  //       fit: BoxFit.cover,
-                                  //       placeholder:
-                                  //           (context, url) =>
-                                  //       const CircularProgressIndicator(),
-                                  //       errorWidget:
-                                  //           (context, url, error) =>
-                                  //       const Icon(Icons.error),
-                                  //     ),
-                                  //   ),
-                                  // ),
                                   const SizedBox(height: 20),
                                   Container(
                                     width: double.infinity,
@@ -230,9 +172,13 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(product.name, style: kMainTextStyle),
+                                        Text(
+                                          product.name,
+                                          style: kMainTextStyle,
+                                        ),
                                         const SizedBox(height: 8),
                                         Text(
                                           product.category,
@@ -264,21 +210,27 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
                                 right: 0,
                                 child: Consumer<FavoritesNotifier>(
                                   builder: (context, favoritesNotifier, _) {
-                                    final isFavorite = favoritesNotifier.ids.contains(widget.id);
+                                    final isFavorite = favoritesNotifier.ids
+                                        .contains(widget.id);
                                     return GestureDetector(
                                       onTap: () async {
                                         if (isFavorite) {
                                           Map<String, dynamic>? favItem;
                                           try {
-                                            favItem = favoritesNotifier.favorites.firstWhere(
-                                                  (item) => item['id'] == product.id,
-                                            );
+                                            favItem = favoritesNotifier
+                                                .favorites
+                                                .firstWhere(
+                                                  (item) =>
+                                                      item['id'] == product.id,
+                                                );
                                           } catch (e) {
                                             favItem = null;
                                           }
 
                                           if (favItem != null) {
-                                            await favoritesNotifier.deleteFav(favItem['key']);
+                                            await favoritesNotifier.deleteFav(
+                                              favItem['key'],
+                                            );
                                           }
                                         } else {
                                           await favoritesNotifier.createFav({
@@ -297,7 +249,9 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
                                         child: Padding(
                                           padding: const EdgeInsets.all(10.0),
                                           child: Image.asset(
-                                            isFavorite ? kAppIcons.liked : kAppIcons.like,
+                                            isFavorite
+                                                ? KAppIcons.liked
+                                                : KAppIcons.like,
                                             // height: 22,
                                             // width: 22,
                                           ),
@@ -315,7 +269,7 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 12 , bottom: 42),
+                        padding: const EdgeInsets.only(top: 12, bottom: 42),
                         child: Column(
                           children: [
                             (qty == 0)
@@ -358,9 +312,6 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
                                         ),
                                       );
                                     }
-                                    print(
-                                      '********************************************************$qty',
-                                    );
                                   },
                                   textColor: kWhiteColor,
                                   title: 'Add to Basket',
@@ -382,10 +333,11 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(
                                         vertical: 14.0,
-                                        horizontal: 18
+                                        horizontal: 18,
                                       ),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           // SizedBox(width: ,),
                                           Text(
@@ -454,7 +406,7 @@ class _ProductPageState extends State<ProductPage> with SingleTickerProviderStat
                                                   alignment: Alignment.center,
                                                   child: Text(
                                                     '$qty',
-                                                    style: kSecondTextStyle
+                                                    style: kSecondTextStyle,
                                                   ),
                                                 ),
                                               ),

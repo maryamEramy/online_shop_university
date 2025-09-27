@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/views/shared/body_ui.dart';
-import 'package:uni_online_shop/views/shared/roundedButton.dart';
+import 'package:uni_online_shop/views/shared/rounded_button.dart';
 import 'package:uni_online_shop/views/ui/login_page.dart';
 import '../../controllers/main_page_provider.dart';
 import '../shared/profile_widget.dart';
@@ -38,9 +38,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: "Favorites",
                       color: Colors.transparent,
                       onPressed: () {
-                        Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 2;
-                        // Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 2;
-                        // Navigator.popUntil(context, (route) => route.isFirst);
+                        Provider.of<MainPageNotifier>(context, listen: false)
+                            .pageIndex = 2;
                       },
                       textColor: kWhiteColor,
                     ),
@@ -48,9 +47,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: "Your Basket",
                       color: Colors.transparent,
                       onPressed: () {
-                        Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 3;
-                        // Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 3;
-                        // Navigator.popUntil(context, (route) => route.isFirst);
+                        Provider.of<MainPageNotifier>(context, listen: false)
+                            .pageIndex = 3;
                       },
                       textColor: kWhiteColor,
                     ),
@@ -64,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: user != null ? "LogOUT" : "Registration",
                       color: Colors.transparent,
                       onPressed: () {
-                        if(user != null){
+                        if (user != null) {
                           FirebaseAuth.instance.signOut();
                           Navigator.push(
                             context,
@@ -73,7 +71,12 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           );
                         } else {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ),
+                          );
                         }
                       },
                       textColor: kWhiteColor,

@@ -13,7 +13,7 @@ class RoundedTextFieldWidget extends StatefulWidget {
     required this.controller,
     required this.hintText,
     this.validator,
-    this.isPasswordField = false
+    this.isPasswordField = false,
   });
 
   @override
@@ -21,7 +21,6 @@ class RoundedTextFieldWidget extends StatefulWidget {
 }
 
 class _RoundedTextFieldWidgetState extends State<RoundedTextFieldWidget> {
-
   bool obscureText = true;
   void togglePasswordVisibility() {
     setState(() {
@@ -32,12 +31,16 @@ class _RoundedTextFieldWidgetState extends State<RoundedTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 22.0,),
+      padding: const EdgeInsets.symmetric(horizontal: 22.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextBoxWidget(text: widget.hintText, textStyle: kSecondTextStyle,padding:  EdgeInsets.zero),
-          SizedBox(height: 6,),
+          TextBoxWidget(
+            text: widget.hintText,
+            textStyle: kSecondTextStyle,
+            padding: EdgeInsets.zero,
+          ),
+          SizedBox(height: 6),
           TextFormField(
             obscureText: widget.isPasswordField == true ? obscureText : false,
             controller: widget.controller,
@@ -45,20 +48,24 @@ class _RoundedTextFieldWidgetState extends State<RoundedTextFieldWidget> {
             autovalidateMode: AutovalidateMode.onUserInteraction,
             style: kRegularTextStyle.copyWith(color: kPrimaryColor),
             decoration: InputDecoration(
-
-              suffixIcon: widget.isPasswordField == true ? IconButton(
-                  onPressed: (){
-                    togglePasswordVisibility();
-                  },
-                  icon: Icon(
-                    obscureText ? Icons.visibility_off : Icons.visibility,
-                  )
-              ) : null,
+              suffixIcon:
+                  widget.isPasswordField == true
+                      ? IconButton(
+                        onPressed: () {
+                          togglePasswordVisibility();
+                        },
+                        icon: Icon(
+                          obscureText ? Icons.visibility_off : Icons.visibility,
+                        ),
+                      )
+                      : null,
               filled: true,
               fillColor: kWhiteColor,
 
-              contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 14.0,
+              ),
 
               errorStyle: kErrorTextStyle.copyWith(height: 1.2),
 

@@ -14,8 +14,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  // late TabController _tabController;
-
   late final TabController _tabController = TabController(
     length: 13,
     vsync: this,
@@ -44,14 +42,12 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final productNotifier = context.read<ProductNotifier>();
       final favoritesNotifier = context.read<FavoritesNotifier>();
-//******************************************************************************
       for (final c in _categories) {
         productNotifier.getProducts(c);
       }
       favoritesNotifier.getFavorites();
     });
   }
-//******************************************************************************
 
   @override
   void dispose() {
@@ -66,7 +62,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       children: [
         Text('Categories', style: kMainTextStyle),
         const SizedBox(height: 8),
-        // CategoryTabBar(tabController: _tabController, categories: _categories),
         CategoryTabBar(tabController: _tabController),
         const SizedBox(height: 8),
         Expanded(child: CategoryTabBarsView(tabController: _tabController)),

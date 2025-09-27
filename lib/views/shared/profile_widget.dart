@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,10 +16,6 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
-
-
-
-
   File? _imageFile;
   Future<void> _pickImage() async {
     final picker = ImagePicker();
@@ -29,16 +24,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       setState(() {
         _imageFile = File(pickedFile.path);
       });
-
       await UserProvider().saveProfileImage(pickedFile.path);
-
-      //upload image to Firebase Storage
-      //then
-      //save the URL in user's profile
-      // uploadToFirebase(_imageFile);
     }
   }
-
 
   @override
   void initState() {
@@ -51,9 +39,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       }
     });
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {

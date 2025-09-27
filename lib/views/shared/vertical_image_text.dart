@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 
 class VerticalImageText extends StatelessWidget {
   const VerticalImageText({
-    super.key, required this.image, required this.title, this.backgroundColor, this.onTap,
+    super.key,
+    required this.image,
+    required this.title,
+    this.backgroundColor,
+    this.onTap,
   });
 
-  final String image , title;
+  final String image, title;
   final Color? backgroundColor;
   final void Function()? onTap;
 
@@ -26,7 +30,11 @@ class VerticalImageText extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(100)),
               ),
               child: Center(
-                child: Image(image: AssetImage(image) , fit: BoxFit.cover , color: Colors.black,),
+                child: Image(
+                  image: AssetImage(image),
+                  fit: BoxFit.cover,
+                  color: Colors.black,
+                ),
               ),
             ),
             SizedBox(

@@ -23,55 +23,55 @@ class CategoryTabBar extends StatelessWidget {
         indicator: const BoxDecoration(),
         tabs: const [
           CategoryWidget(
-            categoryImage: kAppCategoryImages.mensShoes,
+            categoryImage: KAppCategoryImages.mensShoes,
             categoryName: 'mens-shoes',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.beauty,
+            categoryImage: KAppCategoryImages.beauty,
             categoryName: 'beauty',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.fragrances,
+            categoryImage: KAppCategoryImages.fragrances,
             categoryName: 'fragrances',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.furniture,
+            categoryImage: KAppCategoryImages.furniture,
             categoryName: 'furniture',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.groceries,
+            categoryImage: KAppCategoryImages.groceries,
             categoryName: 'groceries',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.laptops,
+            categoryImage: KAppCategoryImages.laptops,
             categoryName: 'laptops',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.mensShirts,
+            categoryImage: KAppCategoryImages.mensShirts,
             categoryName: 'mens-shirts',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.mensWatches,
+            categoryImage: KAppCategoryImages.mensWatches,
             categoryName: 'mens-watches',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.homeDecoration,
+            categoryImage: KAppCategoryImages.homeDecoration,
             categoryName: 'home-decoration',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.kitchenAccessories,
+            categoryImage: KAppCategoryImages.kitchenAccessories,
             categoryName: 'kitchen-accessories',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.smartphones,
+            categoryImage: KAppCategoryImages.smartphones,
             categoryName: 'smartphones',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.motorcycle,
+            categoryImage: KAppCategoryImages.motorcycle,
             categoryName: 'motorcycle',
           ),
           CategoryWidget(
-            categoryImage: kAppCategoryImages.skincare,
+            categoryImage: KAppCategoryImages.skincare,
             categoryName: 'skin-care',
           ),
         ],

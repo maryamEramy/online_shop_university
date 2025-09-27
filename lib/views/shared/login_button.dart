@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../controllers/constant.dart';
-import '../shared/roundedButton.dart';
+import '../shared/rounded_button.dart';
 import '../ui/login_page.dart';
 
 class LogInButton extends StatelessWidget {
   final VoidCallback? onPressed;
 
-  const LogInButton({
-    super.key,
-    this.onPressed,
-  });
+  const LogInButton({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +14,9 @@ class LogInButton extends StatelessWidget {
       title: 'LogIn',
       textColor: kPrimaryColor,
       color: kSecondaryColor,
-      onPressed: onPressed ??
-              () {
+      onPressed:
+          onPressed ??
+          () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => LoginPage()),

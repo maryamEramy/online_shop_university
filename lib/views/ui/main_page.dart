@@ -10,7 +10,7 @@ import '../shared/bottom_nav.dart';
 import 'favorites_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key , this.currentPage,});
+  const MainPage({super.key, this.currentPage});
   final int? currentPage;
 
   @override
@@ -49,5 +49,4 @@ class _MainPageState extends State<MainPage> {
       },
     );
   }
-
 }

@@ -10,7 +10,8 @@ class PasswordTextFieldWidget extends StatefulWidget {
   final TextEditingController _passwordController;
 
   @override
-  State<PasswordTextFieldWidget> createState() => _PasswordTextFieldWidgetState();
+  State<PasswordTextFieldWidget> createState() =>
+      _PasswordTextFieldWidgetState();
 }
 
 class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
@@ -20,7 +21,7 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
       isPasswordField: true,
       controller: widget._passwordController,
       hintText: 'Enter your password',
-      validator:(password) {
+      validator: (password) {
         return password != null && password.length > 5
             ? null
             : 'The password should be of 6 character at least';

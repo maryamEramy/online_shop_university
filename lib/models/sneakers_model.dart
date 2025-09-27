@@ -5,8 +5,8 @@ List<ProductInfo> sneakersFromJson(String str) => List<ProductInfo>.from(
 );
 
 class ProductInfo {
-  int ? key;
-  int ? qty;
+  int? key;
+  int? qty;
   final String id;
   final String name;
   final String category;
@@ -49,7 +49,6 @@ class ProductInfo {
       qty: map["qty"],
     );
   }
-
 
   factory ProductInfo.fromJson(Map<String, dynamic> json) {
     return ProductInfo(

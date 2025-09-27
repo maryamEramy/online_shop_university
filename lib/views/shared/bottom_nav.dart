@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/controllers/main_page_provider.dart';
-
 import 'bottom_nav_widget.dart';
 
 class BottomNavBar extends StatelessWidget {
@@ -31,7 +30,7 @@ class BottomNavBar extends StatelessWidget {
                   onTap: () {
                     mainPageNotifier.pageIndex = 0;
                   },
-                  imagePath: kAppIcons.home,
+                  imagePath: KAppIcons.home,
                   showLine: mainPageNotifier.pageIndex == 0 ? true : false,
 
                 ),
@@ -39,28 +38,28 @@ class BottomNavBar extends StatelessWidget {
                   onTap: () {
                     mainPageNotifier.pageIndex = 1;
                   },
-                  imagePath: kAppIcons.search,
+                  imagePath: KAppIcons.search,
                   showLine: mainPageNotifier.pageIndex == 1 ? true : false,
                 ),
                 BottomNavWidget(
                   onTap: () {
                     mainPageNotifier.pageIndex = 2;
                   },
-                  imagePath: kAppIcons.fave,
+                  imagePath: KAppIcons.fave,
                   showLine: mainPageNotifier.pageIndex == 2 ? true : false,
                 ),
                 BottomNavWidget(
                   onTap: () {
                     mainPageNotifier.pageIndex = 3;
                   },
-                  imagePath: kAppIcons.cart,
+                  imagePath: KAppIcons.cart,
                   showLine: mainPageNotifier.pageIndex == 3 ? true : false,
                 ),
                 BottomNavWidget(
                   onTap: () {
                     mainPageNotifier.pageIndex = 4;
                   },
-                  imagePath: kAppIcons.profile,
+                  imagePath: KAppIcons.profile,
                   showLine: mainPageNotifier.pageIndex == 4 ? true : false,
                 ),
               ],

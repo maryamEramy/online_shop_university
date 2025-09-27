@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -12,29 +11,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'controllers/user_provider.dart';
 import 'firebase_options.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await Hive.initFlutter();
   await Hive.openBox('app_config');
   await Hive.openBox('userProfile');
-
-
-
-  // final user = FirebaseAuth.instance.currentUser;
-  // if (user != null) {
-  //   if(!Hive.isBoxOpen('cart_box_${user.uid}')){
-  //     await Hive.openBox('cart_box_${user.uid}');
-  //   }
-  //   if(!Hive.isBoxOpen('fav_box_${user.uid}')){
-  //     await Hive.openBox('fav_box_${user.uid}');
-  //   }
-  // }
 
   runApp(
     MultiProvider(
@@ -50,22 +34,19 @@ void main() async {
   );
 }
 
-
-
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375 , 812),
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (context , child){
-       return MaterialApp(
+      builder: (context, child) {
+        return MaterialApp(
           debugShowCheckedModeBanner: false,
           home: const SplashScreen(),
-       );
+        );
       },
     );
   }

@@ -26,60 +26,57 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
-
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Stack(
         fit: StackFit.expand,
         children: [
           ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Container(
-            decoration: BoxDecoration(
-              color: kLightSecondaryColor,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Hero(
-                    tag: "productImage_${widget.id}",
-                    child: Image.network(
-                      widget.image,
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.contain,
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              decoration: BoxDecoration(color: kLightSecondaryColor),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Hero(
+                      tag: "productImage_${widget.id}",
+                      child: Image.network(
+                        widget.image,
+                        height: 100,
+                        width: 100,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 100,
-                  child: Text(
-                    widget.name,
-                    style: kRegularTextStyle.copyWith(color: kPrimaryColor),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                SizedBox(height: 2),
-                Flexible(
-                  child: Text(
-                    widget.price,
-                    style: kSecondTextStyle.copyWith(
-                      color: kPrimaryColor,
-                      fontWeight: FontWeight.w700,
+                  SizedBox(
+                    width: 100,
+                    child: Text(
+                      widget.name,
+                      style: kRegularTextStyle.copyWith(color: kPrimaryColor),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
                     ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
                   ),
-                ),
-              ],
+                  SizedBox(height: 2),
+                  Flexible(
+                    child: Text(
+                      widget.price,
+                      style: kSecondTextStyle.copyWith(
+                        color: kPrimaryColor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
           Positioned(
             top: 0,
             right: 0,
@@ -92,7 +89,7 @@ class _ProductCardState extends State<ProductCard> {
                       Map<String, dynamic>? favItem;
                       try {
                         favItem = favoritesNotifier.favorites.firstWhere(
-                              (item) => item['id'] == widget.id,
+                          (item) => item['id'] == widget.id,
                         );
                       } catch (e) {
                         favItem = null;
@@ -118,7 +115,7 @@ class _ProductCardState extends State<ProductCard> {
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Image.asset(
-                        isFavorite ? kAppIcons.liked : kAppIcons.like,
+                        isFavorite ? KAppIcons.liked : KAppIcons.like,
                         // height: 22,
                         // width: 22,
                       ),
@@ -128,7 +125,7 @@ class _ProductCardState extends State<ProductCard> {
               },
             ),
           ),
-        ]
+        ],
       ),
     );
   }

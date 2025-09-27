@@ -6,11 +6,11 @@ class TextBoxWidget extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   const TextBoxWidget({
-    Key? key,
+    super.key,
     required this.text,
     this.textStyle,
     this.padding = const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,7 @@ class TextBoxWidget extends StatelessWidget {
       child: Container(
         width: double.infinity,
         padding: padding,
-        child: Text(
-          text,
-          style: textStyle,
-        ),
+        child: Text(text, style: textStyle),
       ),
     );
   }

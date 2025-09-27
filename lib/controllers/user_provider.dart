@@ -12,7 +12,6 @@ class UserProvider with ChangeNotifier {
   Future<void> loadUserData() async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-
       if (!Hive.isBoxOpen('cart_box_${currentUser.uid}')) {
         await Hive.openBox('cart_box_${currentUser.uid}');
       }
@@ -20,10 +19,11 @@ class UserProvider with ChangeNotifier {
         await Hive.openBox('fav_box_${currentUser.uid}');
       }
 
-      final doc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .get();
+      final doc =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(currentUser.uid)
+              .get();
 
       if (doc.exists) {
         _user = UserModel.fromMap(doc.data()!);
@@ -32,7 +32,6 @@ class UserProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-
 
   Future<void> saveProfileImage(String path) async {
     final box = Hive.box('userProfile');
@@ -43,9 +42,6 @@ class UserProvider with ChangeNotifier {
     final box = Hive.box('userProfile');
     return box.get('profileImagePath');
   }
-
-
-
 
   void setUser(UserModel user) {
     _user = user;

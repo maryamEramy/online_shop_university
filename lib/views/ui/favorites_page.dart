@@ -71,7 +71,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           );
                         },
                         child: Image(
-                          image: AssetImage(kAppIcons.liked),
+                          image: AssetImage(KAppIcons.liked),
                           height: 22,
                           width: 22,
                         ),

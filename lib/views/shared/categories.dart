@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:uni_online_shop/views/shared/vertical_image_text.dart';
-
 import '../../controllers/image_path.dart';
 
 class Categories extends StatelessWidget {

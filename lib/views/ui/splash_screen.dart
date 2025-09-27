@@ -28,33 +28,29 @@ class _SplashScreenState extends State<SplashScreen>
     controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
-      // upperBound: 100,
     );
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
-    // controller.forward();
     controller.reverse(from: 1);
-    animation.addStatusListener((status){
-      if(status == AnimationStatus.completed){
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
         controller.reverse(from: 1);
-      }else if(status == AnimationStatus.dismissed){
+      } else if (status == AnimationStatus.dismissed) {
         controller.forward();
       }
     });
 
     controller.addListener(() {
-      print(animation.value);
+      debugPrint(animation.value);
       setState(() {});
     });
   }
 
   @override
-  void dispose(){
+  void dispose() {
     controller.dispose();
     super.dispose();
   }
-
-
 
   Future<void> _initializeAndNavigate() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
@@ -97,14 +93,8 @@ class _SplashScreenState extends State<SplashScreen>
             SizedBox(
               width: animation.value * 200,
               height: animation.value * 200,
-              child: Image.asset(
-                'assets/logo/splash_screen_image.png',
-                // width:  200,
-                // height: 200,
-              ),
+              child: Image.asset('assets/logo/splash_screen_image.png'),
             ),
-            // const SizedBox(height: 20),
-            // const CircularProgressIndicator(color: Colors.white),
           ],
         ),
       ),

@@ -8,8 +8,6 @@ const kGrayColor = Color(0xFFC5C5C5);
 const kWhiteColor = Color(0xFFFFFFFF);
 const kErrorColor = Color(0xFFF67070);
 
-
-
 final kPageTitleTextStyle = TextStyle(
   fontFamily: "Poppins",
   color: kSecondaryColor,
@@ -41,8 +39,7 @@ final kSecondTextStyle = TextStyle(
   fontSize: 12.0,
 );
 
-
-class kAppIcons {
+class KAppIcons {
   static const String basePath = "assets/logo/";
   static const String home = "${basePath}home.png";
   static const String cart = "${basePath}bag-happy.png";
@@ -54,7 +51,7 @@ class kAppIcons {
   static const String liked = "${basePath}liked.png";
 }
 
-class kAppCategoryImages {
+class KAppCategoryImages {
   static const String basePath = "assets/logo/";
   static const String beauty = "${basePath}Beauty.png";
   static const String fragrances = "${basePath}Fragrances.png";

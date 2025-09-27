@@ -5,12 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:uni_online_shop/controllers/basket_provider.dart';
 import 'package:uni_online_shop/controllers/constant.dart';
 import 'package:uni_online_shop/views/shared/body_ui.dart';
-import 'package:uni_online_shop/views/shared/roundedButton.dart';
+import 'package:uni_online_shop/views/shared/rounded_button.dart';
 import 'package:uni_online_shop/views/ui/main_page.dart';
 import 'package:uni_online_shop/views/ui/product_page.dart';
 
 class BasketPage extends StatefulWidget {
-  BasketPage({super.key});
+  const BasketPage({super.key});
 
   @override
   State<BasketPage> createState() => _BasketPageState();
@@ -19,9 +19,7 @@ class BasketPage extends StatefulWidget {
 class _BasketPageState extends State<BasketPage> {
   @override
   Widget build(BuildContext context) {
-
     var basketProvider = Provider.of<BasketProvider>(context);
-    // basketProvider.getCart();
     return BodyUi(
       headerTitle: "Your Basket",
       children: [
@@ -152,13 +150,15 @@ class _BasketPageState extends State<BasketPage> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(22.0, 12.0, 22.0 , 0),
+                      padding: const EdgeInsets.fromLTRB(22.0, 12.0, 22.0, 0),
                       child: Row(
                         children: [
-                          Text('Total: ' , style: kRegularTextStyle),
+                          Text('Total: ', style: kRegularTextStyle),
                           Text(
                             "${basketProvider.totalPrice.toStringAsFixed(2)} \$",
-                            style: kMainTextStyle.copyWith(color: kSecondaryColor),
+                            style: kMainTextStyle.copyWith(
+                              color: kSecondaryColor,
+                            ),
                           ),
                         ],
                       ),

@@ -68,7 +68,7 @@ class BodyUi extends StatelessWidget {
                           height: 48,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Image.asset(kAppIcons.cart, height: 22, width: 22,),
+                            child: Image.asset(KAppIcons.cart, height: 22, width: 22,),
                           ),
                         ),
                       )
