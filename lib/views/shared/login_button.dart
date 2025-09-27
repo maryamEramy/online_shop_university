@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../controllers/constant.dart';
 import '../shared/rounded_button.dart';
-import '../ui/login_page.dart';
 
 class LogInButton extends StatelessWidget {
   final VoidCallback? onPressed;
+  final bool showSpinner;
 
-  const LogInButton({super.key, this.onPressed});
+  const LogInButton({super.key, this.onPressed, this.showSpinner = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +14,18 @@ class LogInButton extends StatelessWidget {
       title: 'LogIn',
       textColor: kPrimaryColor,
       color: kSecondaryColor,
-      onPressed:
-          onPressed ??
-          () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-            );
-          },
+      onPressed: onPressed ?? () {},
+      child:
+          showSpinner
+              ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.0,
+                  color: kPrimaryColor,
+                ),
+              )
+              : null,
     );
   }
 }

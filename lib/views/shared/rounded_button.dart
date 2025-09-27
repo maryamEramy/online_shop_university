@@ -5,6 +5,7 @@ class RoundedButton extends StatelessWidget {
   final Color color;
   final Color textColor;
   final String title;
+  final Widget? child;
   final VoidCallback onPressed;
   final double borderRadius;
   final Color borderColor;
@@ -15,6 +16,7 @@ class RoundedButton extends StatelessWidget {
     required this.color,
     required this.textColor,
     required this.onPressed,
+    this.child,
     this.borderRadius = 12.0,
     this.borderColor = Colors.transparent,
   });
@@ -38,7 +40,7 @@ class RoundedButton extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 14.0),
               child: Center(
-                child: Text(
+                child: child ?? Text(
                   title,
                   style: kMainTextStyle.copyWith(color: textColor),
                   textAlign: TextAlign.center,

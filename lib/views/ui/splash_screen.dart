@@ -31,17 +31,17 @@ class _SplashScreenState extends State<SplashScreen>
     );
     animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
 
-    controller.reverse(from: 1);
-    animation.addStatusListener((status) {
+    controller.forward();
+    controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        controller.reverse(from: 1);
+        controller.reverse();
       } else if (status == AnimationStatus.dismissed) {
         controller.forward();
       }
     });
 
     controller.addListener(() {
-      debugPrint(animation.value);
+      debugPrint(animation.value.toString());
       setState(() {});
     });
   }
@@ -72,13 +72,13 @@ class _SplashScreenState extends State<SplashScreen>
       } else {
         Navigator.of(
           context,
-        ).pushReplacement(MaterialPageRoute(builder: (_) => const LoginPage()));
+        ).pushReplacement(MaterialPageRoute(builder: (_) => LoginPage()));
       }
     } catch (e) {
       debugPrint("SplashScreen error: $e");
       Navigator.of(
         context,
-      ).pushReplacement(MaterialPageRoute(builder: (_) => const LoginPage()));
+      ).pushReplacement(MaterialPageRoute(builder: (_) => LoginPage()));
     }
   }
 
@@ -87,15 +87,10 @@ class _SplashScreenState extends State<SplashScreen>
     return Scaffold(
       backgroundColor: kPrimaryColor,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: animation.value * 200,
-              height: animation.value * 200,
-              child: Image.asset('assets/logo/splash_screen_image.png'),
-            ),
-          ],
+        child: SizedBox(
+          width: animation.value * 200,
+          height: animation.value * 200,
+          child: Image.asset('assets/logo/splash_screen_image.png'),
         ),
       ),
     );

@@ -12,6 +12,7 @@ class BodyUi extends StatelessWidget {
     this.headerTitle,
     this.showBackIcon = false,
     this.showBasketIcon = false,
+    this.animatedText = false,
     this.backgroundColor,
   });
 
@@ -20,6 +21,7 @@ class BodyUi extends StatelessWidget {
   final Color? backgroundColor;
   final bool showBackIcon;
   final bool showBasketIcon;
+  final bool animatedText;
 
   @override
   Widget build(BuildContext context) {
@@ -46,29 +48,49 @@ class BodyUi extends StatelessWidget {
                           height: 48,
                           child: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16),
-                            child: Icon(Icons.arrow_back_ios, color: kSecondaryColor , size: 22,),
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              color: kSecondaryColor,
+                              size: 22,
+                            ),
                           ),
                         ),
                       )
                     else
                       const SizedBox(width: 48),
-                    SizedBox(width: 20,),
+                    SizedBox(width: 20),
                     Expanded(
-                      child: TextTitleWidget(text: headerTitle ?? "NOZAMA"),
+                      child: TextTitleWidget(
+                        text: headerTitle ?? "NOZAMA",
+                        animatedText: animatedText,
+                      ),
                     ),
-                    SizedBox(width: 20,),
+                    SizedBox(width: 20),
                     if (showBasketIcon)
                       GestureDetector(
-                        onTap: () => Provider.of<MainPageNotifier>(context, listen: false).pageIndex = 3,
+                        onTap:
+                            () =>
+                                Provider.of<MainPageNotifier>(
+                                      context,
+                                      listen: false,
+                                    ).pageIndex =
+                                    3,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: kSecondaryColor,
-                              borderRadius: BorderRadius.all(Radius.circular(100))),
+                            color: kSecondaryColor,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(100),
+                            ),
+                          ),
                           width: 48,
                           height: 48,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 12),
-                            child: Image.asset(KAppIcons.cart, height: 22, width: 22,),
+                            child: Image.asset(
+                              KAppIcons.cart,
+                              height: 22,
+                              width: 22,
+                            ),
                           ),
                         ),
                       )
@@ -94,5 +116,3 @@ class BodyUi extends StatelessWidget {
     );
   }
 }
-
-

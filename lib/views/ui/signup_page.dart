@@ -1,198 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:provider/provider.dart';
-import 'package:uni_online_shop/views/shared/email_text_field_widget.dart';
-import 'package:uni_online_shop/views/shared/password_text_field_widget.dart';
-import 'package:uni_online_shop/views/shared/signup_button.dart';
-import 'package:uni_online_shop/views/ui/main_page.dart';
-import '../../controllers/basket_provider.dart';
-import '../../controllers/constant.dart';
-import '../../controllers/favorites_provider.dart';
-import '../../controllers/user_provider.dart';
-import '../../models/user_model.dart';
-import '../../services/auth_service.dart';
-import '../shared/divider_widget.dart';
-import '../shared/name_text_field_widget.dart';
-import '../shared/text_title_widget.dart';
+import 'package:uni_online_shop/views/shared/body_ui.dart';
+import '../shared/signup_form.dart';
 
-class SignupPage extends StatefulWidget {
+class SignupPage extends StatelessWidget {
   const SignupPage({super.key});
-  @override
-  State<SignupPage> createState() => _SignupPageState();
-}
-
-class _SignupPageState extends State<SignupPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _nameController.dispose();
-  }
-
-  String errorMessage = '';
-  bool errorOccurred = false, showSpinner = false;
-
-  bool obscureText = true;
-  void togglePasswordVisibility() {
-    setState(() {
-      obscureText = !obscureText;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kPrimaryColor,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 40),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 10,
-                        child: GestureDetector(
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            color: kSecondaryColor,
-                          ),
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ),
-                      TextTitleWidget(text: 'SignUp'),
-                      SizedBox(width: 10),
-                    ],
-                  ),
-                  DividerWidget(),
-                  Column(
-                    children: [
-                      Form(
-                        key: _formKey,
-                        child: Column(
-                          children: [
-                            NameTextFieldWidget(
-                              nameController: _nameController,
-                            ),
-                            SizedBox(height: 16),
-                            EmailTextFieldWidget(
-                              emailController: _emailController,
-                            ),
-                            SizedBox(height: 16),
-                            PasswordTextFieldWidget(
-                              passwordController: _passwordController,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 8),
-                      Visibility(
-                        visible: errorOccurred,
-                        child: Text(
-                          errorMessage,
-                          textAlign: TextAlign.center,
-                          style: kErrorTextStyle,
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: SignUpButton(
-                onPressed: () async {
-                  if (_formKey.currentState!.validate()) {
-                    setState(() {
-                      errorOccurred = false;
-                      showSpinner = true;
-                    });
+    final formKey = GlobalKey<FormState>();
+    final nameController = TextEditingController();
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
 
-                    try {
-                      final userCredential = await AuthService()
-                          .createUserWithEmailAndPassword(
-                            email: _emailController.text.trim(),
-                            password: _passwordController.text.trim(),
-                            name: _nameController.text.trim(),
-                            cartProvider: Provider.of<BasketProvider>(
-                              context,
-                              listen: false,
-                            ),
-                            favoritesNotifier: Provider.of<FavoritesNotifier>(
-                              context,
-                              listen: false,
-                            ),
-                          );
-
-                      final user = userCredential.user;
-                      if (user != null) {
-                        if (!Hive.isBoxOpen('cart_box_${user.uid}')) {
-                          await Hive.openBox('cart_box_${user.uid}');
-                        }
-                        if (!Hive.isBoxOpen('fav_box_${user.uid}')) {
-                          await Hive.openBox('fav_box_${user.uid}');
-                        }
-                        /**/
-                        Provider.of<UserProvider>(
-                          context,
-                          listen: false,
-                        ).setUser(
-                          UserModel(
-                            uid: user.uid,
-                            name: _nameController.text.trim(),
-                            email: _emailController.text.trim(),
-                          ),
-                        );
-                        await Provider.of<BasketProvider>(
-                          context,
-                          listen: false,
-                        ).setUserId(user.uid);
-                        await Provider.of<FavoritesNotifier>(
-                          context,
-                          listen: false,
-                        ).setUserId(user.uid);
-                        if (!mounted) return;
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => MainPage()),
-                        );
-                      }
-                    } catch (e) {
-                      if (!mounted) return;
-                      setState(() {
-                        showSpinner = false;
-                        errorOccurred = true;
-                        errorMessage =
-                            e.toString().contains(']')
-                                ? (e.toString().split('] ').length > 1
-                                    ? e.toString().split('] ')[1]
-                                    : e.toString())
-                                : e.toString();
-                      });
-                    }
-                  }
-                },
-              ),
-            ),
-          ],
+    return BodyUi(
+      headerTitle: 'SignUp',
+      showBackIcon: true,
+      children: [
+        SignupForm(
+          formKey: formKey,
+          nameController: nameController,
+          emailController: emailController,
+          passwordController: passwordController,
         ),
-      ),
+      ],
     );
   }
 }

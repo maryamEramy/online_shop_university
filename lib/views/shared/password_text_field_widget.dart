@@ -1,31 +1,22 @@
-import 'package:flutter/cupertino.dart';
-import 'package:uni_online_shop/views/shared/rounded_text_field_widget.dart';
+import 'package:flutter/material.dart';
+import 'rounded_text_field_widget.dart';
 
-class PasswordTextFieldWidget extends StatefulWidget {
-  const PasswordTextFieldWidget({
-    super.key,
-    required TextEditingController passwordController,
-  }) : _passwordController = passwordController;
+class PasswordTextFieldWidget extends StatelessWidget {
+  final TextEditingController controller;
 
-  final TextEditingController _passwordController;
+  const PasswordTextFieldWidget({super.key, required this.controller});
 
-  @override
-  State<PasswordTextFieldWidget> createState() =>
-      _PasswordTextFieldWidgetState();
-}
-
-class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return RoundedTextFieldWidget(
-      isPasswordField: true,
-      controller: widget._passwordController,
+      controller: controller,
       hintText: 'Enter your password',
-      validator: (password) {
-        return password != null && password.length > 5
-            ? null
-            : 'The password should be of 6 character at least';
-      },
+      isPasswordField: true,
+      validator:
+          (password) =>
+              password != null && password.length > 5
+                  ? null
+                  : 'Password must be at least 6 characters',
     );
   }
 }
