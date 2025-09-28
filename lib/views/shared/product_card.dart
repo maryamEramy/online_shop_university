@@ -16,7 +16,7 @@ class ProductCard extends StatefulWidget {
   final String id;
   final String name;
   final String image;
-  final String price;
+  final double price;
   final String category;
 
   @override
@@ -64,7 +64,7 @@ class _ProductCardState extends State<ProductCard> {
                   SizedBox(height: 2),
                   Flexible(
                     child: Text(
-                      widget.price,
+                      '${widget.price}',
                       style: kSecondTextStyle.copyWith(
                         color: kPrimaryColor,
                         fontWeight: FontWeight.w700,

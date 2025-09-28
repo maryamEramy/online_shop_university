@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
-import '../../controllers/constant.dart';
+import '../../controllers/constant.dart'; // فرض بر وجود constant.dart
 
 enum QuantitySelectorStyle { primary, secondary }
 
@@ -22,10 +22,17 @@ class QuantitySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // از context فقط برای theme یا media query استفاده می‌شود، نه برای Provider
     final textColor =
-        (style == QuantitySelectorStyle.primary)
-            ? kPrimaryColor
-            : kSecondaryColor;
+    (style == QuantitySelectorStyle.primary)
+        ? kPrimaryColor
+        : kSecondaryColor;
+
+    // Icon های AntDesign برای consistency با دیگر بخش‌های کد
+    const plusIcon = Icon(AntDesign.plus, size: 22, color: kSecondaryColor);
+    const minusIcon = Icon(AntDesign.minus, size: 22, color: kSecondaryColor);
+    const deleteIcon = Icon(Icons.delete, size: 22, color: kSecondaryColor);
+
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -33,29 +40,32 @@ class QuantitySelector extends StatelessWidget {
       children: [
         (qty <= 1)
             ? GestureDetector(
-              onTap: onDelete,
-              child: Icon(Icons.delete, size: 22, color: kSecondaryColor),
-            )
+          onTap: onDelete,
+          child: deleteIcon,
+        )
             : InkWell(
-              onTap: onDecrement,
-              child: Icon(AntDesign.minus, size: 22, color: kSecondaryColor),
-            ),
+          onTap: onDecrement,
+          child: minusIcon,
+        ),
         const SizedBox(width: 4),
         SizedBox(
-          width: 16,
-          height: 16,
+          width: 24, // اندازه کمی بیشتر برای نمایش بهتر عدد
+          height: 22,
           child: Align(
             alignment: Alignment.center,
             child: Text(
               '$qty',
-              style: kSecondTextStyle.copyWith(color: textColor),
+              style: kSecondTextStyle.copyWith(
+                color: textColor,
+                fontSize: 16, // اندازه فونت تنظیم شد
+              ),
             ),
           ),
         ),
         const SizedBox(width: 4),
         InkWell(
           onTap: onIncrement,
-          child: const Icon(AntDesign.plus, size: 22, color: kSecondaryColor),
+          child: plusIcon,
         ),
       ],
     );

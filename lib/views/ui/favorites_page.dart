@@ -66,9 +66,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
                       trailing: GestureDetector(
                         onTap: () {
                           favoritesNotifier.deleteFav(product.key!);
-                          favoritesNotifier.ids.removeWhere(
-                            (element) => element == product.id,
-                          );
                         },
                         child: Image(
                           image: AssetImage(KAppIcons.liked),

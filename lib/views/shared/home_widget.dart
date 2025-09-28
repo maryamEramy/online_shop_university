@@ -47,7 +47,6 @@ class HomeWidget extends StatelessWidget {
                     childAspectRatio: 1,
                   ),
                   itemCount: products.length,
-                  // scrollDirection: Axis.vertical,
                   itemBuilder: (context, index) {
                     final product = products[index];
                     return GestureDetector(
@@ -67,7 +66,7 @@ class HomeWidget extends StatelessWidget {
                         id: product.id,
                         name: product.name,
                         image: product.imageUrl,
-                        price: "\$${product.price}",
+                        price: double.tryParse(product.price) ?? 0.0,
                         category: product.category,
                       ),
                     );

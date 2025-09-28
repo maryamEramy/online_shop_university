@@ -1,15 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:uni_online_shop/controllers/basket_provider.dart';
 import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/views/shared/body_ui.dart';
-import 'package:uni_online_shop/views/shared/rounded_button.dart';
 import '../../controllers/constant.dart';
 import '../../controllers/favorites_provider.dart';
 import '../../models/sneakers_model.dart';
-import '../shared/quantity_selector_widget.dart';
+import '../shared/product_view.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});
@@ -23,38 +19,34 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage>
     with SingleTickerProviderStateMixin {
-  late Future<ProductInfo> _productFuture;
-  late AnimationController controller;
-  late Animation animation;
-  late Animation backgroundAnimation;
+  late final Future<ProductInfo> _productFuture;
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+  late final Animation<Color?> _backgroundAnimation;
 
   @override
   void initState() {
     super.initState();
 
-    controller = AnimationController(
+    _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 1500),
     );
-    animation = CurvedAnimation(parent: controller, curve: Curves.decelerate);
-    backgroundAnimation = ColorTween(
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.decelerate);
+    _backgroundAnimation = ColorTween(
       begin: kPrimaryColor,
       end: kLightSecondaryColor,
-    ).animate(controller);
+    ).animate(_controller);
 
-    controller.forward();
-    controller.addListener(() {
+    _controller.forward();
+    _controller.addListener(() {
       setState(() {});
     });
 
     _loadProduct();
 
-    Future.microtask(() {
-      final favoritesNotifier = Provider.of<FavoritesNotifier>(
-        context,
-        listen: false,
-      );
-      favoritesNotifier.getFavorites();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<FavoritesNotifier>(context, listen: false).getFavorites();
     });
   }
 
@@ -66,41 +58,20 @@ class _ProductPageState extends State<ProductPage>
     _productFuture = productNotifier.getProduct(widget.category, widget.id);
 
     _productFuture.then((product) {
-      _precacheProductImage(product.imageUrl);
+      if (mounted) {
+        precacheImage(NetworkImage(product.imageUrl), context);
+      }
     });
-  }
-
-  void _precacheProductImage(String url) {
-    precacheImage(NetworkImage(url), context);
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var basketProvider = Provider.of<BasketProvider>(context);
-
-    final productFromProvider = basketProvider.cart.firstWhere(
-      (item) => item['id'] == widget.id,
-      orElse:
-          () => <String, dynamic>{
-            "id": "",
-            "name": "",
-            "category": "",
-            "imageUrl": "",
-            "price": 0.0,
-            "qty": 0,
-          },
-    );
-
-    var qty = productFromProvider['qty'] ?? 0;
-
-    final productKey = productFromProvider['key'];
-
     return FutureBuilder<ProductInfo>(
       future: _productFuture,
       builder: (context, snapshot) {
@@ -111,252 +82,39 @@ class _ProductPageState extends State<ProductPage>
             ],
           );
         } else if (snapshot.hasError) {
+          debugPrint('Error loading product: ${snapshot.error}');
           return BodyUi(
             children: [
               Center(
-                child: Text("Error ${snapshot.error}", style: kErrorTextStyle),
+                child: Text("Error: ${snapshot.error}", style: kErrorTextStyle),
               ),
             ],
           );
-        } else if (!snapshot.hasData) {
+        } else if (!snapshot.hasData || snapshot.data == null) {
           return const BodyUi(
             children: [Center(child: Text("No product found"))],
           );
         } else {
           final product = snapshot.data!;
-
-          return BodyUi(
-            backgroundColor: backgroundAnimation.value,
-            headerTitle: product.name,
-            showBackIcon: true,
-            showBasketIcon: true,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 22),
-                          child: Stack(
-                            children: [
-                              Column(
-                                children: [
-                                  Hero(
-                                    tag: "productImage_${product.id}",
-                                    child: Center(
-                                      child: Transform.scale(
-                                        scale: animation.value,
-                                        child: CachedNetworkImage(
-                                          imageUrl: product.imageUrl,
-                                          fit: BoxFit.cover,
-                                          placeholder:
-                                              (context, url) =>
-                                                  const CircularProgressIndicator(),
-                                          errorWidget:
-                                              (context, url, error) =>
-                                                  const Icon(Icons.error),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.all(16),
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 16,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: kLightPrimaryColor,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          product.name,
-                                          style: kMainTextStyle,
-                                        ),
-                                        const SizedBox(height: 8),
-                                        Text(
-                                          product.category,
-                                          style: kSecondTextStyle,
-                                        ),
-                                        const SizedBox(height: 12),
-                                        Text(
-                                          "\$${product.price}",
-                                          style: kMainTextStyle.copyWith(
-                                            color: kSecondaryColor,
-                                          ),
-                                        ),
-                                        const Divider(
-                                          height: 24,
-                                          color: Colors.black26,
-                                        ),
-                                        Text(
-                                          product.description,
-                                          style: kRegularTextStyle,
-                                          textAlign: TextAlign.justify,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: Consumer<FavoritesNotifier>(
-                                  builder: (context, favoritesNotifier, _) {
-                                    final isFavorite = favoritesNotifier.ids
-                                        .contains(widget.id);
-                                    return GestureDetector(
-                                      onTap: () async {
-                                        if (isFavorite) {
-                                          Map<String, dynamic>? favItem;
-                                          try {
-                                            favItem = favoritesNotifier
-                                                .favorites
-                                                .firstWhere(
-                                                  (item) =>
-                                                      item['id'] == product.id,
-                                                );
-                                          } catch (e) {
-                                            favItem = null;
-                                          }
-
-                                          if (favItem != null) {
-                                            await favoritesNotifier.deleteFav(
-                                              favItem['key'],
-                                            );
-                                          }
-                                        } else {
-                                          await favoritesNotifier.createFav({
-                                            "id": product.id,
-                                            "name": product.name,
-                                            "category": product.category,
-                                            "price": product.price,
-                                            "imageUrl": product.imageUrl,
-                                          });
-                                        }
-                                      },
-                                      child: Container(
-                                        color: Colors.transparent,
-                                        width: 60,
-                                        height: 60,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Image.asset(
-                                            isFavorite
-                                                ? KAppIcons.liked
-                                                : KAppIcons.like,
-                                            // height: 22,
-                                            // width: 22,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+          return AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return BodyUi(
+                backgroundColor: _backgroundAnimation.value,
+                headerTitle: product.name,
+                showBackIcon: true,
+                showBasketIcon: true,
+                children: [
+                  Expanded(
+                    child: ProductView(
+                      product: product,
+                      animation: _animation,
+                      productId: widget.id,
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 12, bottom: 42),
-                        child: Column(
-                          children: [
-                            (qty == 0)
-                                ? RoundedButton(
-                                  color: kSecondaryColor,
-                                  onPressed: () async {
-                                    try {
-                                      await basketProvider.addBasket({
-                                        "id": product.id,
-                                        "name": product.name,
-                                        "category": product.category,
-                                        "imageUrl": product.imageUrl,
-                                        "price": product.price,
-                                        "qty": 1,
-                                      });
-                                      final updatedProduct = basketProvider.cart
-                                          .firstWhere(
-                                            (item) => item['id'] == product.id,
-                                            orElse: () => {"qty": 0},
-                                          );
-                                      qty = updatedProduct['qty'] ?? 0;
-
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            "Added to cart successfully!",
-                                          ),
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                    } catch (e) {
-                                      ScaffoldMessenger.of(
-                                        context,
-                                      ).showSnackBar(
-                                        SnackBar(
-                                          content: Text("Error: $e"),
-                                          backgroundColor: Colors.red,
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  textColor: kWhiteColor,
-                                  title: 'Add to Basket',
-                                )
-                                : RoundedButton(
-                                  color: Colors.transparent,
-                                  onPressed: () {},
-                                  borderColor: kSecondaryColor,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "${basketProvider.productTotalPrice(product.id).toStringAsFixed(2)} \$",
-                                        style: kMainTextStyle.copyWith(
-                                          color: kSecondaryColor,
-                                        ),
-                                      ),
-                                      QuantitySelector(
-                                        qty: qty,
-                                        onIncrement:
-                                            () => basketProvider.incrementQty(
-                                              productKey,
-                                            ),
-                                        onDecrement:
-                                            () => basketProvider.decrementQty(
-                                              productKey,
-                                            ),
-                                        onDelete:
-                                            () => basketProvider
-                                                .deleteBasketItem(productKey),
-                                        style: QuantitySelectorStyle.primary,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                ],
+              );
+            },
           );
         }
       },

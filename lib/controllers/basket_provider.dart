@@ -1,17 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/adapters.dart';
 
-// CartProvider.dart
 class BasketProvider with ChangeNotifier {
   Box? _basketBox;
   List<dynamic> _basket = [];
 
   List<dynamic> get cart => _basket;
 
-  set cart(List<dynamic> newCart) {
-    _basket = newCart;
-    notifyListeners();
-  }
+  // set cart(List<dynamic> newCart) {
+  //   _basket = newCart;
+  //   notifyListeners();
+  // } // این setter غیرضروری است و حذف شد
 
   Future<void> setUserId(String userId) async {
     if (Hive.isBoxOpen('cart_box_$userId')) {
@@ -27,44 +26,89 @@ class BasketProvider with ChangeNotifier {
       throw Exception("Basket box not initialized. Call setUserId first.");
     }
 
-    if (newBasketItem['price'] is String) {
-      newBasketItem['price'] = double.tryParse(newBasketItem['price']) ?? 0.0;
+    final String itemId = newBasketItem['id'];
+
+    // اطمینان از تبدیل قیمت به double
+    final price = newBasketItem['price'] is String
+        ? double.tryParse(newBasketItem['price']) ?? 0.0
+        : (newBasketItem['price'] as num).toDouble();
+    newBasketItem['price'] = price;
+
+    int? existingKey;
+    Map<String, dynamic>? existingItem;
+
+    // جستجو بر اساس ID
+    for (var key in _basketBox!.keys) {
+      final item = _basketBox!.get(key);
+      if (item != null && item['id'] == itemId) {
+        existingKey = key;
+        existingItem = Map<String, dynamic>.from(item);
+        break;
+      }
     }
 
-    final existingItems =
-        _basketBox!.values
-            .where((item) => item['id'] == newBasketItem['id'])
-            .toList();
-
-    if (existingItems.isNotEmpty) {
-      final existingItem = existingItems.first;
-      final key = _basketBox!.keyAt(
-        _basketBox!.values.toList().indexOf(existingItem),
-      );
+    if (existingItem != null && existingKey != null) {
       existingItem['qty'] = (existingItem['qty'] as int) + 1;
-      await _basketBox!.put(key, existingItem);
+      await _basketBox!.put(existingKey, existingItem);
     } else {
       await _basketBox!.add(newBasketItem);
     }
     getBasket();
   }
 
+  // متد کمکی برای دریافت اطلاعات یک آیتم خاص از سبد خرید
+  Map<String, dynamic> getProductFromCart(String productId) {
+    if (_basketBox == null || !_basketBox!.isOpen) {
+      return {
+        "id": productId,
+        "name": "",
+        "category": "",
+        "imageUrl": "",
+        "price": 0.0,
+        "qty": 0,
+        "key": null,
+      };
+    }
+
+    // جستجو در لیست _basket که همیشه به‌روز است
+    final item = _basket.firstWhere(
+          (element) => element['id'] == productId,
+      orElse: () => {
+        "id": productId,
+        "name": "",
+        "category": "",
+        "imageUrl": "",
+        "price": 0.0,
+        "qty": 0,
+        "key": null,
+      },
+    );
+
+    // اگر آیتم پیدا نشد، یک نقشه خالی با qty: 0 برگردانده می‌شود
+    return item;
+  }
+
   getBasket() {
     if (_basketBox == null || !_basketBox!.isOpen) return;
-    final basketData =
-        _basketBox!.keys.map((key) {
-          final item = _basketBox!.get(key);
-          return {
-            "key": key,
-            "id": item['id'],
-            "category": item['category'],
-            "name": item['name'],
-            "imageUrl": item['imageUrl'],
-            "price": item['price'],
-            "sizes": item['sizes'],
-            "qty": item['qty'],
-          };
-        }).toList();
+
+    final List<dynamic> basketData = [];
+
+    for (final key in _basketBox!.keys) {
+      final item = _basketBox!.get(key);
+      if (item != null) {
+        basketData.add({
+          "key": key,
+          "id": item['id'].toString(),
+          "category": item['category'] as String,
+          "name": item['name'] as String,
+          "imageUrl": item['imageUrl'] as String,
+          "price": item['price'],
+          "sizes": item['sizes'],
+          "qty": (item['qty'] as num).toInt(),
+        });
+      }
+    }
+
     _basket = basketData.reversed.toList();
     notifyListeners();
   }
@@ -77,8 +121,8 @@ class BasketProvider with ChangeNotifier {
 
   void incrementQty(int key) {
     if (_basketBox == null) return;
-    final item = _basketBox!.get(key);
-    if (item != null) {
+    final item = Map<String, dynamic>.from(_basketBox!.get(key)); // کپی برای جلوگیری از تغییر در Hive
+    if (item['qty'] != null) {
       item['qty'] = (item['qty'] as int) + 1;
       _basketBox!.put(key, item);
       getBasket();
@@ -87,25 +131,24 @@ class BasketProvider with ChangeNotifier {
 
   void decrementQty(int key) {
     if (_basketBox == null) return;
-    final item = _basketBox!.get(key);
-    if (item != null && item['qty'] > 1) {
+    final item = Map<String, dynamic>.from(_basketBox!.get(key));
+    if (item['qty'] != null && item['qty'] > 1) {
       item['qty'] = (item['qty'] as int) - 1;
       _basketBox!.put(key, item);
       getBasket();
+    } else if (item['qty'] == 1) {
+      // می‌توان در اینجا حذف کرد یا صرفاً اجازه نداد از ۱ کمتر شود
+      deleteBasketItem(key);
     }
   }
 
   double get totalPrice {
     double total = 0;
-    if (_basketBox != null) {
-      for (var key in _basketBox!.keys) {
-        final item = _basketBox!.get(key);
+    if (_basketBox != null && _basketBox!.isOpen) {
+      for (var item in _basketBox!.values) {
         if (item != null) {
-          final rawPrice = item['price'];
-          final price =
-              rawPrice is String
-                  ? double.tryParse(rawPrice) ?? 0.0
-                  : (rawPrice as num).toDouble();
+          final dynamic rawPrice = item['price'];
+          final price = rawPrice is num ? rawPrice.toDouble() : double.tryParse(rawPrice.toString()) ?? 0.0;
           final qty = (item['qty'] as num).toInt();
           total += price * qty;
         }
@@ -115,28 +158,11 @@ class BasketProvider with ChangeNotifier {
   }
 
   double productTotalPrice(String productId) {
-    if (_basketBox == null) return 0.0;
+    final item = getProductFromCart(productId);
 
-    final item = _basketBox!.values.firstWhere(
-      (element) => element['id'] == productId,
-      orElse:
-          () => <String, dynamic>{
-            "id": "",
-            "name": "",
-            "category": "",
-            "imageUrl": "",
-            "price": 0.0,
-            "qty": 0,
-          },
-    );
-
-    if (item == null) return 0.0;
-
-    final rawPrice = item['price'];
+    final dynamic rawPrice = item['price'];
     final price =
-        rawPrice is String
-            ? double.tryParse(rawPrice) ?? 0.0
-            : (rawPrice as num).toDouble();
+    rawPrice is num ? rawPrice.toDouble() : double.tryParse(rawPrice.toString()) ?? 0.0;
     final qty = (item['qty'] as num).toInt();
 
     return price * qty;
