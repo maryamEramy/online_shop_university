@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> _initializeAndNavigate() async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     final cartProvider = Provider.of<BasketProvider>(context, listen: false);
-    final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
+    final favProvider = Provider.of<FavoritesProvider>(context, listen: false);
 
     try {
       await userProvider.loadUserData();

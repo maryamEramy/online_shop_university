@@ -9,7 +9,7 @@ class BottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MainPageNotifier>(
+    return Consumer<MainPageProvider>(
       builder: (context, mainPageNotifier, child) {
         return SafeArea(
           child: Container(

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import '../models/sneakers_model.dart';
 
-class FavoritesNotifier extends ChangeNotifier {
+class FavoritesProvider extends ChangeNotifier {
   Box? _favBox;
   List<dynamic> _ids = [];
   List<dynamic> _favorites =

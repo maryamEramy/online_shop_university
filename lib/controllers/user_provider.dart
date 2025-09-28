@@ -63,7 +63,7 @@ class UserProvider with ChangeNotifier {
     required String email,
     required String password,
     required BasketProvider cartProvider,
-    required FavoritesNotifier favoritesNotifier,
+    required FavoritesProvider favoritesNotifier,
   }) async {
     final userCredential = await AuthService().createUserWithEmailAndPassword(
       name: name,
@@ -101,7 +101,7 @@ class UserProvider with ChangeNotifier {
     required String email,
     required String password,
     required BasketProvider cartProvider,
-    required FavoritesNotifier favoritesNotifier,
+    required FavoritesProvider favoritesNotifier,
   }) async {
     final credential = await AuthService().signInUserWithEmailAndPassword(
       email: email,

@@ -3,7 +3,7 @@ import '../../controllers/constant.dart';
 import '../../controllers/product_provider.dart';
 
 class SearchWidget extends StatelessWidget {
-  final ProductNotifier productNotifier;
+  final ProductProvider productNotifier;
 
   const SearchWidget({super.key, required this.productNotifier});
 

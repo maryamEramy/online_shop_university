@@ -80,7 +80,7 @@ class _ProductCardState extends State<ProductCard> {
           Positioned(
             top: 0,
             right: 0,
-            child: Consumer<FavoritesNotifier>(
+            child: Consumer<FavoritesProvider>(
               builder: (context, favoritesNotifier, _) {
                 final isFavorite = favoritesNotifier.ids.contains(widget.id);
                 return GestureDetector(

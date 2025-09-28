@@ -7,11 +7,6 @@ class BasketProvider with ChangeNotifier {
 
   List<dynamic> get cart => _basket;
 
-  // set cart(List<dynamic> newCart) {
-  //   _basket = newCart;
-  //   notifyListeners();
-  // } // این setter غیرضروری است و حذف شد
-
   Future<void> setUserId(String userId) async {
     if (Hive.isBoxOpen('cart_box_$userId')) {
       _basketBox = Hive.box('cart_box_$userId');
@@ -28,16 +23,16 @@ class BasketProvider with ChangeNotifier {
 
     final String itemId = newBasketItem['id'];
 
-    // اطمینان از تبدیل قیمت به double
-    final price = newBasketItem['price'] is String
-        ? double.tryParse(newBasketItem['price']) ?? 0.0
-        : (newBasketItem['price'] as num).toDouble();
+    final price =
+        newBasketItem['price'] is String
+            ? double.tryParse(newBasketItem['price']) ?? 0.0
+            : (newBasketItem['price'] as num).toDouble();
     newBasketItem['price'] = price;
 
     int? existingKey;
     Map<String, dynamic>? existingItem;
 
-    // جستجو بر اساس ID
+    // search by id
     for (var key in _basketBox!.keys) {
       final item = _basketBox!.get(key);
       if (item != null && item['id'] == itemId) {
@@ -56,7 +51,7 @@ class BasketProvider with ChangeNotifier {
     getBasket();
   }
 
-  // متد کمکی برای دریافت اطلاعات یک آیتم خاص از سبد خرید
+  //get product data from basket
   Map<String, dynamic> getProductFromCart(String productId) {
     if (_basketBox == null || !_basketBox!.isOpen) {
       return {
@@ -70,21 +65,20 @@ class BasketProvider with ChangeNotifier {
       };
     }
 
-    // جستجو در لیست _basket که همیشه به‌روز است
     final item = _basket.firstWhere(
-          (element) => element['id'] == productId,
-      orElse: () => {
-        "id": productId,
-        "name": "",
-        "category": "",
-        "imageUrl": "",
-        "price": 0.0,
-        "qty": 0,
-        "key": null,
-      },
+      (element) => element['id'] == productId,
+      orElse:
+          () => {
+            "id": productId,
+            "name": "",
+            "category": "",
+            "imageUrl": "",
+            "price": 0.0,
+            "qty": 0,
+            "key": null,
+          },
     );
 
-    // اگر آیتم پیدا نشد، یک نقشه خالی با qty: 0 برگردانده می‌شود
     return item;
   }
 
@@ -121,7 +115,7 @@ class BasketProvider with ChangeNotifier {
 
   void incrementQty(int key) {
     if (_basketBox == null) return;
-    final item = Map<String, dynamic>.from(_basketBox!.get(key)); // کپی برای جلوگیری از تغییر در Hive
+    final item = Map<String, dynamic>.from(_basketBox!.get(key));
     if (item['qty'] != null) {
       item['qty'] = (item['qty'] as int) + 1;
       _basketBox!.put(key, item);
@@ -137,7 +131,6 @@ class BasketProvider with ChangeNotifier {
       _basketBox!.put(key, item);
       getBasket();
     } else if (item['qty'] == 1) {
-      // می‌توان در اینجا حذف کرد یا صرفاً اجازه نداد از ۱ کمتر شود
       deleteBasketItem(key);
     }
   }
@@ -148,7 +141,10 @@ class BasketProvider with ChangeNotifier {
       for (var item in _basketBox!.values) {
         if (item != null) {
           final dynamic rawPrice = item['price'];
-          final price = rawPrice is num ? rawPrice.toDouble() : double.tryParse(rawPrice.toString()) ?? 0.0;
+          final price =
+              rawPrice is num
+                  ? rawPrice.toDouble()
+                  : double.tryParse(rawPrice.toString()) ?? 0.0;
           final qty = (item['qty'] as num).toInt();
           total += price * qty;
         }
@@ -162,7 +158,9 @@ class BasketProvider with ChangeNotifier {
 
     final dynamic rawPrice = item['price'];
     final price =
-    rawPrice is num ? rawPrice.toDouble() : double.tryParse(rawPrice.toString()) ?? 0.0;
+        rawPrice is num
+            ? rawPrice.toDouble()
+            : double.tryParse(rawPrice.toString()) ?? 0.0;
     final qty = (item['qty'] as num).toInt();
 
     return price * qty;

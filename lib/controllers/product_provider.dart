@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import '../models/sneakers_model.dart';
 import '../services/product_helper.dart';
 
-class ProductNotifier extends ChangeNotifier {
+class ProductProvider extends ChangeNotifier {
   late Future<ProductInfo> product;
 
   Map<String, List<ProductInfo>> _productsByCategory = {};

@@ -3,7 +3,7 @@ import '../../controllers/constant.dart';
 import '../../controllers/product_provider.dart';
 
 class PriceRangeSliderWidget extends StatelessWidget {
-  final ProductNotifier productNotifier;
+  final ProductProvider productNotifier;
 
   const PriceRangeSliderWidget({super.key, required this.productNotifier});
 

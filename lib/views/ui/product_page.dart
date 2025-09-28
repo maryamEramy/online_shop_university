@@ -46,12 +46,12 @@ class _ProductPageState extends State<ProductPage>
     _loadProduct();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<FavoritesNotifier>(context, listen: false).getFavorites();
+      Provider.of<FavoritesProvider>(context, listen: false).getFavorites();
     });
   }
 
   void _loadProduct() {
-    final productNotifier = Provider.of<ProductNotifier>(
+    final productNotifier = Provider.of<ProductProvider>(
       context,
       listen: false,
     );

@@ -16,7 +16,7 @@ class AuthService {
     required String password,
     required String name,
     required BasketProvider cartProvider,
-    required FavoritesNotifier favoritesNotifier,
+    required FavoritesProvider favoritesNotifier,
   }) async {
     try {
       UserCredential userCredential = await _firebaseAuth
@@ -53,7 +53,7 @@ class AuthService {
     required String email,
     required String password,
     required BasketProvider cartProvider,
-    required FavoritesNotifier favoritesNotifier,
+    required FavoritesProvider favoritesNotifier,
   }) async {
     try {
       UserCredential userCredential = await _firebaseAuth

@@ -11,7 +11,7 @@ class FavoriteButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<FavoritesNotifier>(
+    return Consumer<FavoritesProvider>(
       builder: (context, favoritesNotifier, _) {
         final isFavorite = favoritesNotifier.ids.contains(product.id);
         return GestureDetector(

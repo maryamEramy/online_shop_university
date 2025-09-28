@@ -38,7 +38,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: "Favorites",
                       color: Colors.transparent,
                       onPressed: () {
-                        Provider.of<MainPageNotifier>(context, listen: false)
+                        Provider.of<MainPageProvider>(context, listen: false)
                             .pageIndex = 2;
                       },
                       textColor: kWhiteColor,
@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       title: "Your Basket",
                       color: Colors.transparent,
                       onPressed: () {
-                        Provider.of<MainPageNotifier>(context, listen: false)
+                        Provider.of<MainPageProvider>(context, listen: false)
                             .pageIndex = 3;
                       },
                       textColor: kWhiteColor,
@@ -65,7 +65,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         if (user != null) {
                           FirebaseAuth.instance.signOut();
 
-                          Provider.of<MainPageNotifier>(context, listen: false)
+                          Provider.of<MainPageProvider>(context, listen: false)
                               .pageIndex = 4;
                           setState(() {});
                         } else {

@@ -19,13 +19,13 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<ProductNotifier>(context, listen: false).fetchAllProducts();
+      Provider.of<ProductProvider>(context, listen: false).fetchAllProducts();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    var productNotifier = Provider.of<ProductNotifier>(context);
+    var productNotifier = Provider.of<ProductProvider>(context);
 
     var filteredProducts = productNotifier.filteredProducts;
 

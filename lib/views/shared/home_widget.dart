@@ -13,7 +13,7 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productNotifier = Provider.of<ProductNotifier>(context);
+    final productNotifier = Provider.of<ProductProvider>(context);
 
     final products = productNotifier.productsByCategory[category];
 

@@ -19,7 +19,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
     return BodyUi(
       headerTitle: "Wish List",
       children: [
-        Consumer<FavoritesNotifier>(
+        Consumer<FavoritesProvider>(
           builder: (context , favoritesNotifier , child){
             return Expanded(
               child: ListView.builder(

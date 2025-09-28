@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-class MainPageNotifier extends ChangeNotifier {
+class MainPageProvider extends ChangeNotifier {
   int _pageIndex = 0;
   int get pageIndex => _pageIndex;
 

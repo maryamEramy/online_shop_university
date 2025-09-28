@@ -24,9 +24,9 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
-        ChangeNotifierProvider(create: (_) => MainPageNotifier()),
-        ChangeNotifierProvider(create: (_) => ProductNotifier()),
-        ChangeNotifierProvider(create: (_) => FavoritesNotifier()),
+        ChangeNotifierProvider(create: (_) => MainPageProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => FavoritesProvider()),
         ChangeNotifierProvider(create: (_) => BasketProvider()),
       ],
       child: const MyApp(),

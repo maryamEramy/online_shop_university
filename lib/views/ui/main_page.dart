@@ -34,7 +34,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<MainPageNotifier>(
+    return Consumer<MainPageProvider>(
       builder: (context, mainPageNotifier, child) {
         int index = widget.currentPage ?? mainPageNotifier.pageIndex;
         if (index < 0 || index >= pageList.length) {

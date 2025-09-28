@@ -56,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
               try {
                 final userProvider = Provider.of<UserProvider>(context, listen: false);
                 final cartProvider = Provider.of<BasketProvider>(context, listen: false);
-                final favProvider = Provider.of<FavoritesNotifier>(context, listen: false);
+                final favProvider = Provider.of<FavoritesProvider>(context, listen: false);
 
                 await userProvider.loginUser(
                   email: widget.emailController.text.trim(),
@@ -66,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
                 );
 
                 if (!mounted) return;
-                Provider.of<MainPageNotifier>(context, listen: false)
+                Provider.of<MainPageProvider>(context, listen: false)
                     .pageIndex = 0;
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const MainPage()));
               } catch (e) {
