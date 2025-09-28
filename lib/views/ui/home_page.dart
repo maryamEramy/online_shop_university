@@ -42,9 +42,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final productNotifier = context.read<ProductNotifier>();
       final favoritesNotifier = context.read<FavoritesNotifier>();
-      for (final c in _categories) {
-        productNotifier.getProducts(c);
-      }
+      productNotifier.fetchInitialProducts(_categories);
       favoritesNotifier.getFavorites();
     });
   }

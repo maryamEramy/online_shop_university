@@ -4,7 +4,6 @@ import 'package:uni_online_shop/controllers/product_provider.dart';
 import 'package:uni_online_shop/views/shared/product_card.dart';
 import 'package:uni_online_shop/views/ui/product_page.dart';
 import '../../controllers/constant.dart';
-import '../../models/sneakers_model.dart';
 
 class HomeWidget extends StatelessWidget {
   final String category;
@@ -14,69 +13,65 @@ class HomeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var productNotifier = Provider.of<ProductNotifier>(context, listen: false);
+    final productNotifier = Provider.of<ProductNotifier>(context);
 
-    return FutureBuilder<List<ProductInfo>>(
-      future: productNotifier.getProducts(category),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(
-            child: Text("Error: ${snapshot.error}", style: kErrorTextStyle),
-          );
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Center(
-            child: Text("No products found", style: kErrorTextStyle),
-          );
-        } else {
-          final products = snapshot.data!;
+    final products = productNotifier.productsByCategory[category];
 
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 16),
-              Text('Products', style: kMainTextStyle),
-              Expanded(
-                child: GridView.builder(
-                  padding: const EdgeInsets.all(8),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 0,
-                    crossAxisSpacing: 0,
-                    childAspectRatio: 1,
-                  ),
-                  itemCount: products.length,
-                  itemBuilder: (context, index) {
-                    final product = products[index];
-                    return GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) => ProductPage(
-                                  id: product.id,
-                                  category: product.category,
-                                ),
+    if (products == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    if (products.isEmpty) {
+      return Center(
+        child: Text(
+          "No products found for this category.",
+          style: kErrorTextStyle,
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(height: 16),
+        Text('Products', style: kMainTextStyle),
+        Expanded(
+          child: GridView.builder(
+            padding: const EdgeInsets.all(8),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 0,
+              crossAxisSpacing: 0,
+              childAspectRatio: 1,
+            ),
+            itemCount: products.length,
+            itemBuilder: (context, index) {
+              final product = products[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder:
+                          (context) => ProductPage(
+                            id: product.id,
+                            category: product.category,
                           ),
-                        );
-                      },
-                      child: ProductCard(
-                        id: product.id,
-                        name: product.name,
-                        image: product.imageUrl,
-                        price: double.tryParse(product.price) ?? 0.0,
-                        category: product.category,
-                      ),
-                    );
-                  },
+                    ),
+                  );
+                },
+                child: ProductCard(
+                  id: product.id,
+                  name: product.name,
+                  image: product.imageUrl,
+                  price: double.tryParse(product.price) ?? 0.0,
+                  category: product.category,
                 ),
-              ),
-            ],
-          );
-        }
-      },
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }
