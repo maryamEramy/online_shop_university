@@ -90,6 +90,8 @@ class _SignupFormState extends State<SignupForm> {
               if (!mounted) setState(() => _showSpinner = false);
             }
           },
+          showSpinner: _showSpinner,
+
         ),
       ],
     );

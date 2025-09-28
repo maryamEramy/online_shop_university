@@ -5,7 +5,9 @@ import '../ui/signup_page.dart';
 
 class SignUpButton extends StatelessWidget {
   final VoidCallback? onPressed;
-  const SignUpButton({super.key, this.onPressed});
+  final bool showSpinner;
+
+  const SignUpButton({super.key, this.onPressed, this.showSpinner = false});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,17 @@ class SignUpButton extends StatelessWidget {
               MaterialPageRoute(builder: (context) => SignupPage()),
             );
           },
+      child:
+          showSpinner
+              ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2.0,
+                  color: kPrimaryColor,
+                ),
+              )
+              : null,
     );
   }
 }
