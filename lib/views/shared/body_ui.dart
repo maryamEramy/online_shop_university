@@ -68,13 +68,11 @@ class BodyUi extends StatelessWidget {
                     SizedBox(width: 20),
                     if (showBasketIcon)
                       GestureDetector(
-                        onTap:
-                            () =>
-                                Provider.of<MainPageNotifier>(
-                                      context,
-                                      listen: false,
-                                    ).pageIndex =
-                                    3,
+                        onTap: () {
+                          Provider.of<MainPageNotifier>(context, listen: false)
+                              .pageIndex = 3;
+                          Navigator.pop(context);
+                        },
                         child: Container(
                           decoration: BoxDecoration(
                             color: kSecondaryColor,

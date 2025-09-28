@@ -9,6 +9,7 @@ import 'package:uni_online_shop/views/shared/rounded_button.dart';
 import '../../controllers/constant.dart';
 import '../../controllers/favorites_provider.dart';
 import '../../models/sneakers_model.dart';
+import '../shared/quantity_selector_widget.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key, required this.id, required this.category});
@@ -316,127 +317,36 @@ class _ProductPageState extends State<ProductPage>
                                   textColor: kWhiteColor,
                                   title: 'Add to Basket',
                                 )
-                                : Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 22.0,
-                                    vertical: 12.0,
-                                  ),
-                                  child: Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      border: Border.all(
-                                        color: kSecondaryColor,
+                                : RoundedButton(
+                                  color: Colors.transparent,
+                                  onPressed: () {},
+                                  borderColor: kSecondaryColor,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "${basketProvider.productTotalPrice(product.id).toStringAsFixed(2)} \$",
+                                        style: kMainTextStyle.copyWith(
+                                          color: kSecondaryColor,
+                                        ),
                                       ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 14.0,
-                                        horizontal: 18,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          // SizedBox(width: ,),
-                                          Text(
-                                            "${basketProvider.productTotalPrice(product.id).toStringAsFixed(2)} \$",
-                                            style: kMainTextStyle.copyWith(
-                                              color: kSecondaryColor,
+                                      QuantitySelector(
+                                        qty: qty,
+                                        onIncrement:
+                                            () => basketProvider.incrementQty(
+                                              productKey,
                                             ),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              (qty <= 1)
-                                                  ? GestureDetector(
-                                                    onTap: () {
-                                                      basketProvider
-                                                          .deleteBasketItem(
-                                                            productKey,
-                                                          );
-                                                      setState(() {
-                                                        qty =
-                                                            basketProvider.cart
-                                                                .firstWhere(
-                                                                  (item) =>
-                                                                      item['id'] ==
-                                                                      product
-                                                                          .id,
-                                                                )['qty'];
-                                                      });
-                                                    },
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      size: 22,
-                                                      color: kSecondaryColor,
-                                                    ),
-                                                  )
-                                                  : InkWell(
-                                                    onTap: () {
-                                                      basketProvider
-                                                          .decrementQty(
-                                                            productKey,
-                                                          );
-                                                      setState(() {
-                                                        qty =
-                                                            basketProvider.cart
-                                                                .firstWhere(
-                                                                  (item) =>
-                                                                      item['id'] ==
-                                                                      product
-                                                                          .id,
-                                                                )['qty'];
-                                                      });
-                                                    },
-                                                    child: Icon(
-                                                      AntDesign.minus,
-                                                      size: 22,
-                                                      color: kSecondaryColor,
-                                                    ),
-                                                  ),
-                                              SizedBox(width: 4),
-                                              SizedBox(
-                                                width: 16,
-                                                height: 16,
-                                                child: Align(
-                                                  alignment: Alignment.center,
-                                                  child: Text(
-                                                    '$qty',
-                                                    style: kSecondTextStyle,
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(width: 4),
-                                              InkWell(
-                                                onTap: () {
-                                                  basketProvider.incrementQty(
-                                                    productKey,
-                                                  );
-                                                  setState(() {
-                                                    qty =
-                                                        basketProvider.cart
-                                                            .firstWhere(
-                                                              (item) =>
-                                                                  item['id'] ==
-                                                                  product.id,
-                                                            )['qty'];
-                                                  });
-                                                },
-                                                child: const Icon(
-                                                  AntDesign.plus,
-                                                  size: 22,
-                                                  color: kSecondaryColor,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                        onDecrement:
+                                            () => basketProvider.decrementQty(
+                                              productKey,
+                                            ),
+                                        onDelete:
+                                            () => basketProvider
+                                                .deleteBasketItem(productKey),
+                                        style: QuantitySelectorStyle.primary,
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
                           ],
