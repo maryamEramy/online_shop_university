@@ -64,12 +64,19 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () {
                         if (user != null) {
                           FirebaseAuth.instance.signOut();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProfilePage(),
-                            ),
-                          );
+
+                          Provider.of<MainPageNotifier>(context, listen: false)
+                              .pageIndex = 4;
+                          setState(() {
+
+                          });
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //     builder: (context) => ProfilePage(),
+                          //   ),
+                          // );
+
                         } else {
                           Navigator.push(
                             context,

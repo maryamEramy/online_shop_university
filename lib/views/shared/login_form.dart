@@ -4,6 +4,7 @@ import 'package:uni_online_shop/views/shared/password_text_field_widget.dart';
 import '../../controllers/basket_provider.dart';
 import '../../controllers/constant.dart';
 import '../../controllers/favorites_provider.dart';
+import '../../controllers/main_page_provider.dart';
 import '../../controllers/user_provider.dart';
 import '../ui/main_page.dart';
 import 'email_text_field_widget.dart';
@@ -65,6 +66,8 @@ class _LoginFormState extends State<LoginForm> {
                 );
 
                 if (!mounted) return;
+                Provider.of<MainPageNotifier>(context, listen: false)
+                    .pageIndex = 0;
                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const MainPage()));
               } catch (e) {
                 if (!mounted) return;

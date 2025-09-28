@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../controllers/basket_provider.dart';
 import '../../controllers/favorites_provider.dart';
+import '../../controllers/main_page_provider.dart';
 import '../../controllers/user_provider.dart';
 import '../../controllers/constant.dart';
 import '../shared/email_text_field_widget.dart';
@@ -76,6 +77,8 @@ class _SignupFormState extends State<SignupForm> {
               );
 
               if (!mounted) return;
+              Provider.of<MainPageNotifier>(context, listen: false)
+                  .pageIndex = 0;
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const MainPage()));
             } catch (e) {
               if (!mounted) return;
