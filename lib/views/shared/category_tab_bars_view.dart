@@ -2,30 +2,33 @@ import 'package:flutter/material.dart';
 import 'home_widget.dart';
 
 class CategoryTabBarsView extends StatelessWidget {
-  const CategoryTabBarsView({super.key, required TabController tabController})
-    : _tabController = tabController;
+  const CategoryTabBarsView({
+    super.key,
+    required TabController tabController,
+    required this.categories,
+  }) : _tabController = tabController;
 
   final TabController _tabController;
+  final List<String> categories;
+
+  List<Widget> get _buildTabViewChildren {
+    return categories.asMap().entries.map((entry) {
+      final index = entry.key;
+      final categoryName = entry.value;
+
+      return HomeWidget(
+        key: ValueKey(categoryName),
+        category: categoryName,
+        tabIndex: index,
+      );
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
     return TabBarView(
       controller: _tabController,
-      children: const [
-        HomeWidget(category: "mens-shoes", tabIndex: 0),
-        HomeWidget(category: "beauty", tabIndex: 1),
-        HomeWidget(category: "fragrances", tabIndex: 2),
-        HomeWidget(category: "furniture", tabIndex: 3),
-        HomeWidget(category: "groceries", tabIndex: 4),
-        HomeWidget(category: "laptops", tabIndex: 5),
-        HomeWidget(category: "mens-shirts", tabIndex: 6),
-        HomeWidget(category: "mens-watches", tabIndex: 7),
-        HomeWidget(category: "home-decoration", tabIndex: 8),
-        HomeWidget(category: "kitchen-accessories", tabIndex: 9),
-        HomeWidget(category: "smartphones", tabIndex: 10),
-        HomeWidget(category: "motorcycle", tabIndex: 11),
-        HomeWidget(category: "skin-care", tabIndex: 12),
-      ],
+      children: _buildTabViewChildren,
     );
   }
 }
