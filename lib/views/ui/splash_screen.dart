@@ -41,7 +41,6 @@ class _SplashScreenState extends State<SplashScreen>
     });
 
     controller.addListener(() {
-      debugPrint(animation.value.toString());
       setState(() {});
     });
   }
