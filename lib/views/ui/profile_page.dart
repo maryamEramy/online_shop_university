@@ -67,16 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
                           Provider.of<MainPageNotifier>(context, listen: false)
                               .pageIndex = 4;
-                          setState(() {
-
-                          });
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => ProfilePage(),
-                          //   ),
-                          // );
-
+                          setState(() {});
                         } else {
                           Navigator.push(
                             context,

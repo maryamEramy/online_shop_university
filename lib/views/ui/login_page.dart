@@ -17,10 +17,12 @@ class LoginPage extends StatelessWidget {
       headerTitle: 'Welcome to Nozama!',
       animatedText: true,
       children: [
-        LoginForm(
-          formKey: formKey,
-          emailController: emailController,
-          passwordController: passwordController,
+        Expanded(
+          child: LoginForm(
+            formKey: formKey,
+            emailController: emailController,
+            passwordController: passwordController,
+          ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
