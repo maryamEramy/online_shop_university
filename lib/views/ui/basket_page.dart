@@ -12,54 +12,55 @@ class BasketPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final basketProvider = Provider.of<BasketProvider>(context);
-
     return BodyUi(
       headerTitle: "Your Basket",
       children: [
-        Expanded(
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView.builder(
-                  itemCount: basketProvider.cart.length,
-                  itemBuilder: (context, index) {
-                    final product = basketProvider.cart[index];
-                    return BasketItemCard(
-                      product: product,
-                      onTap: () {
+        Consumer<BasketProvider>(
+            builder: (context , basketProvider , child){
+              return Expanded(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: basketProvider.cart.length,
+                        itemBuilder: (context, index) {
+                          final product = basketProvider.cart[index];
+                          return BasketItemCard(
+                            product: product,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProductPage(
+                                    id: product['id'],
+                                    category: product['category'],
+                                  ),
+                                ),
+                              );
+                            },
+                            onIncrement: () =>
+                                basketProvider.incrementQty(product['key']),
+                            onDecrement: () =>
+                                basketProvider.decrementQty(product['key']),
+                            onDelete: () =>
+                                basketProvider.deleteBasketItem(product['key']),
+                          );
+                        },
+                      ),
+                    ),
+                    BasketSummary(
+                      totalPrice: basketProvider.totalPrice,
+                      onBuy: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) => ProductPage(
-                              id: product['id'],
-                              category: product['category'],
-                            ),
-                          ),
+                          MaterialPageRoute(builder: (context) => const MainPage()),
                         );
                       },
-                      onIncrement: () =>
-                          basketProvider.incrementQty(product['key']),
-                      onDecrement: () =>
-                          basketProvider.decrementQty(product['key']),
-                      onDelete: () =>
-                          basketProvider.deleteBasketItem(product['key']),
-                    );
-                  },
+                    ),
+                  ],
                 ),
-              ),
-              BasketSummary(
-                totalPrice: basketProvider.totalPrice,
-                onBuy: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MainPage()),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+              );
+            })
       ],
     );
   }

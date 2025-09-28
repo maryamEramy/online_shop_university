@@ -16,69 +16,72 @@ class FavoritesPage extends StatefulWidget {
 class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
-    var favoritesNotifier = Provider.of<FavoritesNotifier>(context);
     return BodyUi(
       headerTitle: "Wish List",
       children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: favoritesNotifier.fav.length,
-            itemBuilder: (BuildContext context, int index) {
-              final product = favoritesNotifier.fav[index];
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder:
-                          (context) => ProductPage(
+        Consumer<FavoritesNotifier>(
+          builder: (context , favoritesNotifier , child){
+            return Expanded(
+              child: ListView.builder(
+                itemCount: favoritesNotifier.fav.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final product = favoritesNotifier.fav[index];
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => ProductPage(
                             id: product.id,
                             category: product.category,
                           ),
-                    ),
-                  );
-                },
-                child: SizedBox(
-                  height: 100,
-                  child: Card(
-                    color: kLightPrimaryColor,
-                    margin: const EdgeInsets.symmetric(
-                      horizontal: 24,
-                      vertical: 8,
-                    ),
-                    child: ListTile(
-                      leading: CachedNetworkImage(
-                        imageUrl: product.imageUrl,
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                      ),
-                      title: Text(
-                        product.name,
-                        style: kRegularTextStyle,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                      ),
-                      subtitle: Text(
-                        "${product.category}  -   ${product.price}",
-                        style: kSecondTextStyle,
-                      ),
-                      trailing: GestureDetector(
-                        onTap: () {
-                          favoritesNotifier.deleteFav(product.key!);
-                        },
-                        child: Image(
-                          image: AssetImage(KAppIcons.liked),
-                          height: 22,
-                          width: 22,
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      height: 100,
+                      child: Card(
+                        color: kLightPrimaryColor,
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 8,
+                        ),
+                        child: ListTile(
+                          leading: CachedNetworkImage(
+                            imageUrl: product.imageUrl,
+                            width: 50,
+                            height: 50,
+                            fit: BoxFit.cover,
+                          ),
+                          title: Text(
+                            product.name,
+                            style: kRegularTextStyle,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          ),
+                          subtitle: Text(
+                            "${product.category}  -   ${product.price}",
+                            style: kSecondTextStyle,
+                          ),
+                          trailing: GestureDetector(
+                            onTap: () {
+                              favoritesNotifier.deleteFav(product.key!);
+                            },
+                            child: Image(
+                              image: AssetImage(KAppIcons.liked),
+                              height: 22,
+                              width: 22,
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              );
-            },
-          ),
+                  );
+                },
+              ),
+            );
+          },
         ),
       ],
     );
